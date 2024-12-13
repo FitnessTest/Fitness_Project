@@ -26,9 +26,13 @@ public class SubscriptionManagementSteps {
     }
 
     static class User {
+        private String name;
+        private String role;
         private String subscriptionPlan;
 
-        User(String subscriptionPlan) {
+        User(String name, String role, String subscriptionPlan) {
+            this.name = name;
+            this.role = role;
             this.subscriptionPlan = subscriptionPlan;
         }
 
@@ -92,12 +96,11 @@ public class SubscriptionManagementSteps {
 
     @When("I assign a {string} subscription plan to the following user:")
     public void iAssignASubscriptionPlanToTheFollowingUser(String subscriptionPlan, DataTable dataTable) {
-        for (Map<String, String> row : dataTable.asMaps()) {
-            String name;
-            name = row.get("Name").trim();
-            row.get("Role");
-            users.put(name, new User(subscriptionPlan.trim()));
-        }
+        dataTable.asMaps().forEach(row -> {
+            String name = row.get("Name").trim();
+            String role = row.get("Role").trim();
+            users.put(name, new User(name, role, subscriptionPlan.trim()));
+        });
     }
 
     @Then("the user {string} should have the {string} subscription plan")
@@ -116,7 +119,7 @@ public class SubscriptionManagementSteps {
     }
 
     @Then("the subscription plan of {string} should be {string}")
-    public void theSubscriptionPlanOfShouldBe() {
+    public void theSubscriptionPlanOfShouldBe(String userName, String expectedPlan) {
 
     }
 
