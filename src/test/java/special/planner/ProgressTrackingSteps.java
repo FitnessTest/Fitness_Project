@@ -1,130 +1,119 @@
 package special.planner;
+import io.cucumber.java.en.*;
+import org.junit.Assert;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
-import io.cucumber.java.en.Then;
-import io.cucumber.datatable.DataTable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProgressTrackingSteps {
 
-    private ProgressTrackingPage progressTrackingPage;
+    private Map<String, ClientProgress> clients = new HashMap<>();
+    private ClientProgress currentClient;
+    private String recommendation;
 
-    public ProgressTrackingSteps() {
-        progressTrackingPage = new ProgressTrackingPage();
+
+
+    @Then("the attendance rate as {string}")
+    public void theAttendanceRateAs(String expectedAttendanceRate) {
+        Assert.assertEquals("Incorrect attendance rate", expectedAttendanceRate, currentClient.getAttendance());
     }
 
-    @Given("the user is on their progress tracking page")
-    public void theUserIsOnTheirProgressTrackingPage() {
-        progressTrackingPage.openPage();
+    @Given("I have access to the progress tracking dashboard")
+    public void iHaveAccessToTheProgressTrackingDashboard() {
+
+        System.out.println("Access to the progress tracking dashboard granted.");
     }
 
-    @When("the user logs their weight as {string}")
-    public void theUserLogsTheirWeightAs(String weight) {
-        progressTrackingPage.logWeight(weight);
+    @Given("the following clients exist:")
+    public void theFollowingClientsExist(io.cucumber.datatable.DataTable dataTable) {
+        dataTable.asMaps().forEach(row -> {
+            String name = row.get("Name");
+            String program = row.get("Program");
+            String completionRate = row.get("Completion Rate");
+            String attendance = row.get("Attendance");
+
+            clients.put(name, new ClientProgress(name, program, completionRate, attendance));
+        });
     }
 
-    @When("the user logs their BMI as {string}")
-    public void theUserLogsTheirBMIAs(String bmi) {
-        progressTrackingPage.logBMI(bmi);
+    @When("I review the progress of {string}")
+    public void iReviewTheProgressOf(String clientName) {
+        currentClient = clients.get(clientName);
+        Assert.assertNotNull("Client not found: " + clientName, currentClient);
     }
 
-    @When("the user logs their attendance as {string}")
-    public void theUserLogsTheirAttendanceAs(String attendance) {
-        progressTrackingPage.logAttendance(attendance);
+    @Then("I should see the completion rate as {string}")
+    public void iShouldSeeTheCompletionRateAs(String expectedCompletionRate) {
+        Assert.assertEquals("Incorrect completion rate", expectedCompletionRate, currentClient.getCompletionRate());
     }
 
-    @Then("the user's fitness milestones should be updated with:")
-    public void theUserFitnessMilestonesShouldBeUpdatedWith(DataTable dataTable) {
-        progressTrackingPage.verifyMilestones(dataTable);
+    @Then("I should see the attendance rate as {string}")
+    public void iShouldSeeTheAttendanceRateAs(String expectedAttendanceRate) {
+        Assert.assertEquals("Incorrect attendance rate", expectedAttendanceRate, currentClient.getAttendance());
     }
 
-    @Given("the user has completed the {string} program in Progress Tracking")
-    public void theUserHasCompletedTheProgramInProgressTracking(String programName) {
-        progressTrackingPage.completeProgram(programName);
+    @Given("I have access to the client contact system")
+    public void iHaveAccessToTheClientContactSystem() {
+
+        System.out.println("Access to the client contact system granted.");
     }
 
-    @When("the user views their achievements")
-    public void theUserViewsTheirAchievements() {
-        progressTrackingPage.viewAchievements();
+    @When("I send a motivational reminder to {string}")
+    public void iSendAMotivationalReminderTo(String clientName) {
+        currentClient = clients.get(clientName);
+        Assert.assertNotNull("Client not found: " + clientName, currentClient);
+        System.out.println("Motivational reminder sent to: " + clientName);
     }
 
-    @Then("the user should see the following achievement:")
-    public void theUserShouldSeeTheFollowingAchievement(DataTable dataTable) {
-        progressTrackingPage.verifyAchievements(dataTable);
+    @Then("the reminder should be sent successfully")
+    public void theReminderShouldBeSentSuccessfully() {
+
+        System.out.println("Reminder sent successfully to " + currentClient.getName());
     }
 
-    @When("the user views their badges")
-    public void theUserViewsTheirBadges() {
-        progressTrackingPage.viewBadges();
-    }
+    @When("the completion rate is below {string}")
+    public void theCompletionRateIsBelow(String threshold) {
+        int thresholdValue = Integer.parseInt(threshold.replace("%", ""));
+        int completionRate = Integer.parseInt(currentClient.getCompletionRate().replace("%", ""));
 
-    @Then("the user should see the following badge:")
-    public void theUserShouldSeeTheFollowingBadge(DataTable dataTable) {
-        progressTrackingPage.verifyBadges(dataTable);
-    }
-
-    public static class ProgressTrackingPage {
-
-        private String weight;
-        private String bmi;
-        private String attendance;
-        private String programName;
-        private String achievement;
-        private String badge;
-
-        public void openPage() {
-            System.out.println("Opening the progress tracking page...");
+        if (completionRate < thresholdValue) {
+            recommendation = "Attend more group sessions";
         }
+    }
 
-        public void logWeight(String weight) {
-            this.weight = weight;
-            System.out.println("Logging weight: " + weight);
-        }
+    @Then("I should see a recommendation to {string}")
+    public void iShouldSeeARecommendationTo(String expectedRecommendation) {
+        Assert.assertEquals("Incorrect recommendation", expectedRecommendation, recommendation);
+    }
 
-        public void logBMI(String bmi) {
-            this.bmi = bmi;
-            System.out.println("Logging BMI: " + bmi);
-        }
+    // Helper class to represent client progress
+    class ClientProgress {
+        private final String name;
+        private final String program;
+        private final String completionRate;
+        private final String attendance;
 
-        public void logAttendance(String attendance) {
+        public ClientProgress(String name, String program, String completionRate, String attendance) {
+            this.name = name;
+            this.program = program;
+            this.completionRate = completionRate;
             this.attendance = attendance;
-            System.out.println("Logging attendance: " + attendance);
         }
 
-        public void verifyMilestones(DataTable dataTable) {
-            System.out.println("Verifying fitness milestones:");
-            dataTable.asLists().forEach(row -> {
-                System.out.println("Metric: " + row.get(0) + " - Value: " + row.get(1));
-            });
+        public String getName() {
+            return name;
         }
 
-        public void completeProgram(String programName) {
-            this.programName = programName;
-            System.out.println("Completing the program: " + programName);
+        public String getProgram() {
+            return program;
         }
 
-        public void viewAchievements() {
-            this.achievement = "Yoga Beginner";
-            System.out.println("Viewing achievements...");
+        public String getCompletionRate() {
+            return completionRate;
         }
 
-        public void verifyAchievements(DataTable dataTable) {
-            System.out.println("Verifying achievements:");
-            dataTable.asLists().forEach(row -> {
-                System.out.println("Achievement: " + row.get(0) + " - Description: " + row.get(1));
-            });
-        }
-
-        public void viewBadges() {
-            this.badge = "Muscle Builder";
-            System.out.println("Viewing badges...");
-        }
-
-        public void verifyBadges(DataTable dataTable) {
-            System.out.println("Verifying badges:");
-            dataTable.asLists().forEach(row -> {
-                System.out.println("Badge: " + row.get(0) + " - Description: " + row.get(1));
-            });
+        public String getAttendance() {
+            return attendance;
         }
     }
 }

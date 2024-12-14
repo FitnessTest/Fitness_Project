@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.lang.Integer.parseInt;
 import static java.util.Comparator.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +15,7 @@ public class ProgramMonitoringSteps {
 
     private final Map<String, Program> programs = new HashMap<>();
 
-    static class Program {
+     class Program {
         String name;
         int enrollment;
         double revenue;
@@ -32,7 +33,7 @@ public class ProgramMonitoringSteps {
     public void theFollowingProgramsExist(DataTable dataTable) {
         dataTable.asMaps().forEach(row -> {
             String name = row.get("Name");
-            int enrollment = Integer.parseInt(row.get("Enrollment"));
+            int enrollment = parseInt(row.get("Enrollment"));
             double revenue = Double.parseDouble(row.get("Revenue"));
             String status = row.get("Status");
             programs.put(name, new Program(name, enrollment, revenue, status));
