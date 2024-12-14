@@ -13,7 +13,7 @@ public class SubscriptionManagementSteps {
     private final Map<String, Subscription> subscriptions = new HashMap<>();
     private final Map<String, User> users = new HashMap<>();
 
-    static class Subscription {
+     class Subscription {
         String planName;
         String type;
         double price;
@@ -25,7 +25,7 @@ public class SubscriptionManagementSteps {
         }
     }
 
-    static class User {
+     class User {
         private String name;
         private String role;
         private String subscriptionPlan;
