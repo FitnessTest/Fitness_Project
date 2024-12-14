@@ -59,7 +59,6 @@ public class UserManagementSteps {
             users.put(name, new User(name, role, email, status));
         });
     }
-
     @When("I update the details of {string} to the following:")
     public void iUpdateTheDetailsOfToTheFollowing(String name, DataTable dataTable) {
         User user = users.get(name);
