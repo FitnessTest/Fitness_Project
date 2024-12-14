@@ -15,64 +15,64 @@ public class FeedbackAndReviewsSteps {
 
     @Given("the user has completed the {string} program")
     public void theUserHasCompletedTheProgram(String programName) {
-        // Create a new Program based on the program name
+
         program = new Program(programName);
         feedbackAndReviews = new FeedbackAndReviews(program);
     }
 
     @When("the user rates the program with a score of {string}")
     public void theUserRatesTheProgramWithAScoreOf(String rating) {
-        // Add a rating to the program
+
         feedbackAndReviews.addRating(rating);
     }
 
     @When("the user writes a review saying {string}")
     public void theUserWritesAReviewSaying(String reviewText) {
-        // Add the review to the program
+
         feedbackAndReviews.addReview(reviewText);
     }
 
     @Then("the program should have a review with:")
     public void theProgramShouldHaveAReviewWith(DataTable dataTable) {
-        // Retrieve the expected review details from the dataTable
+
         List<List<String>> rows = dataTable.asLists(String.class);
         String expectedRating = rows.get(1).get(0);
         String expectedReview = rows.get(1).get(1);
 
-        // Assert that the program's rating and review match the expected values
+
         assertEquals(expectedRating, feedbackAndReviews.getRating());
         assertEquals(expectedReview, feedbackAndReviews.getReview());
     }
 
     @When("the user submits a suggestion saying {string}")
     public void theUserSubmitsASuggestionSaying(String suggestionText) {
-        // Add a suggestion to the program's instructor
+
         feedbackAndReviews.submitSuggestion(suggestionText);
     }
 
     @Then("the instructor should receive the suggestion with the following content:")
     public void theInstructorShouldReceiveTheSuggestionWithTheFollowingContent(DataTable dataTable) {
-        // Retrieve the expected suggestion from the dataTable
+
         List<List<String>> rows = dataTable.asLists(String.class);
         String expectedSuggestion = rows.get(1).get(0);
 
-        // Assert that the suggestion is correct
+
         assertEquals(expectedSuggestion, feedbackAndReviews.getSuggestion());
     }
 
-    // Inner classes for Program and FeedbackAndReviews
+
     public class Program {
         private String name;
         private String rating;
         private String review;
         private String suggestion;
 
-        // Constructor
+
         public Program(String name) {
             this.name = name;
         }
 
-        // Getter and setter methods
+
         public String getName() {
             return name;
         }

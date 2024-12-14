@@ -26,21 +26,21 @@ public class AccountManagementSteps {
 
     @When("the user enters their age as {string}")
     public void theUserEntersTheirAgeAs(String ageString) {
-        // Convert the string to an integer
+
         int age = Integer.parseInt(ageString);
-        // Update the profile age
+
         userProfile.setAge(age);
     }
 
     @When("the user selects {string} as their fitness goal")
     public void theUserSelectsFitnessGoal(String fitnessGoal) {
-        // Update the fitness goal in the profile
+
         userProfile.setFitnessGoal(fitnessGoal);
     }
 
     @When("the user selects {string} and {string} as their dietary preferences")
     public void theUserSelectsDietaryPreferences(String diet1, String diet2) {
-        // Set dietary preferences
+
         userProfile.setDietaryPreferences(Arrays.asList(diet1, diet2));
     }
 
@@ -65,7 +65,7 @@ public class AccountManagementSteps {
         String fitnessGoal = rows.get(1).get(2);
         List<String> dietaryPreferences = Arrays.asList(rows.get(1).get(3).split(", "));
 
-        // Create a new profile with these details
+
         userProfile = new UserProfile(name, age, fitnessGoal, dietaryPreferences);
         accountManagement = new AccountManagement();
         accountManagement.createProfile(name, age, fitnessGoal, dietaryPreferences);
@@ -96,17 +96,17 @@ public class AccountManagementSteps {
         assertEquals(dietaryPreferences, userProfile.getDietaryPreferences());
     }
 
-    // Inner class: AccountManagement
+
     public class AccountManagement {
         private UserProfile userProfile;
 
-        // Create a new user profile
+
         public void createProfile(String name, int age, String fitnessGoal, List<String> dietaryPreferences) {
             userProfile = new UserProfile(name, age, fitnessGoal, dietaryPreferences);
             System.out.println("Profile created: " + userProfile);
         }
 
-        // Update an existing user profile
+
         public void updateProfile(int newAge, String newFitnessGoal) {
             if (userProfile != null) {
                 userProfile.updateProfile(newAge, newFitnessGoal);
@@ -116,20 +116,20 @@ public class AccountManagementSteps {
             }
         }
 
-        // Get user profile
+
         public UserProfile getUserProfile() {
             return userProfile;
         }
     }
 
-    // Inner class: UserProfile
+
     public class UserProfile {
         private String name;
         private int age;
         private String fitnessGoal;
         private List<String> dietaryPreferences;
 
-        // Constructor
+
         public UserProfile(String name, int age, String fitnessGoal, List<String> dietaryPreferences) {
             this.name = name;
             this.age = age;
@@ -137,7 +137,7 @@ public class AccountManagementSteps {
             this.dietaryPreferences = dietaryPreferences;
         }
 
-        // Getter and setter methods
+
         public String getName() {
             return name;
         }
@@ -170,13 +170,13 @@ public class AccountManagementSteps {
             this.dietaryPreferences = dietaryPreferences;
         }
 
-        // Method to update the profile with new information
+
         public void updateProfile(int newAge, String newFitnessGoal) {
             this.age = newAge;
             this.fitnessGoal = newFitnessGoal;
         }
 
-        // Override toString() for easy printing of user profile
+
         @Override
         public String toString() {
             return "UserProfile{" +
