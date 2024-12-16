@@ -103,42 +103,4 @@ public class ContentManagement {
         }
     }
 
-    public static void main(String[] args) {
-        ContentManagement cm = new ContentManagement();
-
-
-        System.out.println("All Content:");
-        for (String contentStatus : cm.viewAllContent()) {
-            System.out.println(contentStatus);
-        }
-
-
-        cm.approveOrRejectContent("Healthy Eating Tips", true);
-        cm.approveOrRejectContent("5 Easy Smoothie Recipes", false);
-
-
-        System.out.println("\nUpdated Content Statuses:");
-        for (String contentStatus : cm.viewAllContent()) {
-            System.out.println(contentStatus);
-        }
-
-
-        cm.handleFeedback("Great article on healthy eating!");
-        cm.handleFeedback("Yoga tips were very helpful!");
-
-
-        cm.handleComplaint("The smoothie recipe wasn't clear.");
-        cm.handleComplaint("Some health tips were outdated.");
-
-
-        System.out.println("\nUser Feedback:");
-        for (String feedback : cm.viewAllFeedback()) {
-            System.out.println(feedback);
-        }
-
-        System.out.println("\nUser Complaints:");
-        for (String complaint : cm.viewAllComplaints()) {
-            System.out.println(complaint);
-        }
-    }
 }

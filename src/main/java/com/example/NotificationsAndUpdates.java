@@ -81,32 +81,23 @@ public class NotificationsAndUpdates {
         } else {
             System.out.println("Clients and their notifications:");
             for (Client client : clients) {
-                System.out.println(client);
+
+                System.out.printf("%-20s %-30s%n", "Name", "Email");
+                System.out.printf("%-20s %-30s%n", client.getName(), client.getEmail());
+                System.out.println("------------------------------------------------------------");
+
+
                 List<String> notifications = client.getNotifications();
                 if (!notifications.isEmpty()) {
-                    System.out.println("Notifications: " + notifications);
+                    System.out.println("Notifications:");
+                    for (String notification : notifications) {
+                        System.out.println("  - " + notification);
+                    }
                 } else {
                     System.out.println("No notifications for this client.");
                 }
+                System.out.println("------------------------------------------------------------");
             }
         }
-    }
-
-    // Main method for testing the NotificationsAndUpdates class
-    public static void main(String[] args) {
-        NotificationsAndUpdates notificationsAndUpdates = new NotificationsAndUpdates();
-
-        // Add some clients
-        notificationsAndUpdates.addClient("Alice Johnson", "alice.johnson@example.com");
-        notificationsAndUpdates.addClient("Bob Smith", "bob.smith@example.com");
-
-        // Notify clients about a schedule change
-        notificationsAndUpdates.notifyScheduleChange("Morning Yoga", "Every Monday and Wednesday at 7:00 AM");
-
-        // Announce a new program or special offer
-        notificationsAndUpdates.announceNewProgramOrOffer("Special Offer: Get 20% off on all fitness programs for the next month!");
-
-        // List all clients and their notifications
-        notificationsAndUpdates.listAllClientsNotifications();
     }
 }

@@ -91,35 +91,23 @@ public class ClientInteraction {
         } else {
             System.out.println("Clients and their messages:");
             for (Client client : clients) {
-                System.out.println(client);
+                // Print client info in a table-like format
+                System.out.printf("%-20s %-30s%n", "Name", "Email");
+                System.out.printf("%-20s %-30s%n", client.getName(), client.getEmail());
+                System.out.println("------------------------------------------------------------");
+
+                // Print messages or a no message notification
                 List<String> messages = client.getMessages();
                 if (!messages.isEmpty()) {
-                    System.out.println("Messages: " + messages);
+                    System.out.println("Messages:");
+                    for (String message : messages) {
+                        System.out.println("  - " + message);
+                    }
                 } else {
                     System.out.println("No messages for this client.");
                 }
+                System.out.println("------------------------------------------------------------");
             }
         }
     }
-
-
-    public static void main(String[] args) {
-        ClientInteraction clientInteraction = new ClientInteraction();
-
-
-        clientInteraction.addClient("Alice Johnson", "alice.johnson@example.com");
-        clientInteraction.addClient("Bob Smith", "bob.smith@example.com");
-
-
-        clientInteraction.sendMessageToClient("alice.johnson@example.com", "Hello Alice! Your program starts tomorrow.");
-        clientInteraction.sendMessageToClient("bob.smith@example.com", "Hi Bob! Remember to check your weekly progress.");
-
-
-        clientInteraction.provideProgressReport("alice.johnson@example.com", "Alice, you're doing great! Keep it up.");
-        clientInteraction.provideProgressReport("bob.smith@example.com", "Bob, you've improved by 10% in the last 2 weeks.");
-
-
-        clientInteraction.listAllClients();
-    }
 }
-

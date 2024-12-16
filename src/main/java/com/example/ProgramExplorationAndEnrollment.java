@@ -61,13 +61,28 @@ public class ProgramExplorationAndEnrollment {
         programs.add(new Program("Muscle Building Challenge", "Intermediate", "Muscle Building", "Tue-Thu 11:00 AM", 69.99));
         programs.add(new Program("Advanced Flexibility Training", "Advanced", "Flexibility", "Mon-Fri 8:00 AM", 89.99));
     }
+    public void listPrograms(List<Program> programs) {
+        if (programs.isEmpty()) {
+            System.out.println("No programs available matching the criteria.");
+        } else {
+            System.out.println("Programs Available:");
+            System.out.printf("%-30s %-20s %-20s %-20s %-10s%n", "Title", "Difficulty Level", "Focus Area", "Schedule", "Price");
+            System.out.println("----------------------------------------------------------------------------------------------------");
+            for (Program program : programs) {
+                System.out.printf("%-30s %-20s %-20s %-20s %-10.2f%n", program.getTitle(), program.getDifficultyLevel(),
+                        program.getFocusArea(), program.getSchedule(), program.getPrice());
+            }
+        }
+    }
 
-
-    public List<Program> browsePrograms(String difficultyLevel, String focusArea) {
+    public List<Program> browsePrograms(String difficultyLevel, String focusArea, double minPrice, double maxPrice) {
         List<Program> filteredPrograms = new ArrayList<>();
         for (Program program : programs) {
-            if ((difficultyLevel == null || program.getDifficultyLevel().equalsIgnoreCase(difficultyLevel)) &&
-                    (focusArea == null || program.getFocusArea().equalsIgnoreCase(focusArea))) {
+            boolean matchesDifficulty = (difficultyLevel == null || program.getDifficultyLevel().equalsIgnoreCase(difficultyLevel));
+            boolean matchesFocusArea = (focusArea == null || program.getFocusArea().equalsIgnoreCase(focusArea));
+            boolean matchesPrice = (program.getPrice() >= minPrice && program.getPrice() <= maxPrice);
+
+            if (matchesDifficulty && matchesFocusArea && matchesPrice) {
                 filteredPrograms.add(program);
             }
         }
@@ -97,23 +112,4 @@ public class ProgramExplorationAndEnrollment {
     }
 
 
-    public static void main(String[] args) {
-        ProgramExplorationAndEnrollment programManagement = new ProgramExplorationAndEnrollment();
-
-
-        System.out.println("Browsing programs with 'Intermediate' difficulty and 'Muscle Building' focus:");
-        List<Program> filteredPrograms = programManagement.browsePrograms("Intermediate", "Muscle Building");
-        for (Program program : filteredPrograms) {
-            System.out.println(program);
-        }
-
-
-        programManagement.enrollInProgram("Muscle Building Challenge");
-
-
-        programManagement.viewSchedule("Weight Loss Bootcamp");
-
-
-        programManagement.enrollInProgram("Yoga for All");
-    }
 }

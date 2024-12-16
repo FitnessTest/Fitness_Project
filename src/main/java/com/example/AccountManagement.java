@@ -122,37 +122,19 @@ public class AccountManagement {
         if (clientProfiles.isEmpty()) {
             System.out.println("No profiles available.");
         } else {
-            System.out.println("Client Profiles:");
+            // Print the table header
+            System.out.printf("%-20s %-30s %-5s %-30s %-30s%n", "Name", "Email", "Age", "Fitness Goals", "Dietary Preferences");
+            System.out.println("-------------------------------------------------------------------------------------------------------");
+
+            // Print each profile in a row
             for (ClientProfile profile : clientProfiles) {
-                System.out.println(profile);
+                System.out.printf("%-20s %-30s %-5d %-30s %-30s%n",
+                        profile.getName(),
+                        profile.getEmail(),
+                        profile.getAge(),
+                        profile.getFitnessGoals(),
+                        profile.getDietaryPreferences());
             }
         }
-    }
-
-
-    public static void main(String[] args) {
-        AccountManagement accountManagement = new AccountManagement();
-
-
-        accountManagement.createProfile("Alice Johnson", "alice.johnson@example.com", 25, "Lose weight, Gain muscle", "Vegetarian");
-        accountManagement.createProfile("Bob Smith", "bob.smith@example.com", 30, "Improve stamina", "Gluten-free");
-
-
-        ClientProfile profile = accountManagement.viewProfile("alice.johnson@example.com");
-        if (profile != null) {
-            System.out.println("Viewing profile: " + profile);
-        }
-
-
-        accountManagement.updateProfile("bob.smith@example.com", "Bob Smith", 31, "Improve stamina, Increase flexibility", "Gluten-free, Low-carb");
-
-
-        accountManagement.listAllProfiles();
-
-
-        accountManagement.deleteProfile("alice.johnson@example.com");
-
-
-        accountManagement.listAllProfiles();
     }
 }

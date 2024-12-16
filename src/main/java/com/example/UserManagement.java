@@ -96,30 +96,4 @@ public class UserManagement {
         return userAccountsMap.containsKey(email);
     }
 
-    public static void main(String[] args) {
-        UserManagement userManager = new UserManagement();
-
-        System.out.println("User Accounts:");
-        for (String account : userManager.viewUserAccounts()) {
-            System.out.println(account);
-        }
-
-
-        userManager.createUserAccount("john.doe@gmail.com", "Client");
-
-
-        userManager.deleteUserAccount("ameed@gmail.com");
-
-
-        userManager.updateUserRole("amrojamhour4@gmail.com", "Admin");
-
-
-        userManager.approveInstructorRegistration("zahi.q83@gmail.com");
-
-
-        System.out.println("\nUpdated User Accounts:");
-        for (String account : userManager.viewUserAccounts()) {
-            System.out.println(account);
-        }
-    }
 }

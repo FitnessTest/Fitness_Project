@@ -99,35 +99,22 @@ public class ProgramManagement {
             System.out.println("No programs available.");
         } else {
             System.out.println("All Programs:");
+            // Header row
+            System.out.printf("%-30s %-20s %-20s %-40s %-15s %-20s %-15s %-10s %-25s%n",
+                    "Title", "Duration", "Difficulty", "Goals", "Price", "Schedule", "Tutorial", "Image", "Document");
+            System.out.println("----------------------------------------------------------------------------------------------------------");
+
+            // Program details
             for (Program program : programs) {
-                System.out.println(program);
+                System.out.printf("%-30s %-20s %-20s %-40s %-15.2f %-20s %-15s %-20s %-25s%n",
+                        program.title, program.duration, program.difficultyLevel, program.goals,
+                        program.price, program.schedule, program.videoTutorial, program.image, program.document);
             }
+
+            // Show the count of programs
+            System.out.println("\nTotal Programs: " + programs.size());
         }
     }
 
-    public static void main(String[] args) {
-        ProgramManagement pm = new ProgramManagement();
 
-
-        pm.createProgram("Yoga for Beginners", "6 weeks", "Easy", "Learn basic yoga poses",
-                "yoga_intro_video.mp4", "yoga_image.jpg", "yoga_instructions.pdf",
-                49.99, "Mon, Wed, Fri at 7 PM (Online)");
-        pm.createProgram("Advanced HIIT Training", "4 weeks", "Hard", "Build strength and endurance",
-                "hiit_advanced_video.mp4", "hiit_image.jpg", "hiit_instructions.pdf",
-                69.99, "Tue, Thu at 8 AM (In-person)");
-
-
-        pm.listAllPrograms();
-
-
-        pm.updateProgram("Yoga for Beginners", "Yoga for All Levels", "8 weeks", "Easy to Medium",
-                "Yoga poses and breathing techniques", "yoga_all_levels_video.mp4",
-                "yoga_updated_image.jpg", "yoga_updated_instructions.pdf", 59.99,
-                "Mon, Wed, Fri at 6 PM (Online)");
-
-        pm.deleteProgram("Advanced HIIT Training");
-
-
-        pm.listAllPrograms();
-    }
 }

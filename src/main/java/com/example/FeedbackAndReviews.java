@@ -63,13 +63,14 @@ public class FeedbackAndReviews {
         System.out.println("Review submitted for program: " + programTitle);
     }
 
-    public void viewProgramReview(String programTitle) {
+    public String viewProgramReview(String programTitle) {
         ProgramReview review = programReviews.get(programTitle);
         if (review != null) {
             System.out.println("Review for program " + programTitle + ":\n" + review);
         } else {
             System.out.println("No reviews available for program: " + programTitle);
         }
+        return programTitle;
     }
 
     public void submitImprovementSuggestion(String programTitle, String improvementSuggestion) {
@@ -82,20 +83,4 @@ public class FeedbackAndReviews {
         }
     }
 
-    public static void main(String[] args) {
-        FeedbackAndReviews feedbackSystem = new FeedbackAndReviews();
-
-
-        feedbackSystem.submitProgramReview("Weight Loss Challenge", 5, "Great program, very effective!", "Include more variety in exercises.");
-
-
-        feedbackSystem.viewProgramReview("Weight Loss Challenge");
-
-        feedbackSystem.submitImprovementSuggestion("Weight Loss Challenge", "Add more meal prep tips for beginners.");
-
-        feedbackSystem.viewProgramReview("Weight Loss Challenge");
-
-
-        feedbackSystem.viewProgramReview("Muscle Building Mastery");
-    }
 }
