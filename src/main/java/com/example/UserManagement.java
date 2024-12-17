@@ -1,99 +1,67 @@
 package com.example;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UserManagement {
 
-    private List<String> userAccounts;
-    private boolean accountCreationSuccess;
-    private boolean accountDeletionSuccess;
-    private Map<String, String> userAccountsMap;
+    // User class to store account details
+    public static class User {
+        public String id;
+        public String password;
+        String name;
+        String email;
+        public String role;
 
+        public User(String id, String password, String name, String email, String role) {
+            this.id = id;
+            this.password = password;
+            this.name = name;
+            this.email = email;
+            this.role = role;
+        }
 
-    public UserManagement() {
-        userAccounts = new ArrayList<>();
-        userAccountsMap = new HashMap<>();
-
-
-        userAccountsMap.put("amrojamhour4@gmail.com", "Instructor");
-        userAccountsMap.put("ameed@gmail.com", "Client");
-        userAccountsMap.put("zahi.q83@gmail.com", "Instructor");
-
-
-        refreshUserAccounts();
-    }
-
-
-    private void refreshUserAccounts() {
-        userAccounts.clear();
-        for (Map.Entry<String, String> entry : userAccountsMap.entrySet()) {
-            userAccounts.add(entry.getValue() + ": " + entry.getKey());
+        public User() {
         }
     }
 
+    private List<User> users;
 
-    public List<String> viewUserAccounts() {
-        return new ArrayList<>(userAccounts);
+    public UserManagement(List<User> users) {
+        this.users = users; // Use shared user list
     }
 
-
-    public void createUserAccount(String email, String role) {
-        userAccountsMap.put(email, role);
-        refreshUserAccounts();
-        accountCreationSuccess = true;
-        System.out.printf("Created account with email: %s, role: %s%n", email, role);
-    }
-
-
-    public boolean isAccountCreationSuccessful() {
-        return accountCreationSuccess;
-    }
-
-
-    public void deleteUserAccount(String email) {
-        if (userAccountsMap.containsKey(email)) {
-            userAccountsMap.remove(email);
-            refreshUserAccounts();
-            accountDeletionSuccess = true;
-            System.out.printf("Deleted account with email: %s%n", email);
-        } else {
-            accountDeletionSuccess = false;
-            System.out.printf("Failed to delete account with email: %s%n", email);
+    public void createUserAccount(String id, String password, String name, String email, String role) {
+        for (User user : users) {
+            if (user.id.equals(id)) {
+                System.out.println("Account creation failed: ID already exists.");
+                return;
+            }
         }
+        users.add(new User(id, password, name, email, role));
+        System.out.println("Account created successfully!");
     }
 
-
-    public boolean isAccountDeletionSuccessful() {
-        return accountDeletionSuccess;
-    }
-
-
-    public void updateUserRole(String email, String newRole) {
-        if (userAccountsMap.containsKey(email)) {
-            userAccountsMap.put(email, newRole);
-            refreshUserAccounts();
-            System.out.printf("Updated role for %s to %s%n", email, newRole);
-        } else {
-            System.out.printf("User with email %s not found!%n", email);
+    public void deleteUserAccount(String id) {
+        Iterator<User> iterator = users.iterator();
+        while (iterator.hasNext()) {
+            User user = iterator.next();
+            if (user.id.equals(id)) {
+                iterator.remove();
+                System.out.println("Account with ID " + id + " deleted successfully.");
+                return;
+            }
         }
+        System.out.println("Account deletion failed: ID not found.");
     }
 
-
-    public void approveInstructorRegistration(String email) {
-        if (userAccountsMap.containsKey(email) && userAccountsMap.get(email).equals("Instructor")) {
-            System.out.printf("Instructor with email %s approved successfully.%n", email);
-        } else {
-            System.out.printf("No instructor found with email %s or the user is not an instructor.%n", email);
+    public void viewUserAccounts() {
+        System.out.println("+-------+-------------------+-------------------+-------------------+------------+");
+        System.out.printf("| %-5s | %-17s | %-17s | %-17s | %-10s |%n", "ID", "Name", "Email", "Password", "Role");
+        System.out.println("+-------+-------------------+-------------------+-------------------+------------+");
+        for (User user : users) {
+            System.out.printf("| %-5s | %-17s | %-17s | %-17s | %-10s |%n",
+                    user.id, user.name, user.email, user.password, user.role);
         }
+        System.out.println("+-------+-------------------+-------------------+-------------------+------------+");
     }
-
-
-    public boolean userExists(String email) {
-        return userAccountsMap.containsKey(email);
-    }
-
 }
