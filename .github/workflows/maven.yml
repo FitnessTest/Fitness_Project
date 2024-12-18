@@ -16,10 +16,6 @@ on:
 
 jobs:
   build:
-    dependency-submission:
-      permissions:
-        contents: read
-        security-events: write
 
     runs-on: ubuntu-latest
     steps:
