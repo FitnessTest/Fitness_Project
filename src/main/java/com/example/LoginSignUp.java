@@ -117,10 +117,47 @@ public class LoginSignUp {
                     userManagementMenu(scanner);
                     break;
                 case "2":
-                    System.out.println("Program Monitoring features here...");
+                    ProgramMonitoring programMonitoring = new ProgramMonitoring();
+                    boolean programExit = false;
+                    while (!programExit) {
+                        System.out.println("\nProgram Monitoring Menu:");
+                        System.out.println("1. View Most Popular Programs");
+                        System.out.println("2. Generate Reports");
+                        System.out.println("3. Track Program Status");
+                        System.out.println("4. Back to Admin Menu");
+                        System.out.print("Enter your choice: ");
+
+                        int programChoice = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline character
+
+                        switch (programChoice) {
+                            case 1:
+                                System.out.println("Most Popular Programs:");
+                                for (String line : programMonitoring.viewMostPopularPrograms()) {
+                                    System.out.println(line);
+                                }
+                                break;
+                            case 2:
+                                programMonitoring.generateReports();
+                                break;
+                            case 3:
+                                programMonitoring.trackProgramsStatus();
+                                break;
+                            case 4:
+                                programExit = true;
+                                System.out.println("Returning to Admin Menu...");
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please try again.");
+                                break;
+                        }
+                    }
                     break;
                 case "3":
-                    System.out.println("Content Management features here...");
+                    ContentManagement contentManagement = new ContentManagement();
+                    contentManagement.viewAllContent();
+                    contentManagement.viewAllComplaints();
+                    contentManagement.handleComplaint("Sample complaint message");
                     break;
                 case "4":
                     System.out.println("Subscription Management features here...");
