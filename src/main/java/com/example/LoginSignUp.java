@@ -27,7 +27,7 @@ public class LoginSignUp {
     private static List<UserManagement.User> users = new ArrayList<>();
     private static UserManagement userManagement = new UserManagement(users);
 
-    // Method to validate ID format based on role
+    // Method to validate ID format based on role1
     private static boolean isValidID(String id, Role role) {
         if (role == Role.ADMIN) {
             return true; // Admin can have any length of ID
