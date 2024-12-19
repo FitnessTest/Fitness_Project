@@ -220,8 +220,8 @@ public class LoginSignUp {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
-        userManagement.createUserAccount("1", "ihab", "Ihab", "ihab@gmail.com", "ADMIN");
-        userManagement.createUserAccount("2", "amr", "Amr", "amr@gmail.com", "ADMIN");
+        userManagement.createUserAccount("1", "ihab", "Ihab", "kebab83@gmail.com", "ADMIN");
+        userManagement.createUserAccount("2", "amr", "Amr", "amrojamhour4@gmail.com", "ADMIN");
         userManagement.createUserAccount("111", "ameed", "Ameed", "ameed@gmail.com", "INSTRUCTOR");
         userManagement.createUserAccount("11111", "zahi", "Zahi", "zahi@gmail.com", "CLIENT");
 
