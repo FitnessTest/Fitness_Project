@@ -42,16 +42,16 @@ public class ProgramManagement {
     }
 
 
-    private List<Program> programs;
+    private static List<Program> programs;
 
     public ProgramManagement() {
         programs = new ArrayList<>();
     }
 
 
-    public void createProgram(String title, String duration, String difficultyLevel, String goals,
-                              String videoTutorial, String image, String document,
-                              double price, String schedule) {
+    public static void createProgram(String title, String duration, String difficultyLevel, String goals,
+                                     String videoTutorial, String image, String document,
+                                     double price, String schedule) {
         Program newProgram = new Program(title, duration, difficultyLevel, goals,
                 videoTutorial, image, document, price, schedule);
         programs.add(newProgram);
@@ -59,9 +59,9 @@ public class ProgramManagement {
     }
 
 
-    public boolean updateProgram(String oldTitle, String newTitle, String newDuration, String newDifficultyLevel,
-                                 String newGoals, String newVideoTutorial, String newImage, String newDocument,
-                                 double newPrice, String newSchedule) {
+    public static boolean updateProgram(String oldTitle, String newTitle, String newDuration, String newDifficultyLevel,
+                                        String newGoals, String newVideoTutorial, String newImage, String newDocument,
+                                        double newPrice, String newSchedule) {
         for (Program program : programs) {
             if (program.title.equalsIgnoreCase(oldTitle)) {
                 program.title = newTitle;
@@ -81,7 +81,7 @@ public class ProgramManagement {
         return false;
     }
 
-    public boolean deleteProgram(String title) {
+    public static boolean deleteProgram(String title) {
         for (Program program : programs) {
             if (program.title.equalsIgnoreCase(title)) {
                 programs.remove(program);
@@ -94,24 +94,24 @@ public class ProgramManagement {
     }
 
 
-    public void listAllPrograms() {
+    public static void listAllPrograms() {
         if (programs.isEmpty()) {
             System.out.println("No programs available.");
         } else {
             System.out.println("All Programs:");
-            // Header row
+
             System.out.printf("%-30s %-20s %-20s %-40s %-15s %-20s %-15s %-10s %-25s%n",
                     "Title", "Duration", "Difficulty", "Goals", "Price", "Schedule", "Tutorial", "Image", "Document");
             System.out.println("----------------------------------------------------------------------------------------------------------");
 
-            // Program details
+
             for (Program program : programs) {
                 System.out.printf("%-30s %-20s %-20s %-40s %-15.2f %-20s %-15s %-20s %-25s%n",
                         program.title, program.duration, program.difficultyLevel, program.goals,
                         program.price, program.schedule, program.videoTutorial, program.image, program.document);
             }
 
-            // Show the count of programs
+
             System.out.println("\nTotal Programs: " + programs.size());
         }
     }

@@ -71,7 +71,7 @@ public class AccountManagement {
     }
 
 
-    private List<ClientProfile> clientProfiles;
+    private static List<ClientProfile> clientProfiles;
 
 
     public AccountManagement() {
@@ -79,14 +79,14 @@ public class AccountManagement {
     }
 
 
-    public void createProfile(String name, String email, int age, String fitnessGoals, String dietaryPreferences) {
+    public static void createProfile(String name, String email, int age, String fitnessGoals, String dietaryPreferences) {
         ClientProfile newProfile = new ClientProfile(name, email, age, fitnessGoals, dietaryPreferences);
         clientProfiles.add(newProfile);
         System.out.println("Created profile for: " + name);
     }
 
 
-    public void updateProfile(String email, String newName, int newAge, String newFitnessGoals, String newDietaryPreferences) {
+    public static void updateProfile(String email, String newName, int newAge, String newFitnessGoals, String newDietaryPreferences) {
         for (ClientProfile profile : clientProfiles) {
             if (profile.getEmail().equals(email)) {
                 profile.setName(newName);
@@ -101,7 +101,7 @@ public class AccountManagement {
     }
 
     // View the profile of a client by email
-    public ClientProfile viewProfile(String email) {
+    public static ClientProfile viewProfile(String email) {
         for (ClientProfile profile : clientProfiles) {
             if (profile.getEmail().equals(email)) {
                 return profile;
@@ -112,13 +112,13 @@ public class AccountManagement {
     }
 
 
-    public void deleteProfile(String email) {
+    public static void deleteProfile(String email) {
         clientProfiles.removeIf(profile -> profile.getEmail().equals(email));
         System.out.println("Deleted profile for: " + email);
     }
 
 
-    public void listAllProfiles() {
+    public static void listAllProfiles() {
         if (clientProfiles.isEmpty()) {
             System.out.println("No profiles available.");
         } else {

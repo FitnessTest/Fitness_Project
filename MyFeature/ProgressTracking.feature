@@ -11,7 +11,7 @@ Feature: Progress Tracking
       | Ihab Habash| Muscle Gain    | 70%             | 80%        |
     When I review the progress of "Amr Jamhour"
     Then I should see the completion rate as "50%"
-    And the attendance rate as "75%"
+    And the attendance rate as "75%"`
 
   Scenario: Send motivational reminders
     Given I have access to the client contact system

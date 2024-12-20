@@ -8,13 +8,18 @@ public class ProgressTrackingClient {
 
     public static class FitnessProgress {
         private double weight;
+        private double height; // Add height for calculating BMI
         private double bmi;
         private int attendanceCount;
         private Map<String, String> achievements;
 
 
         public FitnessProgress(double weight, double height, int attendanceCount) {
+            if (height <= 0) {
+                throw new IllegalArgumentException("Height must be greater than zero.");
+            }
             this.weight = weight;
+            this.height = height;
             this.bmi = calculateBMI(weight, height);
             this.attendanceCount = attendanceCount;
             this.achievements = new HashMap<>();
@@ -35,6 +40,10 @@ public class ProgressTrackingClient {
             return weight;
         }
 
+        public double getHeight() {
+            return height;
+        }
+
         public double getBmi() {
             return bmi;
         }
@@ -47,15 +56,16 @@ public class ProgressTrackingClient {
             return achievements;
         }
 
+
         @Override
         public String toString() {
-            return "FitnessProgress [Weight=" + weight + ", BMI=" + bmi + ", Attendance Count=" + attendanceCount
-                    + ", Achievements=" + achievements + "]";
+            return "FitnessProgress [Weight=" + weight + ", Height=" + height + ", BMI=" + bmi + ", Attendance Count="
+                    + attendanceCount + ", Achievements=" + achievements + "]";
         }
     }
 
 
-    private Map<String, FitnessProgress> clientProgressMap;
+    private static Map<String, FitnessProgress> clientProgressMap;
 
 
     public ProgressTrackingClient() {
@@ -63,14 +73,18 @@ public class ProgressTrackingClient {
     }
 
 
-    public void updateClientProgress(String clientId, double weight, double height, int attendanceCount) {
-        FitnessProgress progress = new FitnessProgress(weight, height, attendanceCount);
-        clientProgressMap.put(clientId, progress);
-        System.out.println("Updated progress for client ID: " + clientId);
+    public static void updateClientProgress(String clientId, double weight, double height, int attendanceCount) {
+        try {
+            FitnessProgress progress = new FitnessProgress(weight, height, attendanceCount);
+            clientProgressMap.put(clientId, progress);
+            System.out.println("Updated progress for client ID: " + clientId);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error updating progress: " + e.getMessage());
+        }
     }
 
 
-    public void showClientProgress(String clientId) {
+    public static void showClientProgress(String clientId) {
         FitnessProgress progress = clientProgressMap.get(clientId);
         if (progress != null) {
             System.out.println("Progress for client ID " + clientId + ": " + progress);
@@ -79,8 +93,7 @@ public class ProgressTrackingClient {
         }
     }
 
-
-    public void addAchievement(String clientId, String achievement, String date) {
+    public static void addAchievement(String clientId, String achievement, String date) {
         FitnessProgress progress = clientProgressMap.get(clientId);
         if (progress != null) {
             progress.addAchievement(achievement, date);
@@ -91,20 +104,24 @@ public class ProgressTrackingClient {
     }
 
 
-    public static void main(String[] args) {
-        ProgressTrackingClient progressTracking = new ProgressTrackingClient();
+    public static void removeAchievement(String clientId, String achievement) {
+        FitnessProgress progress = clientProgressMap.get(clientId);
+        if (progress != null && progress.getAchievements().containsKey(achievement)) {
+            progress.getAchievements().remove(achievement);
+            System.out.println("Achievement removed for client ID " + clientId + ": " + achievement);
+        } else {
+            System.out.println("Achievement not found for client ID: " + clientId);
+        }
+    }
 
-
-        progressTracking.updateClientProgress("C001", 75.5, 1.75, 20);
-
-
-        progressTracking.addAchievement("C001", "Completed 30-day Fitness Challenge", "2024-12-15");
-        progressTracking.addAchievement("C001", "Lost 5kg", "2024-12-10");
-
-
-        progressTracking.showClientProgress("C001");
-
-
-        progressTracking.showClientProgress("C002");
+    public static void listAchievements(String clientId) {
+        FitnessProgress progress = clientProgressMap.get(clientId);
+        if (progress != null && !progress.getAchievements().isEmpty()) {
+            System.out.println("Achievements for client ID " + clientId + ":");
+            progress.getAchievements().forEach((achievement, date) ->
+                    System.out.println("Achievement: " + achievement + " on " + date));
+        } else {
+            System.out.println("No achievements found for client ID: " + clientId);
+        }
     }
 }

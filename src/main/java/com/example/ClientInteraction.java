@@ -44,7 +44,7 @@ public class ClientInteraction {
     }
 
 
-    private List<Client> clients;
+    private static List<Client> clients;
 
 
     public ClientInteraction() {
@@ -52,14 +52,14 @@ public class ClientInteraction {
     }
 
 
-    public void addClient(String name, String email) {
+    public static void addClient(String name, String email) {
         Client newClient = new Client(name, email);
         clients.add(newClient);
         System.out.println("Added new client: " + name);
     }
 
     // Send a message to a specific client
-    public boolean sendMessageToClient(String clientEmail, String message) {
+    public static boolean sendMessageToClient(String clientEmail, String message) {
         for (Client client : clients) {
             if (client.getEmail().equalsIgnoreCase(clientEmail)) {
                 client.addMessage(message);
@@ -72,7 +72,7 @@ public class ClientInteraction {
     }
 
 
-    public boolean provideProgressReport(String clientEmail, String report) {
+    public static boolean provideProgressReport(String clientEmail, String report) {
         for (Client client : clients) {
             if (client.getEmail().equalsIgnoreCase(clientEmail)) {
                 client.addMessage("Progress Report: " + report);
@@ -85,7 +85,7 @@ public class ClientInteraction {
     }
 
 
-    public void listAllClients() {
+    public static void listAllClients() {
         if (clients.isEmpty()) {
             System.out.println("No clients available.");
         } else {

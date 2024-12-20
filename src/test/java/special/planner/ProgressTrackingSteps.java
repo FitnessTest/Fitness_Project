@@ -13,11 +13,10 @@ public class ProgressTrackingSteps {
 
 
 
-    @Then("the attendance rate as {string}")
+    @Then("the attendance rate as {string}`")
     public void theAttendanceRateAs(String expectedAttendanceRate) {
         Assert.assertEquals("Incorrect attendance rate", expectedAttendanceRate, currentClient.getAttendance());
     }
-
     @Given("I have access to the progress tracking dashboard")
     public void iHaveAccessToTheProgressTrackingDashboard() {
 

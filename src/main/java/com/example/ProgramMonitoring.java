@@ -4,8 +4,8 @@ import java.util.*;
 
 public class ProgramMonitoring {
 
-    private Map<String, Program> programs;
-    private Map<String, Client> clients;
+    private static Map<String, Program> programs;
+    private static Map<String, Client> clients;
 
     public ProgramMonitoring() {
         programs = new HashMap<>();
@@ -19,14 +19,14 @@ public class ProgramMonitoring {
         programs.put("HIIT Bootcamp", new Program("HIIT Bootcamp", 3500, 50));
 
         // Adding sample clients enrolled in these fitness programs
-        clients.put("john.doe@gmail.com", new Client("john.doe@gmail.com", "John Doe", "Weight Loss"));
-        clients.put("jane.doe@gmail.com", new Client("jane.doe@gmail.com", "Jane Doe", "Yoga and Flexibility"));
-        clients.put("alex.smith@gmail.com", new Client("alex.smith@gmail.com", "Alex Smith", "Cardio Fitness"));
-        clients.put("maria.garcia@gmail.com", new Client("maria.garcia@gmail.com", "Maria Garcia", "Strength Training"));
-        clients.put("daniel.brown@gmail.com", new Client("daniel.brown@gmail.com", "Daniel Brown", "HIIT Bootcamp"));
+        clients.put("amrojamhour4@gmail.com", new Client("amrojamhour4@gmail.com", "Amr Jamhour", "Weight Loss"));
+        clients.put("kebab830@gmail.com", new Client("kebab830@gmail.com", "Ihab Habash", "Yoga and Flexibility"));
+        clients.put("zahi.q83@gmail.com", new Client("zahi.q83@gmail.com", "Zahi Qudu", "Cardio Fitness"));
+        clients.put("eternalnightmare@gmail.com", new Client("eternalnightmare@gmail.com", "Ameed Diab", "Strength Training"));
+        clients.put("potetogamer@gmail.com", new Client("potetogamer@gmail.com", "Momen Habash", "HIIT Bootcamp"));
     }
 
-    public List<String> viewMostPopularPrograms() {
+    public static List<String> viewMostPopularPrograms() {
         List<Program> programList = new ArrayList<>(programs.values());
         programList.sort(Comparator.comparingInt(Program::getEnrollmentCount).reversed());
 
@@ -45,7 +45,7 @@ public class ProgramMonitoring {
         return result;
     }
 
-    public void generateReports() {
+    public static void generateReports() {
         System.out.println("Program Revenue Report:");
         for (Program program : programs.values()) {
             System.out.println(program.getName() + " - Revenue: $" + program.getRevenue());
@@ -62,7 +62,7 @@ public class ProgramMonitoring {
         }
     }
 
-    public void trackProgramsStatus() {
+    public static void trackProgramsStatus() {
         System.out.println("\nActive Programs:");
         for (Program program : programs.values()) {
             if (program.getEnrollmentCount() > 0) {
@@ -102,7 +102,7 @@ public class ProgramMonitoring {
         }
     }
 
-    class Client {
+    static class Client {
         private String email;
         private String name;
         private String programName;
@@ -122,15 +122,4 @@ public class ProgramMonitoring {
         }
     }
 
-    public static void main(String[] args) {
-        ProgramMonitoring monitoring = new ProgramMonitoring();
-
-        System.out.println("Most Popular Programs:");
-        for (String line : monitoring.viewMostPopularPrograms()) {
-            System.out.println(line);
-        }
-
-        monitoring.generateReports();
-        monitoring.trackProgramsStatus();
-    }
 }

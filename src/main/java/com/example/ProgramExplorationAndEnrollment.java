@@ -5,7 +5,6 @@ import java.util.List;
 
 public class ProgramExplorationAndEnrollment {
 
-
     public static class Program {
         private String title;
         private String difficultyLevel;
@@ -51,8 +50,12 @@ public class ProgramExplorationAndEnrollment {
     }
 
 
-    private List<Program> programs;
+    private static List<Program> programs;
 
+
+    public static List<Program> getPrograms() {
+        return programs;
+    }
 
     public ProgramExplorationAndEnrollment() {
         programs = new ArrayList<>();
@@ -61,7 +64,7 @@ public class ProgramExplorationAndEnrollment {
         programs.add(new Program("Muscle Building Challenge", "Intermediate", "Muscle Building", "Tue-Thu 11:00 AM", 69.99));
         programs.add(new Program("Advanced Flexibility Training", "Advanced", "Flexibility", "Mon-Fri 8:00 AM", 89.99));
     }
-    public void listPrograms(List<Program> programs) {
+    public static void listPrograms(List<Program> programs) {
         if (programs.isEmpty()) {
             System.out.println("No programs available matching the criteria.");
         } else {
@@ -75,7 +78,7 @@ public class ProgramExplorationAndEnrollment {
         }
     }
 
-    public List<Program> browsePrograms(String difficultyLevel, String focusArea, double minPrice, double maxPrice) {
+    public static List<Program> browsePrograms(String difficultyLevel, String focusArea, double minPrice, double maxPrice) {
         List<Program> filteredPrograms = new ArrayList<>();
         for (Program program : programs) {
             boolean matchesDifficulty = (difficultyLevel == null || program.getDifficultyLevel().equalsIgnoreCase(difficultyLevel));
@@ -90,7 +93,7 @@ public class ProgramExplorationAndEnrollment {
     }
 
 
-    public void enrollInProgram(String programTitle) {
+    public static void enrollInProgram(String programTitle) {
         for (Program program : programs) {
             if (program.getTitle().equalsIgnoreCase(programTitle)) {
                 System.out.println("Successfully enrolled in: " + program.getTitle());
@@ -101,7 +104,7 @@ public class ProgramExplorationAndEnrollment {
     }
 
 
-    public void viewSchedule(String programTitle) {
+    public static void viewSchedule(String programTitle) {
         for (Program program : programs) {
             if (program.getTitle().equalsIgnoreCase(programTitle)) {
                 System.out.println("Schedule for " + program.getTitle() + ": " + program.getSchedule());

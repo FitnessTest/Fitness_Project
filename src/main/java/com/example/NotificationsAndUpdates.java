@@ -44,7 +44,7 @@ public class NotificationsAndUpdates {
     }
 
 
-    private List<Client> clients;
+    private static List<Client> clients;
 
 
     public NotificationsAndUpdates() {
@@ -52,14 +52,14 @@ public class NotificationsAndUpdates {
     }
 
 
-    public void addClient(String name, String email) {
+    public static void addClient(String name, String email) {
         Client newClient = new Client(name, email);
         clients.add(newClient);
         System.out.println("Added new client: " + name);
     }
 
 
-    public void notifyScheduleChange(String programTitle, String newSchedule) {
+    public static void notifyScheduleChange(String programTitle, String newSchedule) {
         String notification = "The schedule for the program \"" + programTitle + "\" has been changed. The new schedule is: " + newSchedule;
         for (Client client : clients) {
             client.addNotification(notification);
@@ -68,14 +68,14 @@ public class NotificationsAndUpdates {
     }
 
 
-    public void announceNewProgramOrOffer(String announcement) {
+    public static void announceNewProgramOrOffer(String announcement) {
         for (Client client : clients) {
             client.addNotification("Announcement: " + announcement);
             System.out.println("Notified " + client.getName() + " about the new program or special offer.");
         }
     }
 
-    public void listAllClientsNotifications() {
+    public static void listAllClientsNotifications() {
         if (clients.isEmpty()) {
             System.out.println("No clients available.");
         } else {
