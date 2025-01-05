@@ -1,6 +1,5 @@
 package com.example;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,6 +7,10 @@ import java.util.logging.Logger;
 public class AccountManagement {
 
     private static final Logger logger = Logger.getLogger(AccountManagement.class.getName());
+
+    public static void setClientProfiles(List<ClientProfile> clientProfiles) {
+        AccountManagement.clientProfiles = clientProfiles;
+    }
 
     public static class ClientProfile {
         private String name;
@@ -23,7 +26,7 @@ public class AccountManagement {
             this.fitnessGoals = fitnessGoals;
             this.dietaryPreferences = dietaryPreferences;
 
-            // Log the creation of the ClientProfile object
+
             logger.log(Level.INFO, "Created ClientProfile: {0}", this.toString());
         }
 
@@ -77,7 +80,6 @@ public class AccountManagement {
     private static List<ClientProfile> clientProfiles;
 
     private AccountManagement() {
-        clientProfiles = new ArrayList<>();
     }
 
     public static void createProfile(String name, String email, int age, String fitnessGoals, String dietaryPreferences) {
