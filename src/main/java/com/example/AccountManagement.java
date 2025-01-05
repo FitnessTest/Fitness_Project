@@ -6,7 +6,26 @@ import java.util.logging.Logger;
 
 public class AccountManagement {
 
+
     private static final Logger logger = Logger.getLogger(AccountManagement.class.getName());
+
+
+    private static AccountManagement instance;
+
+
+    private static List<ClientProfile> clientProfiles = new ArrayList<>();
+
+
+    private AccountManagement() {}
+
+
+    public static AccountManagement getInstance() {
+        if (instance == null) {
+            instance = new AccountManagement();
+        }
+        return instance;
+    }
+
 
     public static class ClientProfile {
         private String name;
@@ -70,17 +89,16 @@ public class AccountManagement {
         }
     }
 
-    private static List<ClientProfile> clientProfiles;
-
-    public AccountManagement() {
-        clientProfiles = new ArrayList<>();
-    }
 
     public static void createProfile(String name, String email, int age, String fitnessGoals, String dietaryPreferences) {
         ClientProfile newProfile = new ClientProfile(name, email, age, fitnessGoals, dietaryPreferences);
         clientProfiles.add(newProfile);
-        logger.info("Created profile for: " + name);
+
+
+        String message = String.format("Created profile for: %s", name);
+        logger.info(message);
     }
+
 
     public static void updateProfile(String email, String newName, int newAge, String newFitnessGoals, String newDietaryPreferences) {
         for (ClientProfile profile : clientProfiles) {
@@ -89,28 +107,39 @@ public class AccountManagement {
                 profile.setAge(newAge);
                 profile.setFitnessGoals(newFitnessGoals);
                 profile.setDietaryPreferences(newDietaryPreferences);
-                logger.info("Profile updated for: " + email);
+
+
+                String message = String.format("Profile updated for: %s", email);
+                logger.info(message);
                 return;
             }
         }
-        logger.warning("Profile not found for: " + email);
+
+        String message = String.format("Profile not found for: %s", email);
+        logger.info(message);
     }
 
-    // View the profile of a client by email
+
     public static ClientProfile viewProfile(String email) {
         for (ClientProfile profile : clientProfiles) {
             if (profile.getEmail().equals(email)) {
                 return profile;
             }
         }
-        logger.warning("Profile not found for: " + email);
+        String message = String.format("Profile not found for: %s", email);
+        logger.info(message);
         return null;
     }
 
+
     public static void deleteProfile(String email) {
         clientProfiles.removeIf(profile -> profile.getEmail().equals(email));
-        logger.info("Deleted profile for: " + email);
+
+
+        String message = String.format("Deleted profile for: %s", email);
+        logger.info(message);  // Log the message
     }
+
 
     public static void listAllProfiles() {
         if (clientProfiles.isEmpty()) {
@@ -120,14 +149,25 @@ public class AccountManagement {
             logger.info(String.format("%-20s %-30s %-5s %-30s %-30s", "Name", "Email", "Age", "Fitness Goals", "Dietary Preferences"));
             logger.info("-------------------------------------------------------------------------------------------------------");
 
-            // Log each profile in a row
+
             for (ClientProfile profile : clientProfiles) {
-                logger.info(String.format("%-20s %-30s %-5d %-30s %-30s",
-                        profile.getName(),
-                        profile.getEmail(),
-                        profile.getAge(),
-                        profile.getFitnessGoals(),
-                        profile.getDietaryPreferences()));
+
+                if (profile.getName() != null && !profile.getName().isEmpty() &&
+                        profile.getEmail() != null && !profile.getEmail().isEmpty() &&
+                        profile.getFitnessGoals() != null && !profile.getFitnessGoals().isEmpty() &&
+                        profile.getDietaryPreferences() != null && !profile.getDietaryPreferences().isEmpty()) {
+
+                    String profileInfo = String.format("%-20s %-30s %-5d %-30s %-30s",
+                            profile.getName(),
+                            profile.getEmail(),
+                            profile.getAge(),
+                            profile.getFitnessGoals(),
+                            profile.getDietaryPreferences());
+
+                    logger.info(profileInfo);
+                } else {
+                    logger.warning("Skipping profile with missing or empty required fields.");
+                }
             }
         }
     }
