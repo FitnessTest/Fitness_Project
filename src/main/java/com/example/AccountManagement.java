@@ -2,9 +2,11 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class AccountManagement {
 
+    private static final Logger logger = Logger.getLogger(AccountManagement.class.getName());
 
     public static class ClientProfile {
         private String name;
@@ -13,7 +15,6 @@ public class AccountManagement {
         private String fitnessGoals;
         private String dietaryPreferences;
 
-
         public ClientProfile(String name, String email, int age, String fitnessGoals, String dietaryPreferences) {
             this.name = name;
             this.email = email;
@@ -21,7 +22,6 @@ public class AccountManagement {
             this.fitnessGoals = fitnessGoals;
             this.dietaryPreferences = dietaryPreferences;
         }
-
 
         public String getName() {
             return name;
@@ -70,21 +70,17 @@ public class AccountManagement {
         }
     }
 
-
     private static List<ClientProfile> clientProfiles;
-
 
     public AccountManagement() {
         clientProfiles = new ArrayList<>();
     }
 
-
     public static void createProfile(String name, String email, int age, String fitnessGoals, String dietaryPreferences) {
         ClientProfile newProfile = new ClientProfile(name, email, age, fitnessGoals, dietaryPreferences);
         clientProfiles.add(newProfile);
-        System.out.println("Created profile for: " + name);
+        logger.info("Created profile for: " + name);
     }
-
 
     public static void updateProfile(String email, String newName, int newAge, String newFitnessGoals, String newDietaryPreferences) {
         for (ClientProfile profile : clientProfiles) {
@@ -93,11 +89,11 @@ public class AccountManagement {
                 profile.setAge(newAge);
                 profile.setFitnessGoals(newFitnessGoals);
                 profile.setDietaryPreferences(newDietaryPreferences);
-                System.out.println("Profile updated for: " + email);
+                logger.info("Profile updated for: " + email);
                 return;
             }
         }
-        System.out.println("Profile not found for: " + email);
+        logger.warning("Profile not found for: " + email);
     }
 
     // View the profile of a client by email
@@ -107,33 +103,31 @@ public class AccountManagement {
                 return profile;
             }
         }
-        System.out.println("Profile not found for: " + email);
+        logger.warning("Profile not found for: " + email);
         return null;
     }
 
-
     public static void deleteProfile(String email) {
         clientProfiles.removeIf(profile -> profile.getEmail().equals(email));
-        System.out.println("Deleted profile for: " + email);
+        logger.info("Deleted profile for: " + email);
     }
-
 
     public static void listAllProfiles() {
         if (clientProfiles.isEmpty()) {
-            System.out.println("No profiles available.");
+            logger.info("No profiles available.");
         } else {
-            // Print the table header
-            System.out.printf("%-20s %-30s %-5s %-30s %-30s%n", "Name", "Email", "Age", "Fitness Goals", "Dietary Preferences");
-            System.out.println("-------------------------------------------------------------------------------------------------------");
+            // Log the table header
+            logger.info(String.format("%-20s %-30s %-5s %-30s %-30s", "Name", "Email", "Age", "Fitness Goals", "Dietary Preferences"));
+            logger.info("-------------------------------------------------------------------------------------------------------");
 
-            // Print each profile in a row
+            // Log each profile in a row
             for (ClientProfile profile : clientProfiles) {
-                System.out.printf("%-20s %-30s %-5d %-30s %-30s%n",
+                logger.info(String.format("%-20s %-30s %-5d %-30s %-30s",
                         profile.getName(),
                         profile.getEmail(),
                         profile.getAge(),
                         profile.getFitnessGoals(),
-                        profile.getDietaryPreferences());
+                        profile.getDietaryPreferences()));
             }
         }
     }
