@@ -22,6 +22,9 @@ public class AccountManagement {
             this.age = age;
             this.fitnessGoals = fitnessGoals;
             this.dietaryPreferences = dietaryPreferences;
+
+            // Log the creation of the ClientProfile object
+            logger.log(Level.INFO, "Created ClientProfile: {0}", this.toString());
         }
 
         public String getName() {
