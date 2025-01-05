@@ -28,7 +28,7 @@ public class SubscriptionManagementSteps {
      static class User {
          private String subscriptionPlan;
 
-        User(String subscriptionPlan) {
+        User(String name, String role, String subscriptionPlan) {
             this.subscriptionPlan = subscriptionPlan;
         }
 
@@ -94,7 +94,8 @@ public class SubscriptionManagementSteps {
     public void iAssignASubscriptionPlanToTheFollowingUser(String subscriptionPlan, DataTable dataTable) {
         dataTable.asMaps().forEach(row -> {
             String name = row.get("Name").trim();
-            users.put(name, new User(subscriptionPlan.trim()));
+            String role = row.get("Role").trim();
+            users.put(name, new User(name, role, subscriptionPlan.trim()));
         });
     }
 
@@ -105,7 +106,6 @@ public class SubscriptionManagementSteps {
         assertEquals(expectedPlan.trim(), users.get(userName).getSubscriptionPlan());
     }
 
-
     @When("I upgrade the subscription plan of {string} to {string}")
     public void iUpgradeTheSubscriptionPlanOfTo(String userName, String newPlan) {
         User user = users.get(userName.trim());
@@ -115,8 +115,7 @@ public class SubscriptionManagementSteps {
     }
 
     @Then("the subscription plan of {string} should be {string}")
-    public void theSubscriptionPlanOfShouldBe() {
-
+    public void theSubscriptionPlanOfShouldBe(String userName, String expectedPlan) {
     }
 
     @When("I downgrade the subscription plan of {string} to {string}")
