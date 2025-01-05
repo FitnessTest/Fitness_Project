@@ -94,7 +94,6 @@ public class SubscriptionManagementSteps {
     public void iAssignASubscriptionPlanToTheFollowingUser(String subscriptionPlan, DataTable dataTable) {
         dataTable.asMaps().forEach(row -> {
             String name = row.get("Name").trim();
-            String role = row.get("Role").trim();
             users.put(name, new User(subscriptionPlan.trim()));
         });
     }
@@ -105,6 +104,7 @@ public class SubscriptionManagementSteps {
         assertTrue(users.containsKey(userName), "User not found: " + userName);
         assertEquals(expectedPlan.trim(), users.get(userName).getSubscriptionPlan());
     }
+
 
     @When("I upgrade the subscription plan of {string} to {string}")
     public void iUpgradeTheSubscriptionPlanOfTo(String userName, String newPlan) {
