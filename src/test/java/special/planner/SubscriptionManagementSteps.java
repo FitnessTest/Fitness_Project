@@ -13,7 +13,7 @@ public class SubscriptionManagementSteps {
     private final Map<String, Subscription> subscriptions = new HashMap<>();
     private final Map<String, User> users = new HashMap<>();
 
-     class Subscription {
+     static class Subscription {
         String planName;
         String type;
         double price;
@@ -25,14 +25,10 @@ public class SubscriptionManagementSteps {
         }
     }
 
-     class User {
-        private String name;
-        private String role;
-        private String subscriptionPlan;
+     static class User {
+         private String subscriptionPlan;
 
-        User(String name, String role, String subscriptionPlan) {
-            this.name = name;
-            this.role = role;
+        User(String subscriptionPlan) {
             this.subscriptionPlan = subscriptionPlan;
         }
 
@@ -99,7 +95,7 @@ public class SubscriptionManagementSteps {
         dataTable.asMaps().forEach(row -> {
             String name = row.get("Name").trim();
             String role = row.get("Role").trim();
-            users.put(name, new User(name, role, subscriptionPlan.trim()));
+            users.put(name, new User(subscriptionPlan.trim()));
         });
     }
 
@@ -119,7 +115,7 @@ public class SubscriptionManagementSteps {
     }
 
     @Then("the subscription plan of {string} should be {string}")
-    public void theSubscriptionPlanOfShouldBe(String userName, String expectedPlan) {
+    public void theSubscriptionPlanOfShouldBe() {
 
     }
 
