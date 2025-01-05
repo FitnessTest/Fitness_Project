@@ -2,9 +2,12 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AccountManagement {
 
+    private static final Logger logger = Logger.getLogger(AccountManagement.class.getName());
 
     public static class ClientProfile {
         private String name;
@@ -13,7 +16,6 @@ public class AccountManagement {
         private String fitnessGoals;
         private String dietaryPreferences;
 
-
         public ClientProfile(String name, String email, int age, String fitnessGoals, String dietaryPreferences) {
             this.name = name;
             this.email = email;
@@ -21,7 +23,6 @@ public class AccountManagement {
             this.fitnessGoals = fitnessGoals;
             this.dietaryPreferences = dietaryPreferences;
         }
-
 
         public String getName() {
             return name;
@@ -70,21 +71,17 @@ public class AccountManagement {
         }
     }
 
-
     private static List<ClientProfile> clientProfiles;
 
-
-    public AccountManagement() {
+    private AccountManagement() {
         clientProfiles = new ArrayList<>();
     }
-
 
     public static void createProfile(String name, String email, int age, String fitnessGoals, String dietaryPreferences) {
         ClientProfile newProfile = new ClientProfile(name, email, age, fitnessGoals, dietaryPreferences);
         clientProfiles.add(newProfile);
-        System.out.println("Created profile for: " + name);
+        logger.log(Level.INFO, "Created profile for: {0}", name);
     }
-
 
     public static void updateProfile(String email, String newName, int newAge, String newFitnessGoals, String newDietaryPreferences) {
         for (ClientProfile profile : clientProfiles) {
@@ -93,11 +90,11 @@ public class AccountManagement {
                 profile.setAge(newAge);
                 profile.setFitnessGoals(newFitnessGoals);
                 profile.setDietaryPreferences(newDietaryPreferences);
-                System.out.println("Profile updated for: " + email);
+                logger.log(Level.INFO, "Profile updated for: {0}", email);
                 return;
             }
         }
-        System.out.println("Profile not found for: " + email);
+        logger.log(Level.WARNING, "Profile not found for: {0}", email);
     }
 
     // View the profile of a client by email
@@ -107,34 +104,37 @@ public class AccountManagement {
                 return profile;
             }
         }
-        System.out.println("Profile not found for: " + email);
+        logger.log(Level.WARNING, "Profile not found for: {0}", email);
         return null;
     }
 
-
     public static void deleteProfile(String email) {
-        clientProfiles.removeIf(profile -> profile.getEmail().equals(email));
-        System.out.println("Deleted profile for: " + email);
+        boolean isRemoved = clientProfiles.removeIf(profile -> profile.getEmail().equals(email));
+        if (isRemoved) {
+            logger.log(Level.INFO, "Deleted profile for: {0}", email);
+        } else {
+            logger.log(Level.WARNING, "Profile not found for deletion: {0}", email);
+        }
     }
-
 
     public static void listAllProfiles() {
         if (clientProfiles.isEmpty()) {
-            System.out.println("No profiles available.");
+            logger.log(Level.INFO, "No profiles available.");
         } else {
-            // Print the table header
-            System.out.printf("%-20s %-30s %-5s %-30s %-30s%n", "Name", "Email", "Age", "Fitness Goals", "Dietary Preferences");
-            System.out.println("-------------------------------------------------------------------------------------------------------");
+            StringBuilder logMessage = new StringBuilder();
+            logMessage.append(String.format("%-20s %-30s %-5s %-30s %-30s%n",
+                    "Name", "Email", "Age", "Fitness Goals", "Dietary Preferences"));
+            logMessage.append("-------------------------------------------------------------------------------------------------------\n");
 
-            // Print each profile in a row
             for (ClientProfile profile : clientProfiles) {
-                System.out.printf("%-20s %-30s %-5d %-30s %-30s%n",
+                logMessage.append(String.format("%-20s %-30s %-5d %-30s %-30s%n",
                         profile.getName(),
                         profile.getEmail(),
                         profile.getAge(),
                         profile.getFitnessGoals(),
-                        profile.getDietaryPreferences());
+                        profile.getDietaryPreferences()));
             }
+            logger.log(Level.INFO, logMessage.toString());
         }
     }
 }
