@@ -1,14 +1,16 @@
 package com.example;
 
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProgramManagement {
 
+    private static final Logger logger = Logger.getLogger(ProgramManagement.class.getName());
 
     public static class Program {
-        private String title;
+        public String title;
         private String duration;
         private String difficultyLevel;
         private String goals;
@@ -17,7 +19,6 @@ public class ProgramManagement {
         private String document;
         private double price;
         private String schedule;
-
 
         public Program(String title, String duration, String difficultyLevel, String goals,
                        String videoTutorial, String image, String document,
@@ -41,13 +42,15 @@ public class ProgramManagement {
         }
     }
 
-
     private static List<Program> programs;
 
     public ProgramManagement() {
         programs = new ArrayList<>();
     }
 
+    public static List<Program> getPrograms() {
+        return programs;  // Added method to get the list of programs
+    }
 
     public static void createProgram(String title, String duration, String difficultyLevel, String goals,
                                      String videoTutorial, String image, String document,
@@ -55,9 +58,8 @@ public class ProgramManagement {
         Program newProgram = new Program(title, duration, difficultyLevel, goals,
                 videoTutorial, image, document, price, schedule);
         programs.add(newProgram);
-        System.out.println("Program \"" + title + "\" created successfully.");
+        logger.log(Level.INFO, "Program \"{0}\" created successfully.", title);
     }
-
 
     public static boolean updateProgram(String oldTitle, String newTitle, String newDuration, String newDifficultyLevel,
                                         String newGoals, String newVideoTutorial, String newImage, String newDocument,
@@ -73,11 +75,11 @@ public class ProgramManagement {
                 program.document = newDocument;
                 program.price = newPrice;
                 program.schedule = newSchedule;
-                System.out.println("Program \"" + oldTitle + "\" updated successfully.");
+                logger.log(Level.INFO, "Program \"{0}\" updated successfully.", oldTitle);
                 return true;
             }
         }
-        System.out.println("Program \"" + oldTitle + "\" not found.");
+        logger.log(Level.WARNING, "Program \"{0}\" not found.", oldTitle);
         return false;
     }
 
@@ -85,36 +87,30 @@ public class ProgramManagement {
         for (Program program : programs) {
             if (program.title.equalsIgnoreCase(title)) {
                 programs.remove(program);
-                System.out.println("Program \"" + title + "\" deleted successfully.");
+                logger.log(Level.INFO, "Program \"{0}\" deleted successfully.", title);
                 return true;
             }
         }
-        System.out.println("Program \"" + title + "\" not found.");
+        logger.log(Level.WARNING, "Program \"{0}\" not found.", title);
         return false;
     }
 
-
     public static void listAllPrograms() {
         if (programs.isEmpty()) {
-            System.out.println("No programs available.");
+            logger.log(Level.INFO, "No programs available.");
         } else {
-            System.out.println("All Programs:");
-
-            System.out.printf("%-30s %-20s %-20s %-40s %-15s %-20s %-15s %-10s %-25s%n",
-                    "Title", "Duration", "Difficulty", "Goals", "Price", "Schedule", "Tutorial", "Image", "Document");
-            System.out.println("----------------------------------------------------------------------------------------------------------");
-
+            logger.log(Level.INFO, "All Programs:");
+            logger.log(Level.INFO, String.format("%-30s %-20s %-20s %-40s %-15s %-20s %-15s %-10s %-25s%n",
+                    "Title", "Duration", "Difficulty", "Goals", "Price", "Schedule", "Tutorial", "Image", "Document"));
+            logger.log(Level.INFO, "----------------------------------------------------------------------------------------------------------");
 
             for (Program program : programs) {
-                System.out.printf("%-30s %-20s %-20s %-40s %-15.2f %-20s %-15s %-20s %-25s%n",
+                logger.log(Level.INFO, String.format("%-30s %-20s %-20s %-40s %-15.2f %-20s %-15s %-20s %-25s%n",
                         program.title, program.duration, program.difficultyLevel, program.goals,
-                        program.price, program.schedule, program.videoTutorial, program.image, program.document);
+                        program.price, program.schedule, program.videoTutorial, program.image, program.document));
             }
 
-
-            System.out.println("\nTotal Programs: " + programs.size());
+            logger.log(Level.INFO, "\nTotal Programs: {0}", programs.size());
         }
     }
-
-
 }
