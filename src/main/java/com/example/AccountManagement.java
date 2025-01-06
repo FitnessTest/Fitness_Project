@@ -26,7 +26,7 @@ public class AccountManagement {
         return instance;
     }
 
-    // ClientProfile class to represent a client's profile
+
     public static class ClientProfile {
         private String name;
         private String email;
@@ -41,13 +41,12 @@ public class AccountManagement {
             }
             this.name = name;
 
-            // Basic validation for email
             if (email == null || !email.contains("@")) {
                 throw new IllegalArgumentException("Invalid email address");
             }
             this.email = email;
 
-            // Basic validation for age
+
             if (age <= 0) {
                 throw new IllegalArgumentException("Age must be a positive number");
             }
