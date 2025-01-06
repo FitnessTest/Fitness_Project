@@ -85,7 +85,7 @@ public class ProgressTrackingSteps {
         Assert.assertEquals("Incorrect recommendation", expectedRecommendation, recommendation);
     }
 
-    // Helper class to represent client progress
+
     class ClientProgress {
         private final String name;
         private final String program;

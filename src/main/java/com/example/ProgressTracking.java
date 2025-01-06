@@ -2,9 +2,11 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ProgressTracking {
 
+    private static final Logger logger = Logger.getLogger(ProgressTracking.class.getName());
 
     public static class Client {
         private String name;
@@ -57,56 +59,59 @@ public class ProgressTracking {
         }
     }
 
-
     private static List<Client> clients;
 
     public ProgressTracking() {
         clients = new ArrayList<>();
     }
 
+    // Getter method for clients
+    public static List<Client> getClients() {
+        return new ArrayList<>(clients);
+    }
+
     public static void addClient(Client client) {
         clients.add(client);
-        System.out.println("Client " + client.getName() + " added successfully.");
+        logger.info("Client " + client.getName() + " added successfully.");
     }
 
     public static void updateCompletedSessions(String clientEmail, int sessionsCompleted) {
         for (Client client : clients) {
             if (client.getEmail().equalsIgnoreCase(clientEmail)) {
                 client.updateCompletedSessions(sessionsCompleted);
-                System.out.println("Updated completed sessions for client " + client.getName() + ".");
+                logger.info("Updated completed sessions for client " + client.getName() + ".");
                 return;
             }
         }
-        System.out.println("Client with email " + clientEmail + " not found.");
+        logger.warning("Client with email " + clientEmail + " not found.");
     }
 
     public static boolean sendMotivationalReminder(String clientEmail, String reminder) {
         for (Client client : clients) {
             if (client.getEmail().equalsIgnoreCase(clientEmail)) {
                 client.addProgressMessage("Motivational Reminder: " + reminder);
-                System.out.println("Motivational reminder sent to client " + client.getName() + ": " + reminder);
+                logger.info("Motivational reminder sent to client " + client.getName() + ": " + reminder);
                 return true;
             }
         }
-        System.out.println("Client with email " + clientEmail + " not found.");
+        logger.warning("Client with email " + clientEmail + " not found.");
         return false;
     }
 
     public static void monitorClientProgress() {
         if (clients.isEmpty()) {
-            System.out.println("No clients available.");
+            logger.info("No clients available.");
         } else {
-            System.out.println("Clients and their progress:");
+            logger.info("Clients and their progress:");
             for (Client client : clients) {
-                System.out.println(client);
+                logger.info(client.toString());
                 List<String> progressMessages = client.getProgressMessages();
                 if (!progressMessages.isEmpty()) {
-                    System.out.println("Progress Messages: " + progressMessages);
+                    logger.info("Progress Messages: " + progressMessages);
                 } else {
-                    System.out.println("No progress messages for this client.");
+                    logger.info("No progress messages for this client.");
                 }
             }
         }
     }
-
 }
