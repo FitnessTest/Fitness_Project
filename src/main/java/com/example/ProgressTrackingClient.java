@@ -2,8 +2,15 @@ package com.example;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class ProgressTrackingClient {
+
+    private static final Logger logger = Logger.getLogger(ProgressTrackingClient.class.getName());
+
+    public static Map<String, FitnessProgress> getClientProgressMap() {
+        return clientProgressMap;
+    }
 
 
     public static class FitnessProgress {
@@ -30,7 +37,6 @@ public class ProgressTrackingClient {
             return weight / (height * height);
         }
 
-
         public void addAchievement(String achievement, String date) {
             achievements.put(achievement, date);
         }
@@ -56,7 +62,6 @@ public class ProgressTrackingClient {
             return achievements;
         }
 
-
         @Override
         public String toString() {
             return "FitnessProgress [Weight=" + weight + ", Height=" + height + ", BMI=" + bmi + ", Attendance Count="
@@ -65,63 +70,64 @@ public class ProgressTrackingClient {
     }
 
 
-    private static Map<String, FitnessProgress> clientProgressMap;
+    private static Map<String, FitnessProgress> clientProgressMap = new HashMap<>();
 
 
     public ProgressTrackingClient() {
-        clientProgressMap = new HashMap<>();
+
     }
 
 
     public static void updateClientProgress(String clientId, double weight, double height, int attendanceCount) {
-        try {
-            FitnessProgress progress = new FitnessProgress(weight, height, attendanceCount);
-            clientProgressMap.put(clientId, progress);
-            System.out.println("Updated progress for client ID: " + clientId);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error updating progress: " + e.getMessage());
+        if (height <= 0) {
+            throw new IllegalArgumentException("Height must be greater than zero.");
         }
+        FitnessProgress progress = new FitnessProgress(weight, height, attendanceCount);
+        clientProgressMap.put(clientId, progress);
+        logger.info("Updated progress for client ID: " + clientId);
     }
 
 
     public static void showClientProgress(String clientId) {
         FitnessProgress progress = clientProgressMap.get(clientId);
         if (progress != null) {
-            System.out.println("Progress for client ID " + clientId + ": " + progress);
+            logger.info("Progress for client ID " + clientId + ": " + progress);
         } else {
-            System.out.println("No progress data found for client ID: " + clientId);
+            logger.warning("No progress data found for client ID: " + clientId);
         }
     }
+
 
     public static void addAchievement(String clientId, String achievement, String date) {
         FitnessProgress progress = clientProgressMap.get(clientId);
         if (progress != null) {
             progress.addAchievement(achievement, date);
-            System.out.println("Achievement added for client ID " + clientId + ": " + achievement);
+            logger.info("Achievement added for client ID " + clientId + ": " + achievement);
         } else {
-            System.out.println("No progress data found for client ID: " + clientId);
+            logger.warning("No progress data found for client ID: " + clientId);
         }
     }
-
 
     public static void removeAchievement(String clientId, String achievement) {
         FitnessProgress progress = clientProgressMap.get(clientId);
         if (progress != null && progress.getAchievements().containsKey(achievement)) {
             progress.getAchievements().remove(achievement);
-            System.out.println("Achievement removed for client ID " + clientId + ": " + achievement);
+            logger.info("Achievement removed for client ID " + clientId + ": " + achievement);
         } else {
-            System.out.println("Achievement not found for client ID: " + clientId);
+            logger.warning("Achievement not found for client ID: " + clientId);
         }
     }
+
 
     public static void listAchievements(String clientId) {
         FitnessProgress progress = clientProgressMap.get(clientId);
         if (progress != null && !progress.getAchievements().isEmpty()) {
-            System.out.println("Achievements for client ID " + clientId + ":");
-            progress.getAchievements().forEach((achievement, date) ->
-                    System.out.println("Achievement: " + achievement + " on " + date));
+            logger.info("Achievements for client ID " + clientId + ":");
+            progress.getAchievements().forEach((achievement, date) -> {
+                logger.info("Achievement: " + achievement + " on " + date);
+            });
         } else {
-            System.out.println("No achievements found for client ID: " + clientId);
+            logger.warning("No achievements found for client ID: " + clientId);
         }
     }
 }
