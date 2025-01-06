@@ -9,7 +9,7 @@ Feature: Client Interaction
     And the client "Amr Jamhour" is enrolled in the program "Yoga Basics"
     When I send the following message to "Amr Jamhour":
       """
-      Hi John, great progress this week! Keep up the good work.
+      Hi Amr, great progress this week! Keep up the good work.
       Let me know if you have any questions.
       """
     Then the client "Amr Jamhour" should receive the message successfully
