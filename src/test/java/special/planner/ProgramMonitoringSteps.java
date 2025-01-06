@@ -2,10 +2,8 @@ package special.planner;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
-
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.logging.Logger;
 
 import static java.lang.Integer.parseInt;
 import static java.util.Comparator.*;
@@ -13,9 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ProgramMonitoringSteps {
 
+    private static final Logger logger = Logger.getLogger(ProgramMonitoringSteps.class.getName());
     private final Map<String, Program> programs = new HashMap<>();
 
-     class Program {
+
+    class Program {
         String name;
         int enrollment;
         double revenue;
@@ -29,6 +29,7 @@ public class ProgramMonitoringSteps {
         }
     }
 
+
     @Given("the following programs exist:")
     public void theFollowingProgramsExist(DataTable dataTable) {
         dataTable.asMaps().forEach(row -> {
@@ -40,13 +41,15 @@ public class ProgramMonitoringSteps {
         });
     }
 
+
     @When("I view the statistics for the most popular programs")
     public void iViewTheStatisticsForTheMostPopularPrograms() {
         programs.values().stream()
                 .sorted((p1, p2) -> Integer.compare(p2.enrollment, p1.enrollment))
                 .limit(3)
-                .forEach(program -> System.out.println("Program: " + program.name + ", Enrollment: " + program.enrollment));
+                .forEach(program -> logger.info("Program: " + program.name + ", Enrollment: " + program.enrollment));
     }
+
 
     @Then("the most popular program should be {string}")
     public void theMostPopularProgramShouldBe(String programName) {
@@ -64,6 +67,7 @@ public class ProgramMonitoringSteps {
         assertEquals(programName, mostPopular.name);
     }
 
+
     @When("I generate a report on revenue and attendance")
     public void iGenerateAReportOnRevenueAndAttendance() {
         double totalRevenue = programs.values().stream()
@@ -73,9 +77,10 @@ public class ProgramMonitoringSteps {
                 .mapToInt(program -> program.enrollment)
                 .sum();
 
-        System.out.println("Total Revenue: $" + totalRevenue);
-        System.out.println("Total Enrollment: " + totalEnrollment);
+        logger.info("Total Revenue: $" + totalRevenue);
+        logger.info("Total Enrollment: " + totalEnrollment);
     }
+
 
     @Then("the total revenue should be {double}")
     public void theTotalRevenueShouldBe(double expectedRevenue) {
@@ -85,6 +90,7 @@ public class ProgramMonitoringSteps {
         assertEquals(expectedRevenue, totalRevenue);
     }
 
+
     @Then("the total enrollment should be {int}")
     public void theTotalEnrollmentShouldBe(int expectedEnrollment) {
         int totalEnrollment = programs.values().stream()
@@ -92,6 +98,7 @@ public class ProgramMonitoringSteps {
                 .sum();
         assertEquals(expectedEnrollment, totalEnrollment);
     }
+
 
     @When("I track the active and completed programs")
     public void iTrackTheActiveAndCompletedPrograms() {
@@ -102,9 +109,10 @@ public class ProgramMonitoringSteps {
                 .filter(program -> program.status.equals("Completed"))
                 .count();
 
-        System.out.println("Active Programs: " + activeCount);
-        System.out.println("Completed Programs: " + completedCount);
+        logger.info("Active Programs: " + activeCount);
+        logger.info("Completed Programs: " + completedCount);
     }
+
 
     @Then("there should be {int} active programs and {int} completed programs")
     public void thereShouldBeActiveProgramsAndCompletedPrograms(int expectedActive, int expectedCompleted) {
