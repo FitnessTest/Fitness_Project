@@ -2,8 +2,11 @@ package com.example;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class SubscriptionManagement {
+
+    private static final Logger logger = Logger.getLogger(SubscriptionManagement.class.getName());
 
     public enum Plan {
         BASIC,
@@ -47,7 +50,6 @@ public class SubscriptionManagement {
 
     public SubscriptionManagement() {
         userSubscriptions = new HashMap<>();
-
         // Sample user subscriptions (ID -> User object)
         userSubscriptions.put("1", new User("1", Plan.BASIC, UserType.CLIENT));
         userSubscriptions.put("2", new User("2", Plan.PREMIUM, UserType.INSTRUCTOR));
@@ -63,13 +65,13 @@ public class SubscriptionManagement {
         User user = userSubscriptions.get(id);
         if (user != null) {
             if (user.getPlan() == Plan.PREMIUM) {
-                System.out.println("User with ID " + id + " is already on Premium.");
+                logger.info("User with ID " + id + " is already on Premium.");
             } else {
                 user.setPlan(Plan.PREMIUM);
-                System.out.println("User with ID " + id + " upgraded to Premium.");
+                logger.info("User with ID " + id + " upgraded to Premium.");
             }
         } else {
-            System.out.println("No user found with ID " + id);
+            logger.warning("No user found with ID " + id);
         }
     }
 
@@ -77,28 +79,28 @@ public class SubscriptionManagement {
         User user = userSubscriptions.get(id);
         if (user != null) {
             if (user.getPlan() == Plan.BASIC) {
-                System.out.println("User with ID " + id + " is already on Basic.");
+                logger.info("User with ID " + id + " is already on Basic.");
             } else {
                 user.setPlan(Plan.BASIC);
-                System.out.println("User with ID " + id + " downgraded to Basic.");
+                logger.info("User with ID " + id + " downgraded to Basic.");
             }
         } else {
-            System.out.println("No user found with ID " + id);
+            logger.warning("No user found with ID " + id);
         }
     }
 
     public static void viewAllSubscriptions() {
         if (userSubscriptions == null || userSubscriptions.isEmpty()) {
-            System.out.println("No users have subscriptions.");
+            logger.info("No users have subscriptions.");
         } else {
-            System.out.println("All user subscriptions:");
-            System.out.println("+-------+------------+------------+");
-            System.out.printf("| %-5s | %-10s | %-10s |%n", "ID", "Plan", "Type");
-            System.out.println("+-------+------------+------------+");
+            logger.info("All user subscriptions:");
+            logger.info("+-------+------------+------------+");
+            logger.info(String.format("| %-5s | %-10s | %-10s |", "ID", "Plan", "Type"));
+            logger.info("+-------+------------+------------+");
             for (User user : userSubscriptions.values()) {
-                System.out.printf("| %-5s | %-10s | %-10s |%n", user.getId(), user.getPlan(), user.getType());
+                logger.info(String.format("| %-5s | %-10s | %-10s |", user.getId(), user.getPlan(), user.getType()));
             }
-            System.out.println("+-------+------------+------------+");
+            logger.info("+-------+------------+------------+");
         }
     }
 
@@ -107,9 +109,9 @@ public class SubscriptionManagement {
         if (user != null) {
             Plan oldPlan = user.getPlan();
             user.setPlan(newPlan);
-            System.out.println("User with ID " + id + " subscription plan changed from " + oldPlan + " to " + newPlan);
+            logger.info("User with ID " + id + " subscription plan changed from " + oldPlan + " to " + newPlan);
         } else {
-            System.out.println("No user found with ID " + id);
+            logger.warning("No user found with ID " + id);
         }
     }
 }
