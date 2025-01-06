@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FeedbackAndReviews {
+
+    private static final Logger LOGGER = Logger.getLogger(FeedbackAndReviews.class.getName());
 
     public static class ProgramReview {
         private int rating;
         private String reviewText;
         private String improvementSuggestion;
-
 
         public ProgramReview(int rating, String reviewText, String improvementSuggestion) {
             if (rating < 1 || rating > 5) {
@@ -57,38 +60,34 @@ public class FeedbackAndReviews {
 
     private static Map<String, List<ProgramReview>> programReviews;
 
-
     public FeedbackAndReviews() {
         programReviews = new HashMap<>();
     }
 
-
     public void submitProgramReview(String programTitle, int rating, String reviewText, String improvementSuggestion) {
         ProgramReview review = new ProgramReview(rating, reviewText, improvementSuggestion);
         programReviews.computeIfAbsent(programTitle, k -> new ArrayList<>()).add(review);
-        System.out.println("Review submitted for program: " + programTitle);
+        LOGGER.log(Level.INFO, "Review submitted for program: {0}", programTitle);
     }
-
 
     public static void viewProgramReview(String programTitle) {
         List<ProgramReview> reviews = programReviews.get(programTitle);
         if (reviews != null && !reviews.isEmpty()) {
-            System.out.println("Reviews for program " + programTitle + ":");
-            reviews.forEach(System.out::println);
+            LOGGER.log(Level.INFO, "Reviews for program {0}:", programTitle);
+            reviews.forEach(review -> LOGGER.log(Level.INFO, review.toString()));
         } else {
-            System.out.println("No reviews available for program: " + programTitle);
+            LOGGER.log(Level.INFO, "No reviews available for program: {0}", programTitle);
         }
     }
-
 
     public static void submitImprovementSuggestion(String programTitle, String improvementSuggestion) {
         List<ProgramReview> reviews = programReviews.get(programTitle);
         if (reviews != null && !reviews.isEmpty()) {
             ProgramReview review = reviews.get(reviews.size() - 1); // Update the most recent review
             review.setImprovementSuggestion(improvementSuggestion);
-            System.out.println("Improvement suggestion submitted for program: " + programTitle);
+            LOGGER.log(Level.INFO, "Improvement suggestion submitted for program: {0}", programTitle);
         } else {
-            System.out.println("No reviews found for program: " + programTitle);
+            LOGGER.log(Level.WARNING, "No reviews found for program: {0}", programTitle);
         }
     }
 }
