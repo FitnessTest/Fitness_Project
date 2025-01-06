@@ -43,6 +43,9 @@ public class ContentManagementSteps {
             String title = row.get("Title");
             String type = row.get("Type");
             String status = row.get("Status");
+            assertNotNull(title, "Article title cannot be null");
+            assertNotNull(type, "Article type cannot be null");
+            assertNotNull(status, "Article status cannot be null");
             articles.put(title, new Article(title, type, status));
         });
     }
@@ -50,22 +53,36 @@ public class ContentManagementSteps {
     @When("I approve the article {string}")
     public void iApproveTheArticle(String title) {
         Article article = articles.get(title);
-        if (article != null && article.status.equals("Pending")) {
-            article.status = "Approved";
+        if (article != null) {
+            if ("Pending".equals(article.status)) {
+                article.status = "Approved";
+            } else {
+                fail("Article status must be 'Pending' to approve. Current status: " + article.status);
+            }
+        } else {
+            fail("Article not found: " + title);
         }
     }
 
     @When("I reject the article {string}")
     public void iRejectTheArticle(String title) {
         Article article = articles.get(title);
-        if (article != null && article.status.equals("Pending")) {
-            article.status = "Rejected";
+        if (article != null) {
+            if ("Pending".equals(article.status)) {
+                article.status = "Rejected";
+            } else {
+                fail("Article status must be 'Pending' to reject. Current status: " + article.status);
+            }
+        } else {
+            fail("Article not found: " + title);
         }
     }
 
     @Then("the status of the article {string} should be {string}")
     public void theStatusOfTheArticleShouldBe(String title, String expectedStatus) {
-        assertEquals(expectedStatus, articles.get(title).status);
+        Article article = articles.get(title);
+        assertNotNull(article, "Article not found: " + title);
+        assertEquals(expectedStatus, article.status, "Status mismatch for article: " + title);
     }
 
     @Given("the following feedbacks exist:")
@@ -74,6 +91,9 @@ public class ContentManagementSteps {
             String user = row.get("User");
             String message = row.get("Message");
             String status = row.get("Status");
+            assertNotNull(user, "Feedback user cannot be null");
+            assertNotNull(message, "Feedback message cannot be null");
+            assertNotNull(status, "Feedback status cannot be null");
             feedbacks.put(user, new Feedback(user, message, status));
         });
     }
@@ -81,13 +101,39 @@ public class ContentManagementSteps {
     @When("I resolve the feedback from {string}")
     public void iResolveTheFeedbackFrom(String user) {
         Feedback feedback = feedbacks.get(user);
-        if (feedback != null && feedback.status.equals("Open")) {
-            feedback.status = "Resolved";
+        if (feedback != null) {
+            if ("Open".equals(feedback.status)) {
+                feedback.status = "Resolved";
+            } else {
+                fail("Feedback status must be 'Open' to resolve. Current status: " + feedback.status);
+            }
+        } else {
+            fail("Feedback not found for user: " + user);
         }
     }
 
     @Then("the status of the feedback from {string} should be {string}")
     public void theStatusOfTheFeedbackFromShouldBe(String user, String expectedStatus) {
-        assertEquals(expectedStatus, feedbacks.get(user).status);
+        Feedback feedback = feedbacks.get(user);
+        assertNotNull(feedback, "Feedback not found for user: " + user);
+        assertEquals(expectedStatus, feedback.status, "Status mismatch for feedback from user: " + user);
+    }
+
+    @When("I attempt to approve a non-existing article {string}")
+    public void iAttemptToApproveANonExistingArticle(String title) {
+        Article article = articles.get(title);
+        assertNull(article, "Expected article not to exist: " + title);
+    }
+
+    @When("I attempt to reject a non-existing article {string}")
+    public void iAttemptToRejectANonExistingArticle(String title) {
+        Article article = articles.get(title);
+        assertNull(article, "Expected article not to exist: " + title);
+    }
+
+    @When("I attempt to resolve a non-existing feedback from {string}")
+    public void iAttemptToResolveANonExistingFeedback(String user) {
+        Feedback feedback = feedbacks.get(user);
+        assertNull(feedback, "Expected feedback not to exist for user: " + user);
     }
 }

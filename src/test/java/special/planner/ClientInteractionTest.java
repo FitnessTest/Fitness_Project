@@ -24,11 +24,11 @@ public class ClientInteractionTest {
     @Test
     void testListAllClients_WithProfiles() {
         clientInteraction.addClient("Amr Jamhor", "amrojamhour4@gmail.com");
-        clientInteraction.addClient("John Doe", "johndoe@example.com");
+        clientInteraction.addClient("Ihab Habash", "kebab83@gmail.com");
 
-        // Asserting that client information is listed
-        // Here you might want to check if the list size is correct, or capture the output
-        clientInteraction.listAllClients(); // This should print client information to the console
+
+
+        clientInteraction.listAllClients();
     }
 
     @Test

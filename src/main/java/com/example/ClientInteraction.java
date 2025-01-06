@@ -10,7 +10,7 @@ public class ClientInteraction {
     private static final Logger logger = Logger.getLogger(ClientInteraction.class.getName());
     private static List<Client> clients = new ArrayList<>();
 
-    // Adds a new client to the list
+
     public static boolean addClient(String name, String email) {
         Client newClient = new Client(name, email);
         clients.add(newClient);
@@ -18,7 +18,7 @@ public class ClientInteraction {
         return true;
     }
 
-    // Lists all clients and their messages
+
     public static void listAllClients() {
         logger.info("Clients and their messages:");
         for (Client client : clients) {
@@ -35,7 +35,7 @@ public class ClientInteraction {
         }
     }
 
-    // Sends a message to a client by email
+
     public static boolean sendMessageToClient(String email, String message) {
         Optional<Client> clientOptional = clients.stream()
                 .filter(client -> client.getEmail().equals(email))
@@ -52,7 +52,7 @@ public class ClientInteraction {
         }
     }
 
-    // Sends a progress report to a client by email
+
     public static boolean provideProgressReport(String email, String report) {
         Optional<Client> clientOptional = clients.stream()
                 .filter(client -> client.getEmail().equals(email))
@@ -69,7 +69,7 @@ public class ClientInteraction {
         }
     }
 
-    // A client class with basic properties and messages
+
     public static class Client {
         private String name;
         private String email;
