@@ -6,19 +6,19 @@ import java.util.logging.Logger;
 
 public class AccountManagement {
 
-    // Logger for logging messages
+
     private static final Logger logger = Logger.getLogger(AccountManagement.class.getName());
 
-    // Singleton pattern - instance of AccountManagement
+
     private static AccountManagement instance;
 
-    // List of client profiles
-    private static List<ClientProfile> clientProfiles = new ArrayList<>();
 
-    // Private constructor to prevent instantiation
+    private static final List<ClientProfile> clientProfiles = new ArrayList<>();
+
+
     private AccountManagement() {}
 
-    // Public method to get the single instance of AccountManagement
+
     public static AccountManagement getInstance() {
         if (instance == null) {
             instance = new AccountManagement();
@@ -35,51 +35,77 @@ public class AccountManagement {
         private String dietaryPreferences;
 
         public ClientProfile(String name, String email, int age, String fitnessGoals, String dietaryPreferences) {
+            // Basic validation for name
+            if (name == null || name.isEmpty()) {
+                throw new IllegalArgumentException("Name cannot be null or empty");
+            }
             this.name = name;
+
+            // Basic validation for email
+            if (email == null || !email.contains("@")) {
+                throw new IllegalArgumentException("Invalid email address");
+            }
             this.email = email;
+
+            // Basic validation for age
+            if (age <= 0) {
+                throw new IllegalArgumentException("Age must be a positive number");
+            }
             this.age = age;
-            this.fitnessGoals = fitnessGoals;
-            this.dietaryPreferences = dietaryPreferences;
+
+            // Optional validation for fitness goals
+            this.fitnessGoals = (fitnessGoals != null && !fitnessGoals.isEmpty()) ? fitnessGoals : "Not specified";
+
+            // Optional validation for dietary preferences
+            this.dietaryPreferences = (dietaryPreferences != null && !dietaryPreferences.isEmpty()) ? dietaryPreferences : "Not specified";
         }
 
+        // Getter and Setter for name
+        // Getter and Setter for name
         public String getName() {
             return name;
         }
 
         public void setName(String name) {
-            this.name = name;
+            this.name = (name != null && !name.isEmpty()) ? name : "Unknown Name"; // Validating name
         }
 
+        // Getter and Setter for email
         public String getEmail() {
             return email;
         }
 
         public void setEmail(String email) {
-            this.email = email;
+            this.email = (email != null && email.contains("@")) ? email : "unknown@example.com"; // Validating email
         }
 
+        // Getter and Setter for age
         public int getAge() {
             return age;
         }
 
         public void setAge(int age) {
-            this.age = age;
+            this.age = (age > 0) ? age : 18; // Validating age
         }
 
+        // Getter and Setter for fitnessGoals
         public String getFitnessGoals() {
             return fitnessGoals;
         }
 
         public void setFitnessGoals(String fitnessGoals) {
-            this.fitnessGoals = fitnessGoals;
+            this.fitnessGoals = (fitnessGoals != null && !fitnessGoals.isEmpty()) ? fitnessGoals : "General Fitness"; // Default if empty
         }
 
+        // Getter and Setter for dietaryPreferences
         public String getDietaryPreferences() {
             return dietaryPreferences;
         }
 
         public void setDietaryPreferences(String dietaryPreferences) {
-            this.dietaryPreferences = dietaryPreferences;
+            this.dietaryPreferences = (dietaryPreferences != null && !dietaryPreferences.isEmpty())
+                    ? dietaryPreferences
+                    : "No specific preferences"; // Default if empty
         }
 
         @Override
@@ -89,17 +115,16 @@ public class AccountManagement {
         }
     }
 
-    // Create a new client profile
+
     public static void createProfile(String name, String email, int age, String fitnessGoals, String dietaryPreferences) {
         ClientProfile newProfile = new ClientProfile(name, email, age, fitnessGoals, dietaryPreferences);
         clientProfiles.add(newProfile);
 
-        // Use String.format to construct the message
+
         String message = String.format("Created profile for: %s", name);
-        logger.info(message);  // Log the message
+        logger.info(message);
     }
 
-    // Update an existing client profile
     public static void updateProfile(String email, String newName, int newAge, String newFitnessGoals, String newDietaryPreferences) {
         for (ClientProfile profile : clientProfiles) {
             if (profile.getEmail().equals(email)) {
@@ -114,12 +139,12 @@ public class AccountManagement {
                 return;
             }
         }
-        // Log message if profile is not found
+
         String message = String.format("Profile not found for: %s", email);
         logger.info(message);
     }
 
-    // View a client profile by email
+
     public static ClientProfile viewProfile(String email) {
         for (ClientProfile profile : clientProfiles) {
             if (profile.getEmail().equals(email)) {
@@ -127,17 +152,17 @@ public class AccountManagement {
             }
         }
         String message = String.format("Profile not found for: %s", email);
-        logger.info(message);  // Log the message if profile is not found
+        logger.info(message);
         return null;
     }
 
-    // Delete a client profile by email
+
     public static void deleteProfile(String email) {
         clientProfiles.removeIf(profile -> profile.getEmail().equals(email));
 
-        // Use String.format to construct the message
+
         String message = String.format("Deleted profile for: %s", email);
-        logger.info(message);  // Log the message
+        logger.info(message);
     }
 
     // List all client profiles
@@ -145,11 +170,12 @@ public class AccountManagement {
         if (clientProfiles.isEmpty()) {
             logger.info("No profiles available.");
         } else {
-            // Only log the table header if there are profiles to display
+
             logger.info(String.format("%-20s %-30s %-5s %-30s %-30s", "Name", "Email", "Age", "Fitness Goals", "Dietary Preferences"));
             logger.info("-------------------------------------------------------------------------------------------------------");
 
-            // Log each profile conditionally
+
+
             for (ClientProfile profile : clientProfiles) {
                 if (profile != null && profile.getName() != null && !profile.getName().isEmpty()) {
                     String profileInfo = String.format("%-20s %-30s %-5d %-30s %-30s",
