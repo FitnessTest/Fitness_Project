@@ -14,7 +14,7 @@ public class LoginSignUp {
             super(id, password, name, email, role);
         }
     }
-
+    private static final String CHOOSE_OPTION_PROMPT = "Choose an option: ";
     private static final String LOGOUT_OPTION = "5. Logout";
     private static final String CLIENT_ROLE = "CLIENT";
 
@@ -98,7 +98,7 @@ public class LoginSignUp {
             logger.info("3. Content Management");
             logger.info("4. Subscription Management");
             logger.info(LOGOUT_OPTION);
-            logger.info("Choose an option: ");
+            logger.info(CHOOSE_OPTION_PROMPT);
             String choice = scanner.nextLine();
 
             switch (choice) {
@@ -374,7 +374,7 @@ public class LoginSignUp {
             logger.info("3. Progress Tracking");
             logger.info("4. Notifications and Updates");
             logger.info(LOGOUT_OPTION);
-            logger.info("Choose an option: ");
+            logger.info(CHOOSE_OPTION_PROMPT);
             String choice = scanner.nextLine();
 
             switch (choice) {
@@ -687,7 +687,7 @@ public class LoginSignUp {
             logger.info("3. Progress Tracking");
             logger.info("4. Feedback and Reviews");
             logger.info(LOGOUT_OPTION);
-            logger.info("Choose an option: ");
+            logger.info(CHOOSE_OPTION_PROMPT);
             String choice = scanner.nextLine();
 
             switch (choice) {
