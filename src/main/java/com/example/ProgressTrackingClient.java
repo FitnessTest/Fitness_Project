@@ -74,7 +74,7 @@ public class ProgressTrackingClient {
 
 
     public ProgressTrackingClient() {
-
+        throw new UnsupportedOperationException("Instance creation is not supported for ProgressTrackingClient.");
     }
 
 
