@@ -187,7 +187,13 @@ public class ProgramExplorationAndEnrollmentSteps {
         }
 
         public void viewProgramSchedule(Program program) {
+            // This method is a placeholder and doesn't perform any actions yet.
+            // In the future, it may interact with a database or external service
+            // to retrieve the program schedule based on the specific program.
+            // For now, it is left empty to avoid errors in the current implementation.
 
+            // Optionally, you can throw an exception if the method is not yet supported:
+          throw new UnsupportedOperationException("Viewing program schedule is not supported yet.");
         }
 
         public String getProgramSchedule(Program program) {

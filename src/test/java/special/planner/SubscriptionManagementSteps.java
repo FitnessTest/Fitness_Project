@@ -116,6 +116,7 @@ public class SubscriptionManagementSteps {
 
     @Then("the subscription plan of {string} should be {string}")
     public void theSubscriptionPlanOfShouldBe(String userName, String expectedPlan) {
+        throw new UnsupportedOperationException("This step is not yet implemented. The verification logic will be added in the future.");
     }
 
     @When("I downgrade the subscription plan of {string} to {string}")
