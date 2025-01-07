@@ -12,6 +12,7 @@ public class ClientInteraction {
 
 
     public ClientInteraction() {
+        throw new UnsupportedOperationException("ClientInteraction class cannot be instantiated.");
     }
 
 
