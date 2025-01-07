@@ -1,19 +1,19 @@
 package com.example;
-
 import java.util.*;
 import java.util.logging.Logger;
 
 public class UserManagement {
-
     private static final Logger logger = Logger.getLogger(UserManagement.class.getName());
-
     private static List<User> users;
+
+
+    private static final String TABLE_SEPARATOR = "+-------+-------------------+------------+-------------------+---------------+";
 
     public UserManagement(List<User> users) {
         this.users = users != null ? new ArrayList<>(users) : new ArrayList<>();
     }
 
-    public Iterable<? extends User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
@@ -90,13 +90,13 @@ public class UserManagement {
     }
 
     public void viewEngagementStats() {
-        logger.info("+-------+-------------------+------------+-------------------+---------------+");
+        logger.info(TABLE_SEPARATOR);
         logger.info(String.format("| %-5s | %-17s | %-10s | %-17s | %-13s |", "ID", "Name", "Role", "Email", "Engagement"));
-        logger.info("+-------+-------------------+------------+-------------------+---------------+");
+        logger.info(TABLE_SEPARATOR);
         for (User user : users) {
             logger.info(String.format("| %-5s | %-17s | %-10s | %-17s | %-13d |", user.id, user.name, user.role, user.email, user.engagementStats));
         }
-        logger.info("+-------+-------------------+------------+-------------------+---------------+");
+        logger.info(TABLE_SEPARATOR);
     }
 
     public void simulateActivity(String id, int additionalEngagement) {
