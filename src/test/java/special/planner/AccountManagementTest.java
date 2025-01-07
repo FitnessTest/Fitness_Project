@@ -91,20 +91,17 @@ class AccountManagementTest {
     @Test
     void testDeleteProfile_nonExistingProfile() {
         AccountManagement.deleteProfile("nonexistent@example.com");
-
     }
 
     @Test
     void testListAllProfiles_empty() {
         AccountManagement.listAllProfiles();
-
     }
 
     @Test
     void testListAllProfiles_withProfiles() {
         AccountManagement.createProfile("Amr Jamhor", "amrjamhor@example.com", 30, "Weight Loss", "Vegetarian");
         AccountManagement.createProfile("Jane Doe", "jane@example.com", 28, "Muscle Gain", "Non-Vegan");
-
         AccountManagement.listAllProfiles();
 
     }
