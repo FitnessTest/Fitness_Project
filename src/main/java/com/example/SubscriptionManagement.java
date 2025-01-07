@@ -6,6 +6,8 @@ import java.util.logging.Logger;
 
 public class SubscriptionManagement {
     private static final String USER_ID_PREFIX = "User with ID ";
+    private static final String USER_NOT_FOUND_MESSAGE = "No user found with ID ";
+    private static final String TABLE_BORDER = "+-------+------------+------------+";
     private static final Logger logger = Logger.getLogger(SubscriptionManagement.class.getName());
 
     public enum Plan {
@@ -71,7 +73,7 @@ public class SubscriptionManagement {
                 logger.info(USER_ID_PREFIX  + id + " upgraded to Premium.");
             }
         } else {
-            logger.warning("No user found with ID " + id);
+            logger.warning(USER_NOT_FOUND_MESSAGE + id);
         }
     }
 
@@ -85,7 +87,7 @@ public class SubscriptionManagement {
                 logger.info(USER_ID_PREFIX  + id + " downgraded to Basic.");
             }
         } else {
-            logger.warning("No user found with ID " + id);
+            logger.warning(USER_NOT_FOUND_MESSAGE + id);
         }
     }
 
@@ -94,13 +96,13 @@ public class SubscriptionManagement {
             logger.info("No users have subscriptions.");
         } else {
             logger.info("All user subscriptions:");
-            logger.info("+-------+------------+------------+");
+            logger.info(TABLE_BORDER);
             logger.info(String.format("| %-5s | %-10s | %-10s |", "ID", "Plan", "Type"));
-            logger.info("+-------+------------+------------+");
+            logger.info(TABLE_BORDER);
             for (User user : userSubscriptions.values()) {
                 logger.info(String.format("| %-5s | %-10s | %-10s |", user.getId(), user.getPlan(), user.getType()));
             }
-            logger.info("+-------+------------+------------+");
+            logger.info(TABLE_BORDER);
         }
     }
 
@@ -111,7 +113,7 @@ public class SubscriptionManagement {
             user.setPlan(newPlan);
             logger.info(USER_ID_PREFIX  + id + " subscription plan changed from " + oldPlan + " to " + newPlan);
         } else {
-            logger.warning("No user found with ID " + id);
+            logger.warning(USER_NOT_FOUND_MESSAGE + id);
         }
     }
 }
