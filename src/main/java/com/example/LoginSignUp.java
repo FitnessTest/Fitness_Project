@@ -82,13 +82,13 @@ public class LoginSignUp {
             if (user.id.equals(id) && user.password.equals(password)) {
                 logger.info("Login successful! Welcome, " + user.role + ".");
                 switch (user.role) {
-                    case "ADMIN":
+                    case ADMIN_ROLE:
                         adminMenu(scanner);
                         break;
-                    case "INSTRUCTOR":
+                    case INSTRUCTOR_ROLE:
                         instructorMenu(scanner);
                         break;
-                    case CLIENT_ROLE: // Use the constant CLIENT_ROLE here
+                    case CLIENT_ROLE:
                         clientMenu(scanner);
                         break;
                     default:
