@@ -64,7 +64,7 @@ public class LoginSignUp {
         logger.info("Enter Email: ");
         String email = scanner.nextLine();
 
-        // Use the constant CLIENT_ROLE here
+
         User newUser = new User(id, password, name, email, CLIENT_ROLE);
         users.add(newUser);
         userManagement.addUser(id, password, name, email, CLIENT_ROLE);

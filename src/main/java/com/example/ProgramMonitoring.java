@@ -5,6 +5,12 @@ import java.util.logging.*;
 
 public class ProgramMonitoring {
 
+    private static final String WEIGHT_LOSS_PROGRAM = "Weight Loss";
+    private static final String STRENGTH_TRAINING_PROGRAM = "Strength Training";
+    private static final String CARDIO_FITNESS_PROGRAM = "Cardio Fitness";
+    private static final String YOGA_AND_FLEXIBILITY_PROGRAM = "Yoga and Flexibility";
+    private static final String HIIT_BOOTCAMP_PROGRAM = "HIIT Bootcamp";
+
     private static final Logger logger = Logger.getLogger(ProgramMonitoring.class.getName());
     public static Map<String, Program> programs = new HashMap<>();
     public static Map<String, Client> clients = new HashMap<>();
@@ -12,18 +18,18 @@ public class ProgramMonitoring {
 
     public ProgramMonitoring() {
 
-        programs.put("Weight Loss", new Program("Weight Loss", 3000, 80));
-        programs.put("Strength Training", new Program("Strength Training", 4000, 60));
-        programs.put("Cardio Fitness", new Program("Cardio Fitness", 2000, 100));
-        programs.put("Yoga and Flexibility", new Program("Yoga and Flexibility", 2500, 70));
-        programs.put("HIIT Bootcamp", new Program("HIIT Bootcamp", 3500, 50));
+        programs.put(WEIGHT_LOSS_PROGRAM, new Program(WEIGHT_LOSS_PROGRAM, 3000, 80));
+        programs.put(STRENGTH_TRAINING_PROGRAM, new Program(STRENGTH_TRAINING_PROGRAM, 4000, 60));
+        programs.put(CARDIO_FITNESS_PROGRAM, new Program(CARDIO_FITNESS_PROGRAM, 2000, 100));
+        programs.put(YOGA_AND_FLEXIBILITY_PROGRAM, new Program(YOGA_AND_FLEXIBILITY_PROGRAM, 2500, 70));
+        programs.put(HIIT_BOOTCAMP_PROGRAM, new Program(HIIT_BOOTCAMP_PROGRAM, 3500, 50));
 
 
-        clients.put("amrojamhour4@gmail.com", new Client("amrojamhour4@gmail.com", "Amr Jamhour", "Weight Loss"));
-        clients.put("kebab830@gmail.com", new Client("kebab830@gmail.com", "Ihab Habash", "Yoga and Flexibility"));
-        clients.put("zahi.q83@gmail.com", new Client("zahi.q83@gmail.com", "Zahi Qudu", "Cardio Fitness"));
-        clients.put("eternalnightmare@gmail.com", new Client("eternalnightmare@gmail.com", "Ameed Diab", "Strength Training"));
-        clients.put("potetogamer@gmail.com", new Client("potetogamer@gmail.com", "Momen Habash", "HIIT Bootcamp"));
+        clients.put("amrojamhour4@gmail.com", new Client("amrojamhour4@gmail.com", "Amr Jamhour", WEIGHT_LOSS_PROGRAM));
+        clients.put("kebab830@gmail.com", new Client("kebab830@gmail.com", "Ihab Habash",  YOGA_AND_FLEXIBILITY_PROGRAM));
+        clients.put("zahi.q83@gmail.com", new Client("zahi.q83@gmail.com", "Zahi Qudu", CARDIO_FITNESS_PROGRAM));
+        clients.put("eternalnightmare@gmail.com", new Client("eternalnightmare@gmail.com", "Ameed Diab", STRENGTH_TRAINING_PROGRAM));
+        clients.put("potetogamer@gmail.com", new Client("potetogamer@gmail.com", "Momen Habash", HIIT_BOOTCAMP_PROGRAM));
     }
 
 
