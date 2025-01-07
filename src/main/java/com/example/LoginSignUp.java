@@ -15,13 +15,13 @@ public class LoginSignUp {
         }
     }
 
-
+    private static final String BACK_TO_MAIN_MENU = "5. Back to Main Menu";
     private static final String CLIENT_ROLE = "CLIENT";
     private static final String LOGOUT_OPTION = "5. Logout";
     private static final String CHOOSE_OPTION_PROMPT = "Choose an option: ";
     private static final String LOGOUT_MESSAGE = "Logging out...";
     private static final String INVALID_CHOICE_MESSAGE = "Invalid choice. Please try again.";
-
+    private static final String ENTER_CHOICE_PROMPT = "Enter your choice: ";
 
     private static final List<UserManagement.User> users = new ArrayList<>();
     private static final UserManagement userManagement = new UserManagement(users);
@@ -197,7 +197,7 @@ public class LoginSignUp {
             logger.info("2. Generate Reports");
             logger.info("3. Track Program Status");
             logger.info("4. Back to Admin Menu");
-            logger.info("Enter your choice: ");
+            logger.info(ENTER_CHOICE_PROMPT);
 
             int programChoice;
             try {
@@ -288,7 +288,7 @@ public class LoginSignUp {
         logger.info("2. Add Complaint");
         logger.info("3. View All Feedback");
         logger.info("4. View All Complaints");
-        logger.info("Choose an option: ");
+        logger.info(ENTER_CHOICE_PROMPT);
         String subChoice = scanner.nextLine();
 
         switch (subChoice) {
@@ -349,7 +349,7 @@ public class LoginSignUp {
             logger.info("2. Upgrade to Premium");
             logger.info("3. Downgrade to Basic");
             logger.info("4. Change Subscription Plan");
-            logger.info("5. Back to Main Menu");
+            logger.info(BACK_TO_MAIN_MENU);
             logger.info(CHOOSE_OPTION_PROMPT);
             String choice = scanner.nextLine();
 
@@ -438,8 +438,8 @@ public class LoginSignUp {
             logger.info("2. Update an Existing Program");
             logger.info("3. Delete a Program");
             logger.info("4. List All Programs");
-            logger.info("5. Back to Main Menu");
-            logger.info("Enter your choice: ");
+            logger.info(BACK_TO_MAIN_MENU);
+            logger.info(ENTER_CHOICE_PROMPT);
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -530,8 +530,8 @@ public class LoginSignUp {
             logger.info("2. Send Message to a Client");
             logger.info("3. Provide Progress Report to a Client");
             logger.info("4. List All Clients");
-            logger.info("5. Back to Main Menu");
-            logger.info("Enter your choice: ");
+            logger.info(BACK_TO_MAIN_MENU);
+            logger.info(ENTER_CHOICE_PROMPT);
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -587,8 +587,8 @@ public class LoginSignUp {
             logger.info("2. Update Completed Sessions for a Client");
             logger.info("3. Send Motivational Reminder to a Client");
             logger.info("4. Monitor All Client Progress");
-            logger.info("5. Back to Main Menu");
-            logger.info("Enter your choice: ");
+            logger.info(BACK_TO_MAIN_MENU);
+            logger.info(ENTER_CHOICE_PROMPT);
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -660,8 +660,8 @@ public class LoginSignUp {
             logger.info("2. Notify Schedule Change");
             logger.info("3. Announce New Program or Offer");
             logger.info("4. List All Clients and Notifications");
-            logger.info("5. Back to Main Menu");
-            logger.info("Enter your choice: ");
+            logger.info(BACK_TO_MAIN_MENU);
+            logger.info(ENTER_CHOICE_PROMPT);
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline
@@ -752,8 +752,8 @@ public class LoginSignUp {
             logger.info("3. View Profile");
             logger.info("4. Delete Profile");
             logger.info("5. List All Profiles");
-            logger.info("6. Back to Main Menu");
-            logger.info("Enter your choice: ");
+            logger.info(BACK_TO_MAIN_MENU);
+            logger.info(ENTER_CHOICE_PROMPT);
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -830,8 +830,8 @@ public class LoginSignUp {
             logger.info("2. Enroll in a Program");
             logger.info("3. View Program Schedule");
             logger.info("4. List All Available Programs");
-            logger.info("5. Back to Main Menu");
-            logger.info("Enter your choice: ");
+            logger.info(BACK_TO_MAIN_MENU);
+            logger.info(ENTER_CHOICE_PROMPT);
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume the newline
@@ -891,7 +891,7 @@ public class LoginSignUp {
             logger.info("4. Remove Achievement");
             logger.info("5. List Achievements");
             logger.info("6. Exit");
-            logger.info("Enter your choice: ");
+            logger.info(ENTER_CHOICE_PROMPT);
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -953,7 +953,7 @@ public class LoginSignUp {
             logger.info("2. View Program Reviews");
             logger.info("3. Submit Improvement Suggestion");
             logger.info("4. Exit");
-            logger.info("Enter your choice: ");
+            logger.info(ENTER_CHOICE_PROMPT);
 
             int choice = scanner.nextInt();
             scanner.nextLine();
