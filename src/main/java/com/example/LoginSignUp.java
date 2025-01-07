@@ -14,9 +14,14 @@ public class LoginSignUp {
             super(id, password, name, email, role);
         }
     }
-    private static final String CHOOSE_OPTION_PROMPT = "Choose an option: ";
-    private static final String LOGOUT_OPTION = "5. Logout";
+
+
     private static final String CLIENT_ROLE = "CLIENT";
+    private static final String LOGOUT_OPTION = "5. Logout";
+    private static final String CHOOSE_OPTION_PROMPT = "Choose an option: ";
+    private static final String LOGOUT_MESSAGE = "Logging out...";
+    private static final String INVALID_CHOICE_MESSAGE = "Invalid choice. Please try again.";
+
 
     private static final List<UserManagement.User> users = new ArrayList<>();
     private static final UserManagement userManagement = new UserManagement(users);
@@ -55,7 +60,7 @@ public class LoginSignUp {
         logger.info("Enter Email: ");
         String email = scanner.nextLine();
 
-
+        // Use the constant CLIENT_ROLE here
         User newUser = new User(id, password, name, email, CLIENT_ROLE);
         users.add(newUser);
         userManagement.addUser(id, password, name, email, CLIENT_ROLE);
@@ -115,11 +120,11 @@ public class LoginSignUp {
                     subscriptionManagementMenu(scanner);
                     break;
                 case "5":
-                    logger.info("Logging out...");
+                    logger.info(LOGOUT_MESSAGE);
                     running = false;
                     break;
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
             }
         }
     }
@@ -134,7 +139,7 @@ public class LoginSignUp {
             logger.info("3. Deactivate User Account");
             logger.info("4. View User Accounts");
             logger.info("5. Back to Admin Menu");
-            logger.info("Choose an option: ");
+            logger.info(CHOOSE_OPTION_PROMPT);
             String choice = scanner.nextLine();
 
             switch (choice) {
@@ -179,7 +184,7 @@ public class LoginSignUp {
                     break;
 
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
             }
         }
     }
@@ -242,65 +247,20 @@ public class LoginSignUp {
             logger.info("2. Handle Feedback and Complaints");
             logger.info("3. View All Content");
             logger.info("4. Back to Admin Menu");
-            logger.info("Choose an option: ");
+            logger.info(CHOOSE_OPTION_PROMPT);
             String choice = scanner.nextLine();
 
             switch (choice) {
                 case "1":
-                    logger.info("Enter the title of the content to review: ");
-                    String title = scanner.nextLine();
-                    logger.info("Approve (yes/no): ");
-                    String approve = scanner.nextLine().trim().toLowerCase();
-                    boolean isApproved = "yes".equals(approve);
-                    cm.approveOrRejectContent(title, isApproved);
+                    approveOrRejectArticles(scanner, cm);
                     break;
 
                 case "2":
-                    logger.info("\n--- Handle Feedback and Complaints ---");
-                    logger.info("1. Add Feedback");
-                    logger.info("2. Add Complaint");
-                    logger.info("3. View All Feedback");
-                    logger.info("4. View All Complaints");
-                    logger.info("Choose an option: ");
-                    String subChoice = scanner.nextLine();
-
-                    switch (subChoice) {
-                        case "1":
-                            logger.info("Enter feedback: ");
-                            String feedback = scanner.nextLine();
-                            cm.handleFeedback(feedback);
-                            break;
-
-                        case "2":
-                            logger.info("Enter complaint: ");
-                            String complaint = scanner.nextLine();
-                            cm.handleComplaint(complaint);
-                            break;
-
-                        case "3":
-                            logger.info("\nAll Feedback:");
-                            for (String fb : cm.viewAllFeedback()) {
-                                logger.info("- " + fb);
-                            }
-                            break;
-
-                        case "4":
-                            logger.info("\nAll Complaints:");
-                            for (String comp : cm.viewAllComplaints()) {
-                                logger.info("- " + comp);
-                            }
-                            break;
-
-                        default:
-                            logger.warning("Invalid choice. Please try again.");
-                    }
+                    handleFeedbackAndComplaints(scanner, cm);
                     break;
 
                 case "3":
-                    logger.info("\nAll Content:");
-                    for (String contentStatus : cm.viewAllContent()) {
-                        logger.info("- " + contentStatus);
-                    }
+                    viewAllContent(cm);
                     break;
 
                 case "4":
@@ -313,6 +273,75 @@ public class LoginSignUp {
         }
     }
 
+    private static void approveOrRejectArticles(Scanner scanner, ContentManagement cm) {
+        logger.info("Enter the title of the content to review: ");
+        String title = scanner.nextLine();
+        logger.info("Approve (yes/no): ");
+        String approve = scanner.nextLine().trim().toLowerCase();
+        boolean isApproved = "yes".equals(approve);
+        cm.approveOrRejectContent(title, isApproved);
+    }
+
+    private static void handleFeedbackAndComplaints(Scanner scanner, ContentManagement cm) {
+        logger.info("\n--- Handle Feedback and Complaints ---");
+        logger.info("1. Add Feedback");
+        logger.info("2. Add Complaint");
+        logger.info("3. View All Feedback");
+        logger.info("4. View All Complaints");
+        logger.info("Choose an option: ");
+        String subChoice = scanner.nextLine();
+
+        switch (subChoice) {
+            case "1":
+                addFeedback(scanner, cm);
+                break;
+            case "2":
+                addComplaint(scanner, cm);
+                break;
+            case "3":
+                viewAllFeedback(cm);
+                break;
+            case "4":
+                viewAllComplaints(cm);
+                break;
+            default:
+                logger.warning("Invalid choice. Please try again.");
+        }
+    }
+
+    private static void addFeedback(Scanner scanner, ContentManagement cm) {
+        logger.info("Enter feedback: ");
+        String feedback = scanner.nextLine();
+        cm.handleFeedback(feedback);
+    }
+
+    private static void addComplaint(Scanner scanner, ContentManagement cm) {
+        logger.info("Enter complaint: ");
+        String complaint = scanner.nextLine();
+        cm.handleComplaint(complaint);
+    }
+
+    private static void viewAllFeedback(ContentManagement cm) {
+        logger.info("\nAll Feedback:");
+        for (String fb : cm.viewAllFeedback()) {
+            logger.info("- " + fb);
+        }
+    }
+
+    private static void viewAllComplaints(ContentManagement cm) {
+        logger.info("\nAll Complaints:");
+        for (String comp : cm.viewAllComplaints()) {
+            logger.info("- " + comp);
+        }
+    }
+
+    private static void viewAllContent(ContentManagement cm) {
+        logger.info("\nAll Content:");
+        for (String contentStatus : cm.viewAllContent()) {
+            logger.info("- " + contentStatus);
+        }
+    }
+
     public static void subscriptionManagementMenu(Scanner scanner) {
         while (true) {
             logger.info("\n--- Subscription Management ---");
@@ -321,7 +350,7 @@ public class LoginSignUp {
             logger.info("3. Downgrade to Basic");
             logger.info("4. Change Subscription Plan");
             logger.info("5. Back to Main Menu");
-            logger.info("Choose an option: ");
+            logger.info(CHOOSE_OPTION_PROMPT);
             String choice = scanner.nextLine();
 
             switch (choice) {
@@ -392,10 +421,10 @@ public class LoginSignUp {
                     break;
                 case "5":
                     running = false;
-                    logger.info("Logging out...");
+                    logger.info(LOGOUT_MESSAGE);
                     break;
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
             }
         }
     }
@@ -486,7 +515,7 @@ public class LoginSignUp {
                     break;
 
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
                     break;
             }
         }
@@ -543,7 +572,7 @@ public class LoginSignUp {
                     break;
 
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
                     break;
             }
         }
@@ -616,7 +645,7 @@ public class LoginSignUp {
                     break;
 
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
                     break;
             }
         }
@@ -670,7 +699,7 @@ public class LoginSignUp {
                     break;
 
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
                     break;
             }
         }
@@ -705,10 +734,10 @@ public class LoginSignUp {
                     break;
                 case "5":
                     running = false;
-                    logger.info("Logging out...");
+                    logger.info(LOGOUT_MESSAGE);
                     break;
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
             }
         }
     }
@@ -727,7 +756,7 @@ public class LoginSignUp {
             logger.info("Enter your choice: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -786,7 +815,7 @@ public class LoginSignUp {
                     break;
 
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
                     break;
             }
         }
@@ -910,7 +939,7 @@ public class LoginSignUp {
                     logger.info("Exiting the menu.");
                     break;
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
             }
         }
     }
@@ -966,7 +995,7 @@ public class LoginSignUp {
                     break;
 
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
             }
         }
 
@@ -986,7 +1015,7 @@ public class LoginSignUp {
             logger.info("1. Login");
             logger.info("2. Sign Up (Clients Only)");
             logger.info("3. Exit");
-            logger.info("Choose an option: ");
+            logger.info(CHOOSE_OPTION_PROMPT);
             String choice = scanner.nextLine();
 
             switch (choice) {
@@ -1004,7 +1033,7 @@ public class LoginSignUp {
                     break;
 
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
                     break;
             }
         }
