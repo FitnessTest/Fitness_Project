@@ -3,10 +3,8 @@ package special.planner;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -15,8 +13,6 @@ public class LoginTest {
     private String email;
     private String password;
     private boolean isLoggedIn;
-
-
     private static final Map<String, String> validCredentials = new HashMap<>();
 
     static {
@@ -65,5 +61,56 @@ public class LoginTest {
         this.email = email;
         this.password = password;
         isLoggedIn = validCredentials.containsKey(email) && validCredentials.get(email).equals(password);
+    }
+
+
+
+    @When("The email is empty")
+    public void the_email_is_empty() {
+        this.email = "";
+        this.password = "Ihab";
+        isLoggedIn = validCredentials.containsKey(email) && validCredentials.get(email).equals(password);
+    }
+
+    @Then("User fails to log in due to empty email")
+    public void user_fails_to_log_in_due_to_empty_email() {
+        assertFalse("User should not be logged in due to empty email", isLoggedIn);
+    }
+
+    @When("The password is empty")
+    public void the_password_is_empty() {
+        this.email = "kebab83@gmail.com"; // Example valid email
+        this.password = "";
+        isLoggedIn = validCredentials.containsKey(email) && validCredentials.get(email).equals(password);
+    }
+
+    @Then("User fails to log in due to empty password")
+    public void user_fails_to_log_in_due_to_empty_password() {
+        assertFalse("User should not be logged in due to empty password", isLoggedIn);
+    }
+
+    @When("The email format is invalid email is {string} and password is {string}")
+    public void the_email_format_is_invalid_email_is_and_password_is(String email, String password) {
+        this.email = email;
+        this.password = password;
+        // Assuming an email must contain "@" symbol for simplicity
+        isLoggedIn = validCredentials.containsKey(email) && validCredentials.get(email).equals(password) && email.contains("@");
+    }
+
+    @Then("User fails to log in due to invalid email format")
+    public void user_fails_to_log_in_due_to_invalid_email_format() {
+        assertFalse("User should not be logged in due to invalid email format", isLoggedIn);
+    }
+
+    @When("The credentials are missing, email is empty and password is empty")
+    public void the_credentials_are_missing() {
+        this.email = "";
+        this.password = "";
+        isLoggedIn = validCredentials.containsKey(email) && validCredentials.get(email).equals(password);
+    }
+
+    @Then("User fails to log in due to missing credentials")
+    public void user_fails_to_log_in_due_to_missing_credentials() {
+        assertFalse("User should not be logged in due to missing credentials", isLoggedIn);
     }
 }
