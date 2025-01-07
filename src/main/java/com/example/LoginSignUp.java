@@ -15,6 +15,9 @@ public class LoginSignUp {
         }
     }
 
+    // Define a constant for "CLIENT" role
+    private static final String CLIENT_ROLE = "CLIENT";
+
     private static final List<UserManagement.User> users = new ArrayList<>();
     private static final UserManagement userManagement = new UserManagement(users);
 
@@ -37,7 +40,6 @@ public class LoginSignUp {
         logger.info("\n--- Client Signup ---");
         logger.info("Enter ID (5 digits): ");
         String id = scanner.nextLine();
-
         if (!isValidID(id, Role.CLIENT)) {
             logger.warning("Invalid ID format. Client IDs must be exactly 5 digits.");
             return;
@@ -46,7 +48,6 @@ public class LoginSignUp {
             logger.warning("ID already exists. Please try a different ID.");
             return;
         }
-
         logger.info("Enter Password: ");
         String password = scanner.nextLine();
         logger.info("Enter Name: ");
@@ -54,10 +55,10 @@ public class LoginSignUp {
         logger.info("Enter Email: ");
         String email = scanner.nextLine();
 
-        User newUser = new User(id, password, name, email, "CLIENT");
+        // Use the constant CLIENT_ROLE here
+        User newUser = new User(id, password, name, email, CLIENT_ROLE);
         users.add(newUser);
-        userManagement.addUser(id, password, name, email, "CLIENT");
-
+        userManagement.addUser(id, password, name, email, CLIENT_ROLE);
         logger.info("Account created successfully! You can now log in.");
     }
 
@@ -78,16 +79,14 @@ public class LoginSignUp {
                     case "INSTRUCTOR":
                         instructorMenu(scanner);
                         break;
-                    case "CLIENT":
+                    case CLIENT_ROLE: // Use the constant CLIENT_ROLE here
                         clientMenu(scanner);
                         break;
                     default:
                         logger.warning("Unknown role.");
                 }
-                return;
             }
         }
-        logger.warning("Invalid ID or password. Please try again.");
     }
 
     public static void adminMenu(Scanner scanner) {
