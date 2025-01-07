@@ -11,9 +11,6 @@ public class ClientInteraction {
     private static final List<Client> clients = new ArrayList<>();
 
 
-    public ClientInteraction() {
-        throw new UnsupportedOperationException("ClientInteraction class cannot be instantiated.");
-    }
 
 
     public static boolean addClient(String name, String email) {
