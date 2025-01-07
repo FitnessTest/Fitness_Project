@@ -73,11 +73,20 @@ public class UserManagementTest {
 
     @Test
     public void testViewEngagementStats() {
+        // Add user and simulate activity
         userManagement.addUser("1", "password", "Amr Jamhour", "amr.jamhour@email.com", "Instructor");
         userManagement.simulateActivity("1", 5);
+
+        // Capture the user to check the engagement stats
+        UserManagement.User user = ((List<UserManagement.User>) userManagement.getUsers()).get(0);
+
+        // Ensure engagement stats were updated correctly
+        assertEquals(5, user.engagementStats, "The user's engagement stats should be updated correctly.");
+
+        // Optionally, check if the method ran without exceptions by inspecting the logs or output
+        // This would depend on the actual implementation of viewEngagementStats()
         userManagement.viewEngagementStats(); // Ensure it runs without exceptions
     }
-
     @Test
     public void testSimulateActivity() {
         userManagement.addUser("1", "password", "Amr Jamhour", "amr.jamhour@email.com", "Instructor");
@@ -88,6 +97,12 @@ public class UserManagementTest {
 
     @Test
     public void testSimulateActivityUserNotFound() {
+        // Capture the output, for example, if logging is used
+        // This depends on how you handle the error in your code
         userManagement.simulateActivity("nonexistentId", 5);
+
+        // You can verify that the logs or some internal state reflect the error handling
+        // For example, check if an error message was logged
+        // assertTrue(logContains("User not found"));
     }
 }

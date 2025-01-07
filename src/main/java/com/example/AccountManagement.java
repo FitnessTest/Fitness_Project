@@ -166,7 +166,7 @@ public class AccountManagement {
         logger.info(profileInfo);
     }
 
-    // New method to get client profiles (for testing purposes)
+
     public static List<ClientProfile> getClientProfiles() {
         return clientProfiles;
     }
