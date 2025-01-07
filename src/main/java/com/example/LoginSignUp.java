@@ -14,14 +14,18 @@ public class LoginSignUp {
             super(id, password, name, email, role);
         }
     }
-
-    private static final String BACK_TO_MAIN_MENU = "5. Back to Main Menu";
     private static final String CLIENT_ROLE = "CLIENT";
+    private static final String ADMIN_ROLE = "ADMIN";
+    private static final String INSTRUCTOR_ROLE = "INSTRUCTOR";
+    private static final String ENTER_CLIENT_ID_PROMPT = "Enter client ID: ";
+    private static final String ADD_NEW_CLIENT_OPTION = "1. Add a New Client";
+    private static final String BACK_TO_MAIN_MENU = "5. Back to Main Menu";
     private static final String LOGOUT_OPTION = "5. Logout";
     private static final String CHOOSE_OPTION_PROMPT = "Choose an option: ";
     private static final String LOGOUT_MESSAGE = "Logging out...";
     private static final String INVALID_CHOICE_MESSAGE = "Invalid choice. Please try again.";
     private static final String ENTER_CHOICE_PROMPT = "Enter your choice: ";
+    private static final String RETURN_TO_MAIN_MENU_MESSAGE = "Returning to Main Menu...";
 
     private static final List<UserManagement.User> users = new ArrayList<>();
     private static final UserManagement userManagement = new UserManagement(users);
@@ -231,7 +235,7 @@ public class LoginSignUp {
                     break;
 
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
                     break;
             }
         }
@@ -268,7 +272,7 @@ public class LoginSignUp {
                     break;
 
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
             }
         }
     }
@@ -305,7 +309,7 @@ public class LoginSignUp {
                 viewAllComplaints(cm);
                 break;
             default:
-                logger.warning("Invalid choice. Please try again.");
+                logger.warning(INVALID_CHOICE_MESSAGE);
         }
     }
 
@@ -384,11 +388,11 @@ public class LoginSignUp {
                     break;
 
                 case "5":
-                    logger.info("Returning to Main Menu...");
+                    logger.info(RETURN_TO_MAIN_MENU_MESSAGE);
                     return;
 
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
             }
         }
     }
@@ -511,7 +515,7 @@ public class LoginSignUp {
 
                 case 5:
                     exit = true;
-                    logger.info("Returning to Main Menu...");
+                    logger.info(RETURN_TO_MAIN_MENU_MESSAGE);
                     break;
 
                 default:
@@ -526,7 +530,7 @@ public class LoginSignUp {
 
         while (!exit) {
             logger.info("\n--- Client Interaction Menu ---");
-            logger.info("1. Add a New Client");
+            logger.info(ADD_NEW_CLIENT_OPTION);
             logger.info("2. Send Message to a Client");
             logger.info("3. Provide Progress Report to a Client");
             logger.info("4. List All Clients");
@@ -568,7 +572,7 @@ public class LoginSignUp {
 
                 case 5:
                     exit = true;
-                    logger.info("Returning to Main Menu...");
+                    logger.info(RETURN_TO_MAIN_MENU_MESSAGE);
                     break;
 
                 default:
@@ -583,7 +587,7 @@ public class LoginSignUp {
 
         while (!exit) {
             logger.info("\n--- Progress Tracking Menu ---");
-            logger.info("1. Add a New Client");
+            logger.info(ADD_NEW_CLIENT_OPTION);
             logger.info("2. Update Completed Sessions for a Client");
             logger.info("3. Send Motivational Reminder to a Client");
             logger.info("4. Monitor All Client Progress");
@@ -641,7 +645,7 @@ public class LoginSignUp {
 
                 case 5:
                     exit = true;
-                    logger.info("Returning to Main Menu...");
+                    logger.info(RETURN_TO_MAIN_MENU_MESSAGE);
                     break;
 
                 default:
@@ -656,7 +660,7 @@ public class LoginSignUp {
 
         while (!exit) {
             logger.info("\n--- Notifications and Updates Menu ---");
-            logger.info("1. Add a New Client");
+            logger.info(ADD_NEW_CLIENT_OPTION);
             logger.info("2. Notify Schedule Change");
             logger.info("3. Announce New Program or Offer");
             logger.info("4. List All Clients and Notifications");
@@ -695,7 +699,7 @@ public class LoginSignUp {
 
                 case 5:
                     exit = true;
-                    logger.info("Returning to Main Menu...");
+                    logger.info(RETURN_TO_MAIN_MENU_MESSAGE);
                     break;
 
                 default:
@@ -811,7 +815,7 @@ public class LoginSignUp {
 
                 case 6:
                     exit = true;
-                    logger.info("Returning to Main Menu...");
+                    logger.info(RETURN_TO_MAIN_MENU_MESSAGE);
                     break;
 
                 default:
@@ -870,11 +874,11 @@ public class LoginSignUp {
 
                 case 5:
                     exit = true;
-                    logger.info("Returning to Main Menu...");
+                    logger.info(RETURN_TO_MAIN_MENU_MESSAGE);
                     break;
 
                 default:
-                    logger.warning("Invalid choice. Please try again.");
+                    logger.warning(INVALID_CHOICE_MESSAGE);
                     break;
             }
         }
@@ -898,7 +902,7 @@ public class LoginSignUp {
 
             switch (choice) {
                 case 1:
-                    logger.info("Enter client ID: ");
+                    logger.info(ENTER_CLIENT_ID_PROMPT);
                     String clientId = scanner.nextLine();
                     logger.info("Enter weight (kg): ");
                     double weight = scanner.nextDouble();
@@ -909,12 +913,12 @@ public class LoginSignUp {
                     ProgressTrackingClient.updateClientProgress(clientId, weight, height, attendanceCount);
                     break;
                 case 2:
-                    logger.info("Enter client ID: ");
+                    logger.info(ENTER_CLIENT_ID_PROMPT);
                     clientId = scanner.nextLine();
                     ProgressTrackingClient.showClientProgress(clientId);
                     break;
                 case 3:
-                    logger.info("Enter client ID: ");
+                    logger.info(ENTER_CLIENT_ID_PROMPT);
                     clientId = scanner.nextLine();
                     logger.info("Enter achievement: ");
                     String achievement = scanner.nextLine();
@@ -923,14 +927,14 @@ public class LoginSignUp {
                     ProgressTrackingClient.addAchievement(clientId, achievement, date);
                     break;
                 case 4:
-                    logger.info("Enter client ID: ");
+                    logger.info(ENTER_CLIENT_ID_PROMPT);
                     clientId = scanner.nextLine();
                     logger.info("Enter achievement to remove: ");
                     achievement = scanner.nextLine();
                     ProgressTrackingClient.removeAchievement(clientId, achievement);
                     break;
                 case 5:
-                    logger.info("Enter client ID: ");
+                    logger.info(ENTER_CLIENT_ID_PROMPT);
                     clientId = scanner.nextLine();
                     ProgressTrackingClient.listAchievements(clientId);
                     break;
@@ -1006,9 +1010,9 @@ public class LoginSignUp {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
-        userManagement.addUser("1", "ihab", "Ihab", "kebab83@gmail.com", "ADMIN");
-        userManagement.addUser("111", "ameed", "Ameed", "ameed@gmail.com", "INSTRUCTOR");
-        userManagement.addUser("11111", "zahi", "Zahi", "zahi@gmail.com", "CLIENT");
+        userManagement.addUser("1", "ihab", "Ihab", "kebab83@gmail.com", ADMIN_ROLE);
+        userManagement.addUser("111", "ameed", "Ameed", "ameed@gmail.com", INSTRUCTOR_ROLE);
+        userManagement.addUser("11111", "zahi", "Zahi", "zahi@gmail.com", CLIENT_ROLE);
 
         while (running) {
             logger.info("\n--- Login/Signup System ---");
