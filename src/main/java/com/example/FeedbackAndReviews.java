@@ -8,8 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FeedbackAndReviews {
-
     private static final Logger LOGGER = Logger.getLogger(FeedbackAndReviews.class.getName());
+
 
     public static class ProgramReview {
         private int rating;
@@ -58,17 +58,20 @@ public class FeedbackAndReviews {
         }
     }
 
-    private static Map<String, List<ProgramReview>> programReviews;
+
+    private static Map<String, List<ProgramReview>> programReviews = new HashMap<>();
+
 
     public FeedbackAndReviews() {
-        programReviews = new HashMap<>();
     }
+
 
     public void submitProgramReview(String programTitle, int rating, String reviewText, String improvementSuggestion) {
         ProgramReview review = new ProgramReview(rating, reviewText, improvementSuggestion);
         programReviews.computeIfAbsent(programTitle, k -> new ArrayList<>()).add(review);
         LOGGER.log(Level.INFO, "Review submitted for program: {0}", programTitle);
     }
+
 
     public static void viewProgramReview(String programTitle) {
         List<ProgramReview> reviews = programReviews.get(programTitle);
@@ -80,10 +83,11 @@ public class FeedbackAndReviews {
         }
     }
 
+
     public static void submitImprovementSuggestion(String programTitle, String improvementSuggestion) {
         List<ProgramReview> reviews = programReviews.get(programTitle);
         if (reviews != null && !reviews.isEmpty()) {
-            ProgramReview review = reviews.get(reviews.size() - 1); // Update the most recent review
+            ProgramReview review = reviews.get(reviews.size() - 1);
             review.setImprovementSuggestion(improvementSuggestion);
             LOGGER.log(Level.INFO, "Improvement suggestion submitted for program: {0}", programTitle);
         } else {

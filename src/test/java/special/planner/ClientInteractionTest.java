@@ -8,54 +8,52 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientInteractionTest {
 
-    private ClientInteraction clientInteraction;
-
     @BeforeEach
     void setUp() {
-        clientInteraction = new ClientInteraction();
+        ClientInteraction clientInteraction = new ClientInteraction();
     }
 
     @Test
     void testAddClient() {
-        boolean result = clientInteraction.addClient("Amr Jamhor", "amrojamhour4@gmail.com");
+        boolean result = ClientInteraction.addClient("Amr Jamhor", "amrojamhour4@gmail.com");
         assertTrue(result, "Client should be added successfully");
     }
 
     @Test
     void testListAllClients_WithProfiles() {
-        clientInteraction.addClient("Amr Jamhor", "amrojamhour4@gmail.com");
-        clientInteraction.addClient("Ihab Habash", "kebab83@gmail.com");
+        ClientInteraction.addClient("Amr Jamhor", "amrojamhour4@gmail.com");
+        ClientInteraction.addClient("Ihab Habash", "kebab83@gmail.com");
 
 
 
-        clientInteraction.listAllClients();
+        ClientInteraction.listAllClients();
     }
 
     @Test
     void testSendMessageToClient_ClientFound() {
-        clientInteraction.addClient("Amr Jamhor", "amrojamhour4@gmail.com");
+        ClientInteraction.addClient("Amr Jamhor", "amrojamhour4@gmail.com");
 
-        boolean messageSent = clientInteraction.sendMessageToClient("amrojamhour4@gmail.com", "Hello Amr");
+        boolean messageSent = ClientInteraction.sendMessageToClient("amrojamhour4@gmail.com", "Hello Amr");
         assertTrue(messageSent, "Message should be sent successfully to the client");
     }
 
     @Test
     void testSendMessageToClient_ClientNotFound() {
-        boolean messageSent = clientInteraction.sendMessageToClient("nonexistent@example.com", "Hello World");
+        boolean messageSent = ClientInteraction.sendMessageToClient("nonexistent@example.com", "Hello World");
         assertFalse(messageSent, "Message should not be sent to a non-existent client");
     }
 
     @Test
     void testProvideProgressReport_ClientFound() {
-        clientInteraction.addClient("Amr Jamhor", "amrojamhour4@gmail.com");
+        ClientInteraction.addClient("Amr Jamhor", "amrojamhour4@gmail.com");
 
-        boolean reportSent = clientInteraction.provideProgressReport("amrojamhour4@gmail.com", "Progress report here");
+        boolean reportSent = ClientInteraction.provideProgressReport("amrojamhour4@gmail.com", "Progress report here");
         assertTrue(reportSent, "Progress report should be sent successfully to the client");
     }
 
     @Test
     void testProvideProgressReport_ClientNotFound() {
-        boolean reportSent = clientInteraction.provideProgressReport("nonexistent@example.com", "Progress report here");
+        boolean reportSent = ClientInteraction.provideProgressReport("nonexistent@example.com", "Progress report here");
         assertFalse(reportSent, "Progress report should not be sent to a non-existent client");
     }
 }
