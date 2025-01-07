@@ -63,6 +63,8 @@ public class FeedbackAndReviews {
 
 
     public FeedbackAndReviews() {
+        throw new UnsupportedOperationException("FeedbackAndReviews class cannot be instantiated.");
+
     }
 
 
