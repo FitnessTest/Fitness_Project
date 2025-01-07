@@ -43,7 +43,6 @@ public class AccountManagement {
             this.dietaryPreferences = (dietaryPreferences != null && !dietaryPreferences.isEmpty()) ? dietaryPreferences : "Not specified";
         }
 
-
         public String getName() {
             return name;
         }
@@ -165,5 +164,10 @@ public class AccountManagement {
                 profile.getFitnessGoals(),
                 profile.getDietaryPreferences());
         logger.info(profileInfo);
+    }
+
+    // New method to get client profiles (for testing purposes)
+    public static List<ClientProfile> getClientProfiles() {
+        return clientProfiles;
     }
 }
