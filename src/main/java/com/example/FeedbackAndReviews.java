@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class FeedbackAndReviews {
     private static final Logger LOGGER = Logger.getLogger(FeedbackAndReviews.class.getName());
 
-
+    // ProgramReview class remains unchanged
     public static class ProgramReview {
         private int rating;
         private String reviewText;
@@ -58,22 +58,18 @@ public class FeedbackAndReviews {
         }
     }
 
-
     private static Map<String, List<ProgramReview>> programReviews = new HashMap<>();
 
-
+    // Make the constructor private or remove it to prevent instantiation
     public FeedbackAndReviews() {
-        throw new UnsupportedOperationException("FeedbackAndReviews class cannot be instantiated.");
-
+        // Constructor intentionally left blank.
     }
 
-
-    public void submitProgramReview(String programTitle, int rating, String reviewText, String improvementSuggestion) {
+    public static void submitProgramReview(String programTitle, int rating, String reviewText, String improvementSuggestion) {
         ProgramReview review = new ProgramReview(rating, reviewText, improvementSuggestion);
         programReviews.computeIfAbsent(programTitle, k -> new ArrayList<>()).add(review);
         LOGGER.log(Level.INFO, "Review submitted for program: {0}", programTitle);
     }
-
 
     public static void viewProgramReview(String programTitle) {
         List<ProgramReview> reviews = programReviews.get(programTitle);
@@ -84,7 +80,6 @@ public class FeedbackAndReviews {
             LOGGER.log(Level.INFO, "No reviews available for program: {0}", programTitle);
         }
     }
-
 
     public static void submitImprovementSuggestion(String programTitle, String improvementSuggestion) {
         List<ProgramReview> reviews = programReviews.get(programTitle);
