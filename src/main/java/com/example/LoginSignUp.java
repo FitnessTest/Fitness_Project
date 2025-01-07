@@ -15,7 +15,7 @@ public class LoginSignUp {
         }
     }
 
-    // Define a constant for "CLIENT" role
+    private static final String LOGOUT_OPTION = "5. Logout";
     private static final String CLIENT_ROLE = "CLIENT";
 
     private static final List<UserManagement.User> users = new ArrayList<>();
@@ -55,7 +55,7 @@ public class LoginSignUp {
         logger.info("Enter Email: ");
         String email = scanner.nextLine();
 
-        // Use the constant CLIENT_ROLE here
+
         User newUser = new User(id, password, name, email, CLIENT_ROLE);
         users.add(newUser);
         userManagement.addUser(id, password, name, email, CLIENT_ROLE);
@@ -97,7 +97,7 @@ public class LoginSignUp {
             logger.info("2. Program Monitoring");
             logger.info("3. Content Management");
             logger.info("4. Subscription Management");
-            logger.info("5. Logout");
+            logger.info(LOGOUT_OPTION);
             logger.info("Choose an option: ");
             String choice = scanner.nextLine();
 
@@ -373,7 +373,7 @@ public class LoginSignUp {
             logger.info("2. Client Interaction");
             logger.info("3. Progress Tracking");
             logger.info("4. Notifications and Updates");
-            logger.info("5. Logout");
+            logger.info(LOGOUT_OPTION);
             logger.info("Choose an option: ");
             String choice = scanner.nextLine();
 
@@ -686,7 +686,7 @@ public class LoginSignUp {
             logger.info("2. Program Exploration and Enrollment");
             logger.info("3. Progress Tracking");
             logger.info("4. Feedback and Reviews");
-            logger.info("5. Logout");
+            logger.info(LOGOUT_OPTION);
             logger.info("Choose an option: ");
             String choice = scanner.nextLine();
 
