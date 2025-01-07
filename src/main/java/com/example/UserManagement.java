@@ -7,7 +7,7 @@ public class UserManagement {
 
     private static final Logger logger = Logger.getLogger(UserManagement.class.getName());
 
-    private List<User> users;
+    private static List<User> users;
 
     public UserManagement(List<User> users) {
         this.users = users != null ? new ArrayList<>(users) : new ArrayList<>();
@@ -22,10 +22,10 @@ public class UserManagement {
         public String password;
         public String name;
         public String email;
-        public String role; // "Instructor" or "Client"
+        public String role;
         public boolean isActive;
-        public boolean isApproved; // For instructors only
-        public int engagementStats; // Engagement statistics
+        public boolean isApproved;
+        public int engagementStats;
 
         public User(String id, String password, String name, String email, String role) {
             this.id = id;
@@ -33,9 +33,9 @@ public class UserManagement {
             this.name = name;
             this.email = email;
             this.role = role;
-            this.isActive = true; // Accounts are active by default
-            this.isApproved = !role.equalsIgnoreCase("Instructor"); // Only instructors need approval
-            this.engagementStats = 0; // Initial engagement stats
+            this.isActive = true;
+            this.isApproved = !role.equalsIgnoreCase("Instructor");
+            this.engagementStats = 0;
         }
     }
 
@@ -63,7 +63,7 @@ public class UserManagement {
         logger.warning("Update failed: ID not found.");
     }
 
-    public void deactivateUser(String id) {
+    public static void deactivateUser(String id) {
         for (User user : users) {
             if (user.id.equals(id)) {
                 user.isActive = false;

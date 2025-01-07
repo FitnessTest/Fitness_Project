@@ -1,5 +1,4 @@
 package com.example;
-
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -169,7 +168,7 @@ public class LoginSignUp {
                 case "3":
                     logger.info("Enter user ID to deactivate: ");
                     String deactivateId = scanner.nextLine();
-                    userManagement.deactivateUser(deactivateId);
+                    UserManagement.deactivateUser(deactivateId);
                     break;
 
                 case "4":
@@ -365,7 +364,6 @@ public class LoginSignUp {
             }
         }
     }
-
 
 
     public static void instructorMenu(Scanner scanner) {
@@ -680,7 +678,6 @@ public class LoginSignUp {
     }
 
 
-
     // Client menu
     public static void clientMenu(Scanner scanner) {
         boolean running = true;
@@ -976,21 +973,21 @@ public class LoginSignUp {
 
 
     }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
-
 
         userManagement.addUser("1", "ihab", "Ihab", "kebab83@gmail.com", "ADMIN");
         userManagement.addUser("111", "ameed", "Ameed", "ameed@gmail.com", "INSTRUCTOR");
         userManagement.addUser("11111", "zahi", "Zahi", "zahi@gmail.com", "CLIENT");
 
         while (running) {
-            System.out.println("\n--- Login/Signup System ---");
-            System.out.println("1. Login");
-            System.out.println("2. Sign Up (Clients Only)");
-            System.out.println("3. Exit");
-            System.out.print("Choose an option: ");
+            logger.info("\n--- Login/Signup System ---");
+            logger.info("1. Login");
+            logger.info("2. Sign Up (Clients Only)");
+            logger.info("3. Exit");
+            logger.info("Choose an option: ");
             String choice = scanner.nextLine();
 
             switch (choice) {
@@ -1004,11 +1001,11 @@ public class LoginSignUp {
 
                 case "3":
                     running = false;
-                    System.out.println("Exiting... Goodbye!");
+                    logger.info("Exiting... Goodbye!");
                     break;
 
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    logger.warning("Invalid choice. Please try again.");
                     break;
             }
         }
