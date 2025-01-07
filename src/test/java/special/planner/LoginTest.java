@@ -63,8 +63,6 @@ public class LoginTest {
         isLoggedIn = validCredentials.containsKey(email) && validCredentials.get(email).equals(password);
     }
 
-
-
     @When("The email is empty")
     public void the_email_is_empty() {
         this.email = "";
@@ -112,5 +110,44 @@ public class LoginTest {
     @Then("User fails to log in due to missing credentials")
     public void user_fails_to_log_in_due_to_missing_credentials() {
         assertFalse("User should not be logged in due to missing credentials", isLoggedIn);
+    }
+
+    // Additional Test Cases:
+
+    @When("The user attempts multiple failed logins")
+    public void the_user_attempts_multiple_failed_logins() {
+        // Trying multiple failed attempts
+        isLoggedIn = false; // Reset before starting the sequence
+        the_credentials_is_invalid_email_is_and_password_is("wrongemail@example.com", "wrongpassword");
+        the_credentials_is_invalid_email_is_and_password_is("wrongemail2@example.com", "wrongpassword2");
+    }
+
+    @Then("User should still not be logged in")
+    public void user_should_still_not_be_logged_in() {
+        assertFalse("User should not be logged in after multiple failed attempts", isLoggedIn);
+    }
+
+    @When("The user provides valid email but invalid password")
+    public void the_user_provides_valid_email_but_invalid_password() {
+        this.email = "kebab83@gmail.com";
+        this.password = "wrongpassword";
+        isLoggedIn = validCredentials.containsKey(email) && validCredentials.get(email).equals(password);
+    }
+
+    @Then("User fails to log in due to incorrect password")
+    public void user_fails_to_log_in_due_to_incorrect_password() {
+        assertFalse("User should not be logged in due to incorrect password", isLoggedIn);
+    }
+
+    @When("The email or password contains SQL injection characters")
+    public void the_email_or_password_contains_sql_injection_characters() {
+        this.email = "kebab83@gmail.com' OR '1'='1";
+        this.password = "Ihab' OR '1'='1";
+        isLoggedIn = validCredentials.containsKey(email) && validCredentials.get(email).equals(password);
+    }
+
+    @Then("User fails to log in due to suspicious characters")
+    public void user_fails_to_log_in_due_to_suspicious_characters() {
+        assertFalse("User should not be logged in due to SQL injection characters", isLoggedIn);
     }
 }
