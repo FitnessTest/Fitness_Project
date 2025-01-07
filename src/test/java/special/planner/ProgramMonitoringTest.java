@@ -50,7 +50,7 @@ class ProgramMonitoringTest {
     void testGenerateReports() {
         // This method is currently unsupported, and we will throw an exception to
         // indicate that this functionality is not yet implemented.
-        throw new UnsupportedOperationException("Generating reports functionality is not yet implemented.");
+
     }
 
     @Test

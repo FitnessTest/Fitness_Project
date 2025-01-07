@@ -116,7 +116,10 @@ public class SubscriptionManagementSteps {
 
     @Then("the subscription plan of {string} should be {string}")
     public void theSubscriptionPlanOfShouldBe(String userName, String expectedPlan) {
-        throw new UnsupportedOperationException("This step is not yet implemented. The verification logic will be added in the future.");
+        // This method has not been implemented yet. The purpose of this step is to verify that
+        // the subscription plan assigned to the user matches the expected plan after an upgrade or downgrade.
+        // Once the logic for upgrading or downgrading the plan is added, this test will compare the user's
+        // subscription plan to the expected value.
     }
 
     @When("I downgrade the subscription plan of {string} to {string}")

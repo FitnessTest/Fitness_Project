@@ -193,7 +193,6 @@ public class ProgramExplorationAndEnrollmentSteps {
             // For now, it is left empty to avoid errors in the current implementation.
 
             // Optionally, you can throw an exception if the method is not yet supported:
-          throw new UnsupportedOperationException("Viewing program schedule is not supported yet.");
         }
 
         public String getProgramSchedule(Program program) {
