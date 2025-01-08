@@ -80,11 +80,11 @@ public class ProgressTracking {
             if (client.getEmail().equalsIgnoreCase(clientEmail)) {
                 client.updateCompletedSessions(sessionsCompleted);
                 logger.info("Updated completed sessions for client " + client.getName() + ".");
-                return false;
+                return true; // Return true when the client's sessions are updated successfully
             }
         }
         logger.warning("Client with email " + clientEmail + " not found.");
-        return false;
+        return false; // Return false when the client is not found
     }
 
     public static boolean sendMotivationalReminder(String clientEmail, String reminder) {
