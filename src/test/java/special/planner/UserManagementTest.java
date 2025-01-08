@@ -97,12 +97,10 @@ public class UserManagementTest {
 
     @Test
     public void testSimulateActivityUserNotFound() {
-        // Capture the output, for example, if logging is used
-        // This depends on how you handle the error in your code
+        // Simulate activity for a nonexistent user
         userManagement.simulateActivity("nonexistentId", 5);
 
-        // You can verify that the logs or some internal state reflect the error handling
-        // For example, check if an error message was logged
-        // assertTrue(logContains("User not found"));
+        // Verify that the appropriate message was logged
+        assertTrue(userManagement.getLogs().contains("Activity simulation failed: ID not found. ID: nonexistentId"));
     }
 }

@@ -1,11 +1,10 @@
 package com.example;
+
 import java.util.*;
-import java.util.logging.Logger;
 
 public class UserManagement {
-    private static final Logger logger = Logger.getLogger(UserManagement.class.getName());
-    private static List<User> users;
-
+    private static List<User> users; // Remove static
+    private static StringBuilder logBuilder = new StringBuilder(); // Remove static
 
     private static final String TABLE_SEPARATOR = "+-------+-------------------+------------+-------------------+---------------+";
 
@@ -15,6 +14,10 @@ public class UserManagement {
 
     public List<User> getUsers() {
         return users;
+    }
+
+    public String getLogs() {
+        return logBuilder.toString();
     }
 
     public static class User {
@@ -42,12 +45,12 @@ public class UserManagement {
     public void addUser(String id, String password, String name, String email, String role) {
         for (User user : users) {
             if (user.id.equals(id)) {
-                logger.warning("Account creation failed: ID already exists.");
+                logBuilder.append("Account creation failed: ID already exists.\n");
                 return;
             }
         }
         users.add(new User(id, password, name, email, role));
-        logger.info("Account created successfully!");
+        logBuilder.append("Account created successfully! ID: ").append(id).append("\n");
     }
 
     public void updateUser(String id, String newName, String newEmail, String newPassword) {
@@ -56,57 +59,57 @@ public class UserManagement {
                 user.name = newName;
                 user.email = newEmail;
                 user.password = newPassword;
-                logger.info("Account updated successfully!");
+                logBuilder.append("Account updated successfully! ID: ").append(id).append("\n");
                 return;
             }
         }
-        logger.warning("Update failed: ID not found.");
+        logBuilder.append("Update failed: ID not found. ID: ").append(id).append("\n");
     }
 
-    public static void deactivateUser(String id) {
+    public static void deactivateUser(String id) { // Remove static
         for (User user : users) {
             if (user.id.equals(id)) {
                 user.isActive = false;
-                logger.info("Account with ID " + id + " has been deactivated.");
+                logBuilder.append("Account with ID ").append(id).append(" has been deactivated.\n");
                 return;
             }
         }
-        logger.warning("Deactivation failed: ID not found.");
+        logBuilder.append("Deactivation failed: ID not found. ID: ").append(id).append("\n");
     }
 
     public void approveInstructor(String id) {
         for (User user : users) {
             if (user.id.equals(id) && user.role.equalsIgnoreCase("Instructor")) {
                 if (user.isApproved) {
-                    logger.info("Instructor with ID " + id + " is already approved.");
+                    logBuilder.append("Instructor with ID ").append(id).append(" is already approved.\n");
                 } else {
                     user.isApproved = true;
-                    logger.info("Instructor with ID " + id + " approved successfully.");
+                    logBuilder.append("Instructor with ID ").append(id).append(" approved successfully.\n");
                 }
                 return;
             }
         }
-        logger.warning("Approval failed: Instructor ID not found or not an instructor.");
+        logBuilder.append("Approval failed: Instructor ID not found or not an instructor. ID: ").append(id).append("\n");
     }
 
     public void viewEngagementStats() {
-        logger.info(TABLE_SEPARATOR);
-        logger.info(String.format("| %-5s | %-17s | %-10s | %-17s | %-13s |", "ID", "Name", "Role", "Email", "Engagement"));
-        logger.info(TABLE_SEPARATOR);
+        logBuilder.append(TABLE_SEPARATOR).append("\n");
+        logBuilder.append(String.format("| %-5s | %-17s | %-10s | %-17s | %-13s |\n", "ID", "Name", "Role", "Email", "Engagement"));
+        logBuilder.append(TABLE_SEPARATOR).append("\n");
         for (User user : users) {
-            logger.info(String.format("| %-5s | %-17s | %-10s | %-17s | %-13d |", user.id, user.name, user.role, user.email, user.engagementStats));
+            logBuilder.append(String.format("| %-5s | %-17s | %-10s | %-17s | %-13d |\n", user.id, user.name, user.role, user.email, user.engagementStats));
         }
-        logger.info(TABLE_SEPARATOR);
+        logBuilder.append(TABLE_SEPARATOR).append("\n");
     }
 
     public void simulateActivity(String id, int additionalEngagement) {
         for (User user : users) {
             if (user.id.equals(id)) {
                 user.engagementStats += additionalEngagement;
-                logger.info("Engagement stats updated for user ID " + id + ".");
+                logBuilder.append("Engagement stats updated for user ID ").append(id).append(". New Engagement: ").append(user.engagementStats).append("\n");
                 return;
             }
         }
-        logger.warning("Activity simulation failed: ID not found.");
+        logBuilder.append("Activity simulation failed: ID not found. ID: ").append(id).append("\n");
     }
 }

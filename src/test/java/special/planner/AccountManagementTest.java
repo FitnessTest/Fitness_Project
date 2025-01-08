@@ -109,9 +109,19 @@ public class AccountManagementTest {
         accountManagement.createProfile("Amr Jamhour", "amr.jamhour@example.com", 30, "Weight loss", "Vegetarian");
         accountManagement.createProfile("Ihab Habash", "ihab.habash@example.com", 28, "Muscle gain", "Non-Vegetarian");
 
-        accountManagement.listAllProfiles();
+        // Retrieve the list of profiles
+        List<AccountManagement.ClientProfile> profiles = accountManagement.getClientProfiles();
 
-        // Check that the profiles are logged (use a custom logger handler to capture logs, or assert outputs)
+        // Assert the number of profiles in the list
+        assertEquals(2, profiles.size());
+
+        // Assert the details of the first profile
+        assertEquals("Amr Jamhour", profiles.get(0).getName());
+        assertEquals("amr.jamhour@example.com", profiles.get(0).getEmail());
+
+        // Assert the details of the second profile
+        assertEquals("Ihab Habash", profiles.get(1).getName());
+        assertEquals("ihab.habash@example.com", profiles.get(1).getEmail());
     }
 
     @Test
