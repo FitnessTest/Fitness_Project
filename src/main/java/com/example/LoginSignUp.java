@@ -1,4 +1,5 @@
 package com.example;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -77,10 +78,10 @@ public class LoginSignUp {
         String id = scanner.nextLine();
         logger.info("Enter Password: ");
         String password = scanner.nextLine();
-
         for (UserManagement.User user : userManagement.getUsers()) {
             if (user.id.equals(id) && user.password.equals(password)) {
-                logger.info("Login successful! Welcome, " + user.role + ".");
+                logger.info(MessageFormat.format("Login successful! Welcome, {0}.", user.role));
+
                 switch (user.role) {
                     case ADMIN_ROLE:
                         adminMenu(scanner);
@@ -328,21 +329,21 @@ public class LoginSignUp {
     private static void viewAllFeedback(ContentManagement cm) {
         logger.info("\nAll Feedback:");
         for (String fb : cm.viewAllFeedback()) {
-            logger.info("- " + fb);
+            logger.info(MessageFormat.format("- {0}", fb));
         }
     }
 
     private static void viewAllComplaints(ContentManagement cm) {
         logger.info("\nAll Complaints:");
         for (String comp : cm.viewAllComplaints()) {
-            logger.info("- " + comp);
+            logger.info(MessageFormat.format("- {0}", comp));
         }
     }
 
     private static void viewAllContent(ContentManagement cm) {
         logger.info("\nAll Content:");
         for (String contentStatus : cm.viewAllContent()) {
-            logger.info("- " + contentStatus);
+            logger.info(MessageFormat.format("- {0}", contentStatus));
         }
     }
 
