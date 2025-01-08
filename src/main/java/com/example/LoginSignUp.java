@@ -440,92 +440,134 @@ public class LoginSignUp {
 
     public static void programManagementMenu(Scanner scanner) {
         boolean exit = false;
-
         while (!exit) {
-            logger.info("\n--- Program Management Menu ---");
-            logger.info("1. Create a New Program");
-            logger.info("2. Update an Existing Program");
-            logger.info("3. Delete a Program");
-            logger.info("4. List All Programs");
-            logger.info(BACK_TO_MAIN_MENU);
-            logger.info(ENTER_CHOICE_PROMPT);
+            try {
+                logger.info("\n--- Program Management Menu ---");
+                logger.info("1. Create a New Program");
+                logger.info("2. Update an Existing Program");
+                logger.info("3. Delete a Program");
+                logger.info("4. List All Programs");
+                logger.info("5. Back to Main Menu");
+                logger.info("Enter your choice:");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
 
-            switch (choice) {
-                case 1:
-                    logger.info("Enter details for the new program:");
-                    logger.info("Title: ");
-                    String title = scanner.nextLine();
-                    logger.info("Duration: ");
-                    String duration = scanner.nextLine();
-                    logger.info("Difficulty Level: ");
-                    String difficultyLevel = scanner.nextLine();
-                    logger.info("Goals: ");
-                    String goals = scanner.nextLine();
-                    logger.info("Video Tutorial: ");
-                    String videoTutorial = scanner.nextLine();
-                    logger.info("Image: ");
-                    String image = scanner.nextLine();
-                    logger.info("Document: ");
-                    String document = scanner.nextLine();
-                    logger.info("Price: ");
-                    double price = scanner.nextDouble();
-                    scanner.nextLine(); // Consume newline
-                    logger.info("Schedule: ");
-                    String schedule = scanner.nextLine();
+                int choice;
+                while (true) {
+                    if (scanner.hasNextInt()) {
+                        choice = scanner.nextInt();
+                        scanner.nextLine();
+                        break;
+                    } else {
+                        logger.warning("Invalid input, please enter a number.");
+                        scanner.nextLine();
+                    }
+                }
 
-                    ProgramManagement.createProgram(title, duration, difficultyLevel, goals,
-                            videoTutorial, image, document, price, schedule);
-                    break;
+                switch (choice) {
+                    case 1:
+                        // Create a new program
+                        logger.info("Enter details for the new program:");
+                        logger.info("Title: ");
+                        String title = scanner.nextLine();
+                        logger.info("Duration: ");
+                        String duration = scanner.nextLine();
+                        logger.info("Difficulty Level: ");
+                        String difficultyLevel = scanner.nextLine();
+                        logger.info("Goals: ");
+                        String goals = scanner.nextLine();
+                        logger.info("Video Tutorial: ");
+                        String videoTutorial = scanner.nextLine();
+                        logger.info("Image: ");
+                        String image = scanner.nextLine();
+                        logger.info("Document: ");
+                        String document = scanner.nextLine();
 
-                case 2:
-                    logger.info("Enter the title of the program to update: ");
-                    String oldTitle = scanner.nextLine();
-                    logger.info("Enter new details for the program:");
-                    logger.info("New Title: ");
-                    String newTitle = scanner.nextLine();
-                    logger.info("New Duration: ");
-                    String newDuration = scanner.nextLine();
-                    logger.info("New Difficulty Level: ");
-                    String newDifficultyLevel = scanner.nextLine();
-                    logger.info("New Goals: ");
-                    String newGoals = scanner.nextLine();
-                    logger.info("New Video Tutorial: ");
-                    String newVideoTutorial = scanner.nextLine();
-                    logger.info("New Image: ");
-                    String newImage = scanner.nextLine();
-                    logger.info("New Document: ");
-                    String newDocument = scanner.nextLine();
-                    logger.info("New Price: ");
-                    double newPrice = scanner.nextDouble();
-                    scanner.nextLine(); // Consume newline
-                    logger.info("New Schedule: ");
-                    String newSchedule = scanner.nextLine();
+                        // Validate price
+                        double price = -1;
+                        while (price < 0) {
+                            logger.info("Price: ");
+                            if (scanner.hasNextDouble()) {
+                                price = scanner.nextDouble();
+                                scanner.nextLine();
+                            } else {
+                                logger.warning("Invalid price, please enter a valid number.");
+                                scanner.nextLine();
+                            }
+                        }
 
-                    ProgramManagement.updateProgram(oldTitle, newTitle, newDuration, newDifficultyLevel,
-                            newGoals, newVideoTutorial, newImage, newDocument, newPrice, newSchedule);
-                    break;
+                        logger.info("Schedule: ");
+                        String schedule = scanner.nextLine();
+                        ProgramManagement.createProgram(title, duration, difficultyLevel, goals,
+                                videoTutorial, image, document, price, schedule);
+                        break;
+                    case 2:
+                        // Update an existing program
+                        logger.info("Enter the title of the program to update: ");
+                        String oldTitle = scanner.nextLine();
+                        if (!ProgramManagement.programExists(oldTitle)) {
+                            logger.warning("Program with title " + oldTitle + " not found.");
+                            break;
+                        }
+                        logger.info("Enter new details for the program:");
+                        logger.info("New Title: ");
+                        String newTitle = scanner.nextLine();
+                        logger.info("New Duration: ");
+                        String newDuration = scanner.nextLine();
+                        logger.info("New Difficulty Level: ");
+                        String newDifficultyLevel = scanner.nextLine();
+                        logger.info("New Goals: ");
+                        String newGoals = scanner.nextLine();
+                        logger.info("New Video Tutorial: ");
+                        String newVideoTutorial = scanner.nextLine();
+                        logger.info("New Image: ");
+                        String newImage = scanner.nextLine();
+                        logger.info("New Document: ");
+                        String newDocument = scanner.nextLine();
 
-                case 3:
-                    logger.info("Enter the title of the program to delete: ");
-                    String deleteTitle = scanner.nextLine();
-                    ProgramManagement.deleteProgram(deleteTitle);
-                    break;
 
-                case 4:
-                    ProgramManagement.listAllPrograms();
-                    break;
+                        double newPrice = -1;
+                        while (newPrice < 0) {
+                            logger.info("New Price: ");
+                            if (scanner.hasNextDouble()) {
+                                newPrice = scanner.nextDouble();
+                                scanner.nextLine();
+                            } else {
+                                logger.warning("Invalid price, please enter a valid number.");
+                                scanner.nextLine();
+                            }
+                        }
 
-                case 5:
-                    exit = true;
-                    logger.info(RETURN_TO_MAIN_MENU_MESSAGE);
-                    break;
+                        logger.info("New Schedule: ");
+                        String newSchedule = scanner.nextLine();
+                        ProgramManagement.updateProgram(oldTitle, newTitle, newDuration, newDifficultyLevel,
+                                newGoals, newVideoTutorial, newImage, newDocument, newPrice, newSchedule);
+                        break;
+                    case 3:
+                        // Delete a program
+                        logger.info("Enter the title of the program to delete: ");
+                        String deleteTitle = scanner.nextLine();
+                        if (!ProgramManagement.programExists(deleteTitle)) {
+                            logger.warning("Program with title " + deleteTitle + " not found.");
+                            break;
+                        }
+                        ProgramManagement.deleteProgram(deleteTitle);
+                        break;
+                    case 4:
 
-                default:
-                    logger.warning(INVALID_CHOICE_MESSAGE);
-                    break;
+                        ProgramManagement.listAllPrograms();
+                        break;
+                    case 5:
+
+                        exit = true;
+                        logger.info("Returning to Main Menu.");
+                        break;
+                    default:
+                        logger.warning("Invalid choice. Please select a valid option.");
+                        break;
+                }
+            } catch (Exception e) {
+                logger.warning("An error occurred: " + e.getMessage());
+                scanner.nextLine();
             }
         }
     }

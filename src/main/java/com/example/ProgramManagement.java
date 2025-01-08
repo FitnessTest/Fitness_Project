@@ -9,8 +9,9 @@ public class ProgramManagement {
 
     private static final Logger logger = Logger.getLogger(ProgramManagement.class.getName());
 
+    // Program class encapsulating details of a program
     public static class Program {
-        public String title;
+        private String title;
         private String duration;
         private String difficultyLevel;
         private String goals;
@@ -20,6 +21,7 @@ public class ProgramManagement {
         private double price;
         private String schedule;
 
+        // Constructor for Program class
         public Program(String title, String duration, String difficultyLevel, String goals,
                        String videoTutorial, String image, String document,
                        double price, String schedule) {
@@ -34,6 +36,12 @@ public class ProgramManagement {
             this.schedule = schedule;
         }
 
+        // Getters for the fields
+        public String getTitle() {
+            return title;
+        }
+
+        // Override toString method for better display
         @Override
         public String toString() {
             return "Program [title=" + title + ", duration=" + duration + ", difficultyLevel=" + difficultyLevel
@@ -42,16 +50,20 @@ public class ProgramManagement {
         }
     }
 
+    // List to hold the created programs
     private static List<Program> programs;
 
+    // Constructor to initialize the list of programs
     public ProgramManagement() {
         programs = new ArrayList<>();
     }
 
-    public static List<Program> getPrograms() {
-        return programs;  // Added method to get the list of programs
+    // Getter for the programs list
+    public List<Program> getPrograms() {
+        return programs;
     }
 
+    // Method to create a new program
     public static void createProgram(String title, String duration, String difficultyLevel, String goals,
                                      String videoTutorial, String image, String document,
                                      double price, String schedule) {
@@ -61,11 +73,12 @@ public class ProgramManagement {
         logger.log(Level.INFO, "Program \"{0}\" created successfully.", title);
     }
 
+    // Method to update an existing program
     public static boolean updateProgram(String oldTitle, String newTitle, String newDuration, String newDifficultyLevel,
                                         String newGoals, String newVideoTutorial, String newImage, String newDocument,
                                         double newPrice, String newSchedule) {
         for (Program program : programs) {
-            if (program.title.equalsIgnoreCase(oldTitle)) {
+            if (program.getTitle().equalsIgnoreCase(oldTitle)) {
                 program.title = newTitle;
                 program.duration = newDuration;
                 program.difficultyLevel = newDifficultyLevel;
@@ -83,9 +96,10 @@ public class ProgramManagement {
         return false;
     }
 
+    // Method to delete a program
     public static boolean deleteProgram(String title) {
         for (Program program : programs) {
-            if (program.title.equalsIgnoreCase(title)) {
+            if (program.getTitle().equalsIgnoreCase(title)) {
                 programs.remove(program);
                 logger.log(Level.INFO, "Program \"{0}\" deleted successfully.", title);
                 return true;
@@ -95,22 +109,33 @@ public class ProgramManagement {
         return false;
     }
 
+    // Method to list all programs
     public static void listAllPrograms() {
         if (programs.isEmpty()) {
             logger.log(Level.INFO, "No programs available.");
         } else {
             logger.log(Level.INFO, "All Programs:");
-            logger.log(Level.INFO, String.format("%-30s %-20s %-20s %-40s %-15s %-20s %-15s %-10s %-25s%n",
+            logger.log(Level.INFO, String.format("%-30s %-20s %-20s %-40s %-15s %-20s %-15s %-20s %-25s%n",
                     "Title", "Duration", "Difficulty", "Goals", "Price", "Schedule", "Tutorial", "Image", "Document"));
             logger.log(Level.INFO, "----------------------------------------------------------------------------------------------------------");
 
             for (Program program : programs) {
                 logger.log(Level.INFO, String.format("%-30s %-20s %-20s %-40s %-15.2f %-20s %-15s %-20s %-25s%n",
-                        program.title, program.duration, program.difficultyLevel, program.goals,
+                        program.getTitle(), program.duration, program.difficultyLevel, program.goals,
                         program.price, program.schedule, program.videoTutorial, program.image, program.document));
             }
 
             logger.log(Level.INFO, "\nTotal Programs: {0}", programs.size());
         }
+    }
+
+    // Method to check if a program exists by title
+    public static boolean programExists(String title) {
+        for (Program program : programs) {
+            if (program.getTitle().equalsIgnoreCase(title)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
