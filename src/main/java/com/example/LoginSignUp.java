@@ -546,8 +546,9 @@ public class LoginSignUp {
                         // Delete a program
                         logger.info("Enter the title of the program to delete: ");
                         String deleteTitle = scanner.nextLine();
+
                         if (!ProgramManagement.programExists(deleteTitle)) {
-                            logger.warning("Program with title " + deleteTitle + " not found.");
+                            logger.warning(String.format("Program with title \"%s\" not found.", deleteTitle));
                             break;
                         }
                         ProgramManagement.deleteProgram(deleteTitle);
@@ -1021,8 +1022,7 @@ public class LoginSignUp {
                     logger.info("Enter your improvement suggestion: ");
                     String improvementSuggestion = scanner.nextLine();
 
-                    FeedbackAndReviews feedbackAndReviews = new FeedbackAndReviews();
-                    feedbackAndReviews.submitProgramReview(programTitle, rating, reviewText, improvementSuggestion);
+                    FeedbackAndReviews.submitProgramReview(programTitle, rating, reviewText, improvementSuggestion);
                     break;
 
                 case 2:
