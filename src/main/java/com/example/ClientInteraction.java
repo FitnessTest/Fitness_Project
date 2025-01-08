@@ -24,24 +24,22 @@ public class ClientInteraction {
     }
 
 
-    public static void listAllClients() {
-
-        if (logger.isLoggable(Level.INFO)) {
-            logger.info("Clients and their messages:");
-            for (Client client : clients) {
-                logger.info(String.format("%-20s %-30s", client.getName(), client.getEmail()));
-                logger.info("------------------------------------------------------------");
-                if (client.getMessages().isEmpty()) {
-                    logger.info("No messages for this client.");
-                } else {
-                    for (String message : client.getMessages()) {
-                        logger.info(message);
-                    }
-                }
-                logger.info("------------------------------------------------------------");
+    public static List<String> listAllClients() {
+        List<String> clientDetails = new ArrayList<>();
+        for (Client client : clients) {
+            StringBuilder details = new StringBuilder();
+            details.append(String.format("%-20s %-30s", client.getName(), client.getEmail()));
+            if (client.getMessages().isEmpty()) {
+                details.append(" | No messages.");
+            } else {
+                details.append(" | Messages: ").append(String.join(", ", client.getMessages()));
             }
+            clientDetails.add(details.toString());
+            logger.info(details.toString());
         }
+        return clientDetails;
     }
+
 
 
     public static boolean sendMessageToClient(String email, String message) {
