@@ -75,15 +75,16 @@ public class ProgressTracking {
         logger.info("Client " + client.getName() + " added successfully.");
     }
 
-    public static void updateCompletedSessions(String clientEmail, int sessionsCompleted) {
+    public static boolean updateCompletedSessions(String clientEmail, int sessionsCompleted) {
         for (Client client : clients) {
             if (client.getEmail().equalsIgnoreCase(clientEmail)) {
                 client.updateCompletedSessions(sessionsCompleted);
                 logger.info("Updated completed sessions for client " + client.getName() + ".");
-                return;
+                return false;
             }
         }
         logger.warning("Client with email " + clientEmail + " not found.");
+        return false;
     }
 
     public static boolean sendMotivationalReminder(String clientEmail, String reminder) {

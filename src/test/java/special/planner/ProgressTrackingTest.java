@@ -3,13 +3,10 @@ package special.planner;
 import com.example.ProgressTracking;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProgressTrackingTest {
-
     private ProgressTracking progressTracking;
 
     @BeforeEach
@@ -23,15 +20,15 @@ public class ProgressTrackingTest {
         progressTracking.addClient(client);
         assertEquals(1, progressTracking.getClients().size());
     }
+
     @Test
     public void testUpdateCompletedSessions() {
         ProgressTracking.Client client = new ProgressTracking.Client("Ihab Habash", "ihab.habash@email.com", 10);
         progressTracking.addClient(client);
         progressTracking.updateCompletedSessions("ihab.habash@email.com", 5);
-
-
         assertEquals(50.0, client.getCompletionRate(), 0.1);
     }
+
     @Test
     public void testSendMotivationalReminder() {
         ProgressTracking.Client client = new ProgressTracking.Client("Amr Jamhour", "amr.jamhour@email.com", 10);
@@ -45,7 +42,11 @@ public class ProgressTrackingTest {
     public void testMonitorClientProgress() {
         ProgressTracking.Client client = new ProgressTracking.Client("Ihab Habash", "ihab.habash@email.com", 10);
         progressTracking.addClient(client);
+        progressTracking.updateCompletedSessions("ihab.habash@email.com", 7);
         progressTracking.monitorClientProgress();
+
+        // Add assertion to check if client's progress is monitored correctly
+        assertEquals(70.0, client.getCompletionRate(), 0.1);
     }
 
     @Test
@@ -57,7 +58,9 @@ public class ProgressTrackingTest {
 
     @Test
     public void testClientNotFoundInUpdate() {
-        progressTracking.updateCompletedSessions("nonexistent@email.com", 5); // No client should be found
+        boolean result = progressTracking.updateCompletedSessions("nonexistent@email.com", 5);
+
+        assertFalse(result, "No client should be found and updated");
     }
 
     @Test
