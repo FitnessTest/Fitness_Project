@@ -26,8 +26,14 @@ class ProgramExplorationAndEnrollmentTest {
 
     @Test
     void testListPrograms_NoPrograms() {
+        // Creating an empty list to simulate no programs
         List<ProgramExplorationAndEnrollment.Program> emptyList = new ArrayList<>();
-        ProgramExplorationAndEnrollment.listPrograms(emptyList);
+
+        // Ensuring the method handles an empty list without exceptions
+        List<ProgramExplorationAndEnrollment.Program> result = ProgramExplorationAndEnrollment.listPrograms(emptyList);
+
+        // Assertion: The returned list should also be empty
+        assertTrue(result.isEmpty(), "The result list should be empty when no programs are available.");
     }
 
     @Test

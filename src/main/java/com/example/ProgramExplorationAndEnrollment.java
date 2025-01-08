@@ -62,7 +62,7 @@ public class ProgramExplorationAndEnrollment {
         }
     }
 
-    public static void listPrograms(List<Program> programList) {
+    public static List<Program> listPrograms(List<Program> programList) {
         if (programList.isEmpty()) {
             logger.log(Level.INFO, "No programs available matching the criteria.");
         } else {
@@ -75,6 +75,7 @@ public class ProgramExplorationAndEnrollment {
                         program.getTitle(), program.getDifficultyLevel(), program.getFocusArea(), program.getSchedule(), program.getPrice()));
             }
         }
+        return programList;
     }
 
     public static List<Program> browsePrograms(String difficultyLevel, String focusArea, double minPrice, double maxPrice) {
