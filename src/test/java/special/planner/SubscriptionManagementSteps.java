@@ -12,7 +12,14 @@ public class SubscriptionManagementSteps {
 
     private final Map<String, Subscription> subscriptions = new HashMap<>();
     private final Map<String, User> users = new HashMap<>();
+    private boolean isDowngradeValid(String currentPlan, String newPlan) {
+        Map<String, Integer> planHierarchy = new HashMap<>();
+        planHierarchy.put("Premium", 3);
+        planHierarchy.put("Standard", 2);
+        planHierarchy.put("Basic", 1);
 
+        return planHierarchy.get(currentPlan) > planHierarchy.get(newPlan);
+    }
      static class Subscription {
         String planName;
         String type;
