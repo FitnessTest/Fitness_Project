@@ -39,3 +39,17 @@ Feature: Login
       | Email                       | Password |
       | amrojamhour4@gmail.com      | b1b1     |
       |                             |          |
+  Scenario Outline: Invalid email format
+    Given The user is not logged in
+    When The email format is invalid email is "<Email>" and password is "<Password>"
+    Then User fails to log in due to invalid email format
+
+    Examples:
+      | Email              | Password |
+      | kebab83.gmail.com  | Ihab     |
+      | kebab83@           | Amr      |
+
+  Scenario: SQL Injection attempt
+    Given The user is not logged in
+    When The email or password contains SQL injection characters
+    Then User fails to log in due to suspicious characters
