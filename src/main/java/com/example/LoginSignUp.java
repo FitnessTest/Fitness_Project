@@ -86,7 +86,7 @@ public class LoginSignUp {
 
         logger.info("Enter Email: ");
         String email = scanner.nextLine();
-        if (email == null || !isValidEmail(email)) {
+        if (!isValidEmail(email)) {
             logger.warning("Invalid email format.");
             return;
         }
