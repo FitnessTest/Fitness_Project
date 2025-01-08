@@ -50,8 +50,10 @@ public class LoginSignUp {
         if (email == null || email.isEmpty()) {
             return false;
         }
-        // Optimized regular expression for email validation
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{2,})$";
+        // Optimized and efficient regular expression for email validation
+        String emailRegex = "^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+
+
         Pattern pattern = Pattern.compile(emailRegex);
         return pattern.matcher(email).matches();
     }
