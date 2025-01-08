@@ -47,11 +47,14 @@ public class LoginSignUp {
         return users.stream().noneMatch(user -> user.id.equals(id));
     }
     public static boolean isValidEmail(String email) {
-        if (email == null) {
+        if (email == null || email.isEmpty()) {
             return false;
         }
-        // Regular expression for a simple email validation
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+
+        // Simplified and optimized regular expression for email validation
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
+
+        // Using a pattern with explicit matching for email format
         Pattern pattern = Pattern.compile(emailRegex);
         return pattern.matcher(email).matches();
     }
