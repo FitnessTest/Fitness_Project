@@ -48,7 +48,7 @@ public class SubscriptionManagement {
         }
     }
 
-    private static Map<String, User> userSubscriptions;
+    public static Map<String, User> userSubscriptions;
 
     public SubscriptionManagement() {
         userSubscriptions = new HashMap<>();

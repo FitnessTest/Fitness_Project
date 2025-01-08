@@ -33,26 +33,44 @@ public class SubscriptionManagementTest {
     @Test
     public void testUpgradeToPremium() {
         SubscriptionManagement.upgradeToPremium("1");
+        assertEquals(SubscriptionManagement.Plan.PREMIUM, subscriptionManagement.getSubscriptionPlan("1"));
+
         SubscriptionManagement.upgradeToPremium("2");
+        assertEquals(SubscriptionManagement.Plan.PREMIUM, subscriptionManagement.getSubscriptionPlan("2"));
+
         SubscriptionManagement.upgradeToPremium("nonexistent");
+        assertEquals(SubscriptionManagement.Plan.BASIC, subscriptionManagement.getSubscriptionPlan("nonexistent"));
     }
 
     @Test
     public void testDowngradeToBasic() {
         SubscriptionManagement.downgradeToBasic("2");
+        assertEquals(SubscriptionManagement.Plan.BASIC, subscriptionManagement.getSubscriptionPlan("2"));
+
         SubscriptionManagement.downgradeToBasic("1");
+        assertEquals(SubscriptionManagement.Plan.BASIC, subscriptionManagement.getSubscriptionPlan("1"));
+
         SubscriptionManagement.downgradeToBasic("nonexistent");
+        assertEquals(SubscriptionManagement.Plan.BASIC, subscriptionManagement.getSubscriptionPlan("nonexistent"));
     }
 
     @Test
     public void testViewAllSubscriptions() {
-        subscriptionManagement.viewAllSubscriptions();
-    }
+        assertNotNull(subscriptionManagement);
+        assertFalse(SubscriptionManagement.userSubscriptions.isEmpty());
 
+        subscriptionManagement.viewAllSubscriptions();
+        // You might want to add assertions that inspect the log output or the expected state of userSubscriptions.
+    }
     @Test
     public void testChangeSubscriptionPlan() {
         SubscriptionManagement.changeSubscriptionPlan("1", SubscriptionManagement.Plan.PREMIUM);
+        assertEquals(SubscriptionManagement.Plan.PREMIUM, subscriptionManagement.getSubscriptionPlan("1"));
+
         SubscriptionManagement.changeSubscriptionPlan("2", SubscriptionManagement.Plan.BASIC);
+        assertEquals(SubscriptionManagement.Plan.BASIC, subscriptionManagement.getSubscriptionPlan("2"));
+
         SubscriptionManagement.changeSubscriptionPlan("nonexistent", SubscriptionManagement.Plan.PREMIUM);
+        assertEquals(SubscriptionManagement.Plan.BASIC, subscriptionManagement.getSubscriptionPlan("nonexistent"));
     }
 }
