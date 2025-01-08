@@ -50,15 +50,11 @@ public class LoginSignUp {
         if (email == null || email.isEmpty()) {
             return false;
         }
-
-        // Simplified and optimized regular expression for email validation
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
-
-        // Using a pattern with explicit matching for email format
+        // Optimized regular expression for email validation
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{2,})$";
         Pattern pattern = Pattern.compile(emailRegex);
         return pattern.matcher(email).matches();
     }
-
     public static void signUp(Scanner scanner) {
         logger.info("\n--- Client Signup ---");
         logger.info("Enter ID (5 digits): ");
