@@ -79,13 +79,13 @@ public class LoginSignUp {
         logger.info("Enter Password: ");
         String password = scanner.nextLine();
 
-        // Iterate over the list of users
+
         for (UserManagement.User user : userManagement.getUsers()) {
-            // Check if the ID and password match
+
             if (user.id.equals(id) && user.password.equals(password)) {
                 logger.info(MessageFormat.format("Login successful! Welcome, {0}.", user.role));
 
-                // Conditionally invoke the menu method based on the user role
+
                 if (ADMIN_ROLE.equals(user.role)) {
                     adminMenu(scanner);
                 } else if (INSTRUCTOR_ROLE.equals(user.role)) {
@@ -95,11 +95,11 @@ public class LoginSignUp {
                 } else {
                     logger.warning("Unknown role.");
                 }
-                return;  // Exit once the user has been authenticated and the role-specific menu is invoked
+                return;
             }
         }
 
-        // If no matching user was found
+
         logger.warning("Login failed: Invalid ID or password.");
     }
 
