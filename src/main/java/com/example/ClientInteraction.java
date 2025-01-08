@@ -7,16 +7,22 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClientInteraction {
+
+
     private static final Logger logger = Logger.getLogger(ClientInteraction.class.getName());
     private static final List<Client> clients = new ArrayList<>();
 
 
-
+    public ClientInteraction() {
+        throw new UnsupportedOperationException("ClientInteraction class cannot be instantiated.");
+    }
+    public static void clearClients() {
+        clients.clear();
+    }
 
     public static boolean addClient(String name, String email) {
         Client newClient = new Client(name, email);
         clients.add(newClient);
-
         if (logger.isLoggable(Level.INFO)) {
             logger.info(String.format("Added new client: %s", newClient.getName()));
         }
@@ -41,22 +47,18 @@ public class ClientInteraction {
     }
 
 
-
     public static boolean sendMessageToClient(String email, String message) {
         Optional<Client> clientOptional = clients.stream()
                 .filter(client -> client.getEmail().equals(email))
                 .findFirst();
-
         if (clientOptional.isPresent()) {
             Client client = clientOptional.get();
             client.getMessages().add(message);
-
             if (logger.isLoggable(Level.INFO)) {
                 logger.info(String.format("Message sent to client %s: %s", client.getName(), message));
             }
             return true;
         } else {
-
             if (logger.isLoggable(Level.WARNING)) {
                 logger.warning(String.format("Client with email %s not found.", email));
             }
@@ -69,17 +71,14 @@ public class ClientInteraction {
         Optional<Client> clientOptional = clients.stream()
                 .filter(client -> client.getEmail().equals(email))
                 .findFirst();
-
         if (clientOptional.isPresent()) {
             Client client = clientOptional.get();
             client.getMessages().add(String.format("Progress report: %s", report));
-
             if (logger.isLoggable(Level.INFO)) {
                 logger.info(String.format("Progress report sent to client %s: %s", client.getName(), report));
             }
             return true;
         } else {
-
             if (logger.isLoggable(Level.WARNING)) {
                 logger.warning(String.format("Client with email %s not found.", email));
             }
@@ -87,12 +86,11 @@ public class ClientInteraction {
         }
     }
 
-    // Inner Client class to represent a client
+
     public static class Client {
         private String name;
         private String email;
         private List<String> messages;
-
 
         public Client(String name, String email) {
             this.name = name;
