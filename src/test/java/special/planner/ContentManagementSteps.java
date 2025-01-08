@@ -128,9 +128,14 @@ public class ContentManagementSteps {
     @When("I attempt to reject a non-existing article {string}")
     public void iAttemptToRejectANonExistingArticle(String title) {
         Article article = articles.get(title);
-        assertNull(article, "Expected article not to exist: " + title);
-    }
+        if (article == null) {
 
+            fail("Cannot reject an article that does not exist: " + title);
+        } else {
+
+            fail("Article should not exist for rejection: " + title);
+        }
+    }
     @When("I attempt to resolve a non-existing feedback from {string}")
     public void iAttemptToResolveANonExistingFeedback(String user) {
         Feedback feedback = feedbacks.get(user);
