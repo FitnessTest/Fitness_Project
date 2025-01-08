@@ -2,11 +2,9 @@ package special.planner;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -14,8 +12,6 @@ public class SignUpTest {
 
     private String email;
     private boolean isSignUpSuccessful;
-
-
     private static final Set<String> existingEmails = new HashSet<>();
 
     static {
@@ -53,5 +49,49 @@ public class SignUpTest {
     @Then("Signing up succeeds")
     public void signing_up_succeeds() {
         assertTrue("Sign-up should succeed", isSignUpSuccessful);
+    }
+
+    @When("the email is correct but already exists, the email is {string}")
+    public void the_email_is_correct_but_already_exists(String email) {
+        this.email = email;
+        isSignUpSuccessful = !existingEmails.contains(email) && EMAIL_PATTERN.matcher(email).matches();
+    }
+
+    @Then("Signing up fails due to existing email")
+    public void signing_up_fails_due_to_existing_email() {
+        assertFalse("Sign-up should fail due to existing email", isSignUpSuccessful);
+    }
+
+    @When("the email is correct and does not exist, the email is {string}")
+    public void the_email_is_correct_and_does_not_exist(String email) {
+        this.email = email;
+        isSignUpSuccessful = !existingEmails.contains(email) && EMAIL_PATTERN.matcher(email).matches();
+    }
+
+    @Then("Signing up should succeed with new correct email")
+    public void signing_up_should_succeed_with_new_correct_email() {
+        assertTrue("Sign-up should succeed with new correct email", isSignUpSuccessful);
+    }
+
+    @When("the email is empty")
+    public void the_email_is_empty() {
+        this.email = "";
+        isSignUpSuccessful = EMAIL_PATTERN.matcher(email).matches();
+    }
+
+    @Then("Signing up fails due to empty email")
+    public void signing_up_fails_due_to_empty_email() {
+        assertFalse("Sign-up should fail due to empty email", isSignUpSuccessful);
+    }
+
+    @When("the email has an invalid domain, the email is {string}")
+    public void the_email_has_an_invalid_domain(String email) {
+        this.email = email;
+        isSignUpSuccessful = EMAIL_PATTERN.matcher(email).matches();
+    }
+
+    @Then("Signing up fails due to invalid domain")
+    public void signing_up_fails_due_to_invalid_domain() {
+        assertFalse("Sign-up should fail due to invalid domain", isSignUpSuccessful);
     }
 }
