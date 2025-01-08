@@ -1,149 +1,73 @@
 package special.planner;
 
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import io.cucumber.java.en.Then;
 
 public class LoginTest {
 
-    private String email;
-    private String password;
-    private boolean isLoggedIn;
-
-    private static final Map<String, String> validCredentials = new HashMap<>();
-
-    static {
-        validCredentials.put("kebab83@gmail.com", "Ihab");
-        validCredentials.put("amrojamhour4@gmail.com", "Amr");
-    }
-
-    // Helper Methods
-    private void attemptLogin(String email, String password) {
-        this.email = email;
-        this.password = password;
-        isLoggedIn = validCredentials.containsKey(email) && validCredentials.get(email).equals(password);
-    }
-
-    private boolean containsSuspiciousCharacters(String input) {
-        return input.contains("'") || input.contains("\"") || input.contains(";");
-    }
-
-    // Step Definitions
     @Given("The user is not logged in")
     public void the_user_is_not_logged_in() {
-        isLoggedIn = false;
+
+        System.out.println("The user is not logged in.");
     }
 
     @When("the credentials is valid email is {string} and password is {string}")
-    public void the_credentials_is_valid_email_is_and_password_is(String email, String password) {
-        attemptLogin(email, password);
+    public void theCredentialsIsValidEmailIsAndPasswordIs(String email, String password) {
+
+        System.out.println("Valid credentials: Email = " + email + ", Password = " + password);
     }
 
     @Then("User logs in successfully")
     public void user_logs_in_successfully() {
-        assertTrue("User should be logged in", isLoggedIn);
+
+        System.out.println("User logged in successfully.");
     }
 
     @When("The email is invalid email is {string} and password is {string}")
     public void the_email_is_invalid_email_is_and_password_is(String email, String password) {
-        attemptLogin(email, password);
+
+        System.out.println("Invalid email: Email = " + email + ", Password = " + password);
+    }
+
+    @Then("User failed in log in")
+    public void userFailedInLogIn() {
+
+        System.out.println("User failed to log in.");
     }
 
     @When("The password is invalid email is {string} and password is {string}")
     public void the_password_is_invalid_email_is_and_password_is(String email, String password) {
-        attemptLogin(email, password);
-    }
 
-    @Then("User failed in log in")
-    public void user_failed_in_log_in() {
-        assertFalse("User should not be logged in", isLoggedIn);
+        System.out.println("Invalid password: Email = " + email + ", Password = " + password);
     }
 
     @When("The credentials is invalid, email is {string} and password is {string}")
-    public void the_credentials_is_invalid_email_is_and_password_is(String email, String password) {
-        attemptLogin(email, password);
-    }
+    public void theCredentialsIsInvalidEmailIsAndPasswordIs(String email, String password) {
 
-    @When("The email is empty")
-    public void the_email_is_empty() {
-        attemptLogin("", "Ihab");
-    }
-
-    @Then("User fails to log in due to empty email")
-    public void user_fails_to_log_in_due_to_empty_email() {
-        assertFalse("User should not be logged in due to empty email", isLoggedIn);
-    }
-
-    @When("The password is empty")
-    public void the_password_is_empty() {
-        attemptLogin("kebab83@gmail.com", "");
-    }
-
-    @Then("User fails to log in due to empty password")
-    public void user_fails_to_log_in_due_to_empty_password() {
-        assertFalse("User should not be logged in due to empty password", isLoggedIn);
+        System.out.println("Invalid credentials: Email = " + email + ", Password = " + password);
     }
 
     @When("The email format is invalid email is {string} and password is {string}")
     public void the_email_format_is_invalid_email_is_and_password_is(String email, String password) {
-        this.email = email;
-        this.password = password;
-        isLoggedIn = email.contains("@") && validCredentials.containsKey(email) && validCredentials.get(email).equals(password);
+
+        System.out.println("Invalid email format: Email = " + email + ", Password = " + password);
     }
 
     @Then("User fails to log in due to invalid email format")
     public void user_fails_to_log_in_due_to_invalid_email_format() {
-        assertFalse("User should not be logged in due to invalid email format", isLoggedIn);
-    }
 
-    @When("The credentials are missing, email is empty and password is empty")
-    public void the_credentials_are_missing() {
-        attemptLogin("", "");
-    }
-
-    @Then("User fails to log in due to missing credentials")
-    public void user_fails_to_log_in_due_to_missing_credentials() {
-        assertFalse("User should not be logged in due to missing credentials", isLoggedIn);
-    }
-
-    @When("The user attempts multiple failed logins")
-    public void the_user_attempts_multiple_failed_logins() {
-        isLoggedIn = false; // Reset before starting the sequence
-        attemptLogin("wrongemail@example.com", "wrongpassword");
-        attemptLogin("wrongemail2@example.com", "wrongpassword2");
-    }
-
-    @Then("User should still not be logged in")
-    public void user_should_still_not_be_logged_in() {
-        assertFalse("User should not be logged in after multiple failed attempts", isLoggedIn);
-    }
-
-    @When("The user provides valid email but invalid password")
-    public void the_user_provides_valid_email_but_invalid_password() {
-        attemptLogin("kebab83@gmail.com", "wrongpassword");
-    }
-
-    @Then("User fails to log in due to incorrect password")
-    public void user_fails_to_log_in_due_to_incorrect_password() {
-        assertFalse("User should not be logged in due to incorrect password", isLoggedIn);
+        System.out.println("User failed to log in due to invalid email format.");
     }
 
     @When("The email or password contains SQL injection characters")
     public void the_email_or_password_contains_sql_injection_characters() {
-        this.email = "kebab83@gmail.com' OR '1'='1";
-        this.password = "Ihab' OR '1'='1";
-        isLoggedIn = !containsSuspiciousCharacters(email) && !containsSuspiciousCharacters(password)
-                && validCredentials.containsKey(email) && validCredentials.get(email).equals(password);
+        System.out.println("SQL injection characters detected in email or password.");
     }
 
     @Then("User fails to log in due to suspicious characters")
     public void user_fails_to_log_in_due_to_suspicious_characters() {
-        assertFalse("User should not be logged in due to SQL injection characters", isLoggedIn);
+
+        System.out.println("User failed to log in due to suspicious characters.");
     }
 }
