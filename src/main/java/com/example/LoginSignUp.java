@@ -2,6 +2,7 @@ package com.example;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class LoginSignUp {
     private static final Logger logger = Logger.getLogger(LoginSignUp.class.getName());
@@ -45,12 +46,21 @@ public class LoginSignUp {
     private static boolean isUniqueID(String id) {
         return users.stream().noneMatch(user -> user.id.equals(id));
     }
+    public static boolean isValidEmail(String email) {
+        if (email == null) {
+            return false;
+        }
+        // Regular expression for a simple email validation
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        return pattern.matcher(email).matches();
+    }
 
     public static void signUp(Scanner scanner) {
         logger.info("\n--- Client Signup ---");
         logger.info("Enter ID (5 digits): ");
         String id = scanner.nextLine();
-        if (!isValidID(id, Role.CLIENT)) {
+        if (id == null || !isValidID(id, Role.CLIENT)) {
             logger.warning("Invalid ID format. Client IDs must be exactly 5 digits.");
             return;
         }
@@ -58,18 +68,36 @@ public class LoginSignUp {
             logger.warning("ID already exists. Please try a different ID.");
             return;
         }
+
         logger.info("Enter Password: ");
         String password = scanner.nextLine();
+        if (password == null || password.isEmpty()) {
+            logger.warning("Password cannot be empty.");
+            return;
+        }
+
         logger.info("Enter Name: ");
         String name = scanner.nextLine();
+        if (name == null || name.isEmpty()) {
+            logger.warning("Name cannot be empty.");
+            return;
+        }
+
         logger.info("Enter Email: ");
         String email = scanner.nextLine();
+        if (email == null || !isValidEmail(email)) {
+            logger.warning("Invalid email format.");
+            return;
+        }
 
-
-        User newUser = new User(id, password, name, email, CLIENT_ROLE);
-        users.add(newUser);
-        userManagement.addUser(id, password, name, email, CLIENT_ROLE);
-        logger.info("Account created successfully! You can now log in.");
+        try {
+            User newUser = new User(id, password, name, email, CLIENT_ROLE);
+            users.add(newUser);
+            userManagement.addUser(id, password, name, email, CLIENT_ROLE);
+            logger.info("Account created successfully! You can now log in.");
+        } catch (Exception e) {
+            logger.severe("An error occurred while creating the account: " + e.getMessage());
+        }
     }
 
     public static void logInMenu(Scanner scanner) {
@@ -79,28 +107,31 @@ public class LoginSignUp {
         logger.info("Enter Password: ");
         String password = scanner.nextLine();
 
-
+        boolean loginSuccessful = false;
         for (UserManagement.User user : userManagement.getUsers()) {
-
             if (user.id.equals(id) && user.password.equals(password)) {
                 logger.info(MessageFormat.format("Login successful! Welcome, {0}.", user.role));
-
-
-                if (ADMIN_ROLE.equals(user.role)) {
-                    adminMenu(scanner);
-                } else if (INSTRUCTOR_ROLE.equals(user.role)) {
-                    instructorMenu(scanner);
-                } else if (CLIENT_ROLE.equals(user.role)) {
-                    clientMenu(scanner);
-                } else {
-                    logger.warning("Unknown role.");
+                loginSuccessful = true;
+                switch (user.role) {
+                    case ADMIN_ROLE:
+                        adminMenu(scanner);
+                        break;
+                    case INSTRUCTOR_ROLE:
+                        instructorMenu(scanner);
+                        break;
+                    case CLIENT_ROLE:
+                        clientMenu(scanner);
+                        break;
+                    default:
+                        logger.warning("Unknown role.");
                 }
-                return;
+                break;
             }
         }
 
-
-        logger.warning("Login failed: Invalid ID or password.");
+        if (!loginSuccessful) {
+            logger.warning("Login failed: Invalid ID or password.");
+        }
     }
 
     public static void adminMenu(Scanner scanner) {
