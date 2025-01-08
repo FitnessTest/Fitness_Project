@@ -3,11 +3,9 @@ package special.planner;
 import com.example.ProgramMonitoring;
 import org.junit.jupiter.api.*;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProgramMonitoringTest {
-
     private ProgramMonitoring monitoring;
 
     @BeforeEach
@@ -17,21 +15,15 @@ class ProgramMonitoringTest {
 
     @Test
     void testInitialization() {
-
         assertEquals(5, ProgramMonitoring.programs.size());
         assertTrue(ProgramMonitoring.programs.containsKey("Weight Loss"));
-
-
         assertEquals(5, ProgramMonitoring.clients.size());
         assertTrue(ProgramMonitoring.clients.containsKey("amrojamhour4@gmail.com"));
     }
 
     @Test
     void testViewMostPopularPrograms() {
-
         List<String> result = ProgramMonitoring.viewMostPopularPrograms();
-
-
         List<String> expectedOutput = List.of(
                 "Program Name              | Enrollment Count",
                 "------------------------------------------",
@@ -41,16 +33,17 @@ class ProgramMonitoringTest {
                 "Strength Training         | 60             ",
                 "HIIT Bootcamp             | 50             "
         );
-
-
         assertEquals(expectedOutput, result, "The returned output should match the expected format and content.");
     }
 
     @Test
     void testGenerateReports() {
-        // This method is currently unsupported, and we will throw an exception to
-        // indicate that this functionality is not yet implemented.
+        // Call the method
+        ProgramMonitoring.generateReports();
 
+        // Add assertions to check the expected outputs
+        // Example: Check if logs were correctly generated or if some state was updated as expected
+        // You might need to capture the logs or mock dependencies to verify the output.
     }
 
     @Test
