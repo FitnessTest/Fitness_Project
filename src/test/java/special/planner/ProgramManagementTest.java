@@ -19,7 +19,6 @@ class ProgramManagementTest {
     void testCreateProgram() {
         ProgramManagement.createProgram("Yoga Basics", "4 weeks", "Beginner", "Weight loss",
                 "http://tutorial.com", "yoga.jpg", "yoga_doc.pdf", 49.99, "Mon-Wed 9:00 AM");
-
         List<ProgramManagement.Program> programs = ProgramManagement.getPrograms();
         assertEquals(1, programs.size());
         assertEquals("Yoga Basics", programs.get(0).title);
@@ -29,10 +28,8 @@ class ProgramManagementTest {
     void testUpdateProgram_Success() {
         ProgramManagement.createProgram("Yoga Basics", "4 weeks", "Beginner", "Weight loss",
                 "http://tutorial.com", "yoga.jpg", "yoga_doc.pdf", 49.99, "Mon-Wed 9:00 AM");
-
         boolean result = ProgramManagement.updateProgram("Yoga Basics", "Advanced Yoga", "6 weeks", "Advanced",
                 "Flexibility", "http://newtutorial.com", "advanced_yoga.jpg", "advanced_yoga_doc.pdf", 79.99, "Mon-Wed 10:00 AM");
-
         assertTrue(result);
         List<ProgramManagement.Program> programs = ProgramManagement.getPrograms();
         assertEquals("Advanced Yoga", programs.get(0).title);
@@ -42,7 +39,6 @@ class ProgramManagementTest {
     void testUpdateProgram_NotFound() {
         boolean result = ProgramManagement.updateProgram("Nonexistent Program", "Updated Yoga", "6 weeks", "Advanced",
                 "Flexibility", "http://newtutorial.com", "advanced_yoga.jpg", "advanced_yoga_doc.pdf", 79.99, "Mon-Wed 10:00 AM");
-
         assertFalse(result);
     }
 
@@ -50,10 +46,8 @@ class ProgramManagementTest {
     void testDeleteProgram_Success() {
         ProgramManagement.createProgram("Yoga Basics", "4 weeks", "Beginner", "Weight loss",
                 "http://tutorial.com", "yoga.jpg", "yoga_doc.pdf", 49.99, "Mon-Wed 9:00 AM");
-
         boolean result = ProgramManagement.deleteProgram("Yoga Basics");
         assertTrue(result);
-
         List<ProgramManagement.Program> programs = ProgramManagement.getPrograms();
         assertTrue(programs.isEmpty());
     }
@@ -66,6 +60,11 @@ class ProgramManagementTest {
 
     @Test
     void testListAllPrograms_Empty() {
+        // Ensure the list is empty
+        List<ProgramManagement.Program> programs = ProgramManagement.getPrograms();
+        assertTrue(programs.isEmpty(), "The list of programs should be empty.");
+
+
         ProgramManagement.listAllPrograms(); // Should log "No programs available."
     }
 
@@ -76,6 +75,14 @@ class ProgramManagementTest {
         ProgramManagement.createProgram("Advanced Yoga", "6 weeks", "Advanced", "Flexibility",
                 "http://newtutorial.com", "advanced_yoga.jpg", "advanced_yoga_doc.pdf", 79.99, "Mon-Wed 10:00 AM");
 
-        ProgramManagement.listAllPrograms(); // Should log all programs
+        List<ProgramManagement.Program> programs = ProgramManagement.getPrograms();
+
+
+        assertEquals(2, programs.size(), "There should be two programs in the list.");
+        assertEquals("Yoga Basics", programs.get(0).title, "The first program should be 'Yoga Basics'.");
+        assertEquals("Advanced Yoga", programs.get(1).title, "The second program should be 'Advanced Yoga'.");
+
+
+        ProgramManagement.listAllPrograms();
     }
 }
