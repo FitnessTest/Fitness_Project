@@ -8,16 +8,37 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains step definitions for the Content Management feature in the
+ * Cucumber-based testing framework. It handles articles and feedback statuses.
+ */
 public class ContentManagementSteps {
 
+    // Maps to hold articles and feedbacks for testing
     private final Map<String, Article> articles = new HashMap<>();
     private final Map<String, Feedback> feedbacks = new HashMap<>();
-
+    /**
+     * Default constructor for ContentManagementSteps.
+     * Initializes the maps for articles and feedbacks.
+     */
+    public ContentManagementSteps() {
+        // Explicit default constructor (even though not necessary)
+    }
+    /**
+     * A static class representing an Article.
+     */
     static class Article {
         String title;
         String type;
         String status;
 
+        /**
+         * Constructor for the Article class.
+         *
+         * @param title The title of the article.
+         * @param type The type of article.
+         * @param status The current status of the article.
+         */
         Article(String title, String type, String status) {
             this.title = title;
             this.type = type;
@@ -25,11 +46,21 @@ public class ContentManagementSteps {
         }
     }
 
+    /**
+     * A static class representing Feedback.
+     */
     static class Feedback {
         String user;
         String message;
         String status;
 
+        /**
+         * Constructor for the Feedback class.
+         *
+         * @param user The user who gave the feedback.
+         * @param message The feedback message.
+         * @param status The current status of the feedback.
+         */
         Feedback(String user, String message, String status) {
             this.user = user;
             this.message = message;
@@ -37,6 +68,11 @@ public class ContentManagementSteps {
         }
     }
 
+    /**
+     * Given step to initialize articles pending approval from a Cucumber DataTable.
+     *
+     * @param dataTable The table containing article details.
+     */
     @Given("the following articles are pending approval:")
     public void theFollowingArticlesArePendingApproval(DataTable dataTable) {
         dataTable.asMaps().forEach(row -> {
@@ -50,6 +86,11 @@ public class ContentManagementSteps {
         });
     }
 
+    /**
+     * When step to approve an article by title.
+     *
+     * @param title The title of the article to approve.
+     */
     @When("I approve the article {string}")
     public void iApproveTheArticle(String title) {
         Article article = articles.get(title);
@@ -64,6 +105,11 @@ public class ContentManagementSteps {
         }
     }
 
+    /**
+     * When step to reject an article by title.
+     *
+     * @param title The title of the article to reject.
+     */
     @When("I reject the article {string}")
     public void iRejectTheArticle(String title) {
         Article article = articles.get(title);
@@ -78,6 +124,12 @@ public class ContentManagementSteps {
         }
     }
 
+    /**
+     * Then step to verify the status of an article after an action.
+     *
+     * @param title The title of the article.
+     * @param expectedStatus The expected status of the article.
+     */
     @Then("the status of the article {string} should be {string}")
     public void theStatusOfTheArticleShouldBe(String title, String expectedStatus) {
         Article article = articles.get(title);
@@ -85,6 +137,11 @@ public class ContentManagementSteps {
         assertEquals(expectedStatus, article.status, "Status mismatch for article: " + title);
     }
 
+    /**
+     * Given step to initialize existing feedback from a Cucumber DataTable.
+     *
+     * @param dataTable The table containing feedback details.
+     */
     @Given("the following feedbacks exist:")
     public void theFollowingFeedbacksExist(DataTable dataTable) {
         dataTable.asMaps().forEach(row -> {
@@ -98,6 +155,11 @@ public class ContentManagementSteps {
         });
     }
 
+    /**
+     * When step to resolve feedback from a specific user.
+     *
+     * @param user The user whose feedback is to be resolved.
+     */
     @When("I resolve the feedback from {string}")
     public void iResolveTheFeedbackFrom(String user) {
         Feedback feedback = feedbacks.get(user);
@@ -112,6 +174,12 @@ public class ContentManagementSteps {
         }
     }
 
+    /**
+     * Then step to verify the status of feedback from a user after an action.
+     *
+     * @param user The user whose feedback status is to be checked.
+     * @param expectedStatus The expected status of the feedback.
+     */
     @Then("the status of the feedback from {string} should be {string}")
     public void theStatusOfTheFeedbackFromShouldBe(String user, String expectedStatus) {
         Feedback feedback = feedbacks.get(user);
@@ -119,23 +187,37 @@ public class ContentManagementSteps {
         assertEquals(expectedStatus, feedback.status, "Status mismatch for feedback from user: " + user);
     }
 
+    /**
+     * When step to attempt approving a non-existing article by title.
+     *
+     * @param title The title of the article to approve.
+     */
     @When("I attempt to approve a non-existing article {string}")
     public void iAttemptToApproveANonExistingArticle(String title) {
         Article article = articles.get(title);
         assertNull(article, "Expected article not to exist: " + title);
     }
 
+    /**
+     * When step to attempt rejecting a non-existing article by title.
+     *
+     * @param title The title of the article to reject.
+     */
     @When("I attempt to reject a non-existing article {string}")
     public void iAttemptToRejectANonExistingArticle(String title) {
         Article article = articles.get(title);
         if (article == null) {
-
             fail("Cannot reject an article that does not exist: " + title);
         } else {
-
             fail("Article should not exist for rejection: " + title);
         }
     }
+
+    /**
+     * When step to attempt resolving a non-existing feedback by user.
+     *
+     * @param user The user whose feedback is to be resolved.
+     */
     @When("I attempt to resolve a non-existing feedback from {string}")
     public void iAttemptToResolveANonExistingFeedback(String user) {
         Feedback feedback = feedbacks.get(user);

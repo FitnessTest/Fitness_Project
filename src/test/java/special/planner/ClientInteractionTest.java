@@ -7,9 +7,20 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * This class contains tests for the ClientInteraction class, ensuring
+ * that client management functionalities like adding clients, sending messages,
+ * and providing progress reports work as expected.
+ */
 public class ClientInteractionTest {
-
+    /**
+     * This is the default constructor for the test class.
+     * It does not require any initialization, as the setup is handled in the @BeforeEach method.
+     */
+    @SuppressWarnings("default-constructor")
+    public ClientInteractionTest() {
+        // Default constructor for the test class
+    }
     @BeforeEach
     void setUp() {
         ClientInteraction.clearClients();

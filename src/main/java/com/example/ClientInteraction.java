@@ -7,12 +7,18 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * A utility class to manage client interactions, including adding clients, sending messages,
+ * and providing progress reports.
+ */
 public final class ClientInteraction {
 
     private static final Logger logger = Logger.getLogger(ClientInteraction.class.getName());
     private static final List<Client> clients = Collections.synchronizedList(new ArrayList<>());
 
-
+    /**
+     * Private constructor to prevent instantiation of this utility class.
+     */
     private ClientInteraction() {
         throw new UnsupportedOperationException("ClientInteraction class cannot be instantiated.");
     }
@@ -128,27 +134,48 @@ public final class ClientInteraction {
     }
 
     /**
-     * Inner Client class representing a client.
+     * Represents a client with a name, email, and a list of messages.
      */
     public static class Client {
         private final String name;
         private final String email;
         private final List<String> messages;
 
+        /**
+         * Constructs a new Client with the given name and email.
+         *
+         * @param name  the name of the client
+         * @param email the email of the client
+         */
         public Client(String name, String email) {
             this.name = name;
             this.email = email;
             this.messages = new ArrayList<>();
         }
 
+        /**
+         * Gets the name of the client.
+         *
+         * @return the client's name
+         */
         public String getName() {
             return name;
         }
 
+        /**
+         * Gets the email of the client.
+         *
+         * @return the client's email
+         */
         public String getEmail() {
             return email;
         }
 
+        /**
+         * Gets the list of messages for the client.
+         *
+         * @return the list of messages
+         */
         public List<String> getMessages() {
             return messages;
         }

@@ -3,10 +3,30 @@ import com.example.FeedbackAndReviews;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Unit tests for the FeedbackAndReviews class.
+ * This class tests the functionality of submitting reviews, improvement suggestions, and rating validation
+ * for fitness programs.
+ *
+ * Default constructor: Automatically provided by Java. It is used to instantiate the test class and
+ * doesn't contain any specific logic, as it is invoked by the JUnit framework before each test method.
+ */
 public class FeedbackAndReviewsTest {
     private FeedbackAndReviews feedbackAndReviews;
 
+    /**
+     * Default constructor: Explicitly added for documentation purposes.
+     * It doesn't contain any specific logic, as JUnit automatically calls this constructor
+     * before each test method.
+     */
+    public FeedbackAndReviewsTest() {
+        // Default constructor
+    }
+
+    /**
+     * Sets up the environment for each test case.
+     * Initializes the FeedbackAndReviews object before each test method.
+     */
     @BeforeEach
     void setUp() {
         feedbackAndReviews = new FeedbackAndReviews();

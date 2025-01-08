@@ -136,4 +136,5 @@ public class SubscriptionManagementSteps {
             user.setSubscriptionPlan(newPlan.trim());
         }
     }
+
 }

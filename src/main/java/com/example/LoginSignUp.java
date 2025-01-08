@@ -4,14 +4,55 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+/**
+ * The LoginSignUp class handles user login, signup, and role management functionality.
+ * It provides menus for different user roles and manages user data.
+ */
 public class LoginSignUp {
     private static final Logger logger = Logger.getLogger(LoginSignUp.class.getName());
 
-    public enum Role {
-        ADMIN, INSTRUCTOR, CLIENT
+    /**
+     * Constructs a LoginSignUp instance with the specified list of users.
+     *
+     * @param users List of existing users to initialize the user management system.
+     */
+    public LoginSignUp(List<UserManagement.User> users) {
     }
 
+    /**
+     * Enum that defines the different roles in the system.
+     * - ADMIN: Admin role with full access to manage users, programs, and settings.
+     * - INSTRUCTOR: Instructor role with permissions to manage and track programs.
+     * - CLIENT: Client role with access to fitness programs and personal tracking.
+     */
+    public enum Role {
+        /**
+         * Admin role with full access to manage users, programs, and settings.
+         */
+        ADMIN,
+        /**
+         * Instructor role with permissions to manage and track programs.
+         */
+        INSTRUCTOR,
+        /**
+         * Client role with access to fitness programs and personal tracking.
+         */
+        CLIENT
+    }
+    /**
+     * The User class represents a user in the system.
+     * It extends UserManagement.User to manage user credentials and role.
+     */
     public static class User extends UserManagement.User {
+        /**
+         * Constructs a new User object with the provided details.
+         *
+         * @param id The unique ID of the user.
+         * @param password The password for the user.
+         * @param name The full name of the user.
+         * @param email The email address of the user.
+         * @param role The role assigned to the user.
+         */
         public User(String id, String password, String name, String email, String role) {
             super(id, password, name, email, role);
         }
@@ -46,6 +87,12 @@ public class LoginSignUp {
     private static boolean isUniqueID(String id) {
         return users.stream().noneMatch(user -> user.id.equals(id));
     }
+    /**
+     * Validates whether the provided email is in the correct format.
+     *
+     * @param email The email string to validate.
+     * @return true if the email format is valid, false otherwise.
+     */
     public static boolean isValidEmail(String email) {
         if (email == null || email.isEmpty()) {
             return false;
@@ -57,6 +104,10 @@ public class LoginSignUp {
         Pattern pattern = Pattern.compile(emailRegex);
         return pattern.matcher(email).matches();
     }
+    /**
+     * Handles the sign-up process for new users.
+     * @param scanner Scanner object to read user input.
+     */
     public static void signUp(Scanner scanner) {
         logger.info("\n--- Client Signup ---");
         logger.info("Enter ID (5 digits): ");
@@ -86,7 +137,7 @@ public class LoginSignUp {
 
         logger.info("Enter Email: ");
         String email = scanner.nextLine();
-        if (!isValidEmail(email)) {
+        if (email == null || !isValidEmail(email)) {
             logger.warning("Invalid email format.");
             return;
         }
@@ -100,7 +151,11 @@ public class LoginSignUp {
             logger.severe("An error occurred while creating the account: " + e.getMessage());
         }
     }
-
+    /**
+     * Displays the login menu where users can enter their credentials.
+     *
+     * @param scanner Scanner object to capture user input.
+     */
     public static void logInMenu(Scanner scanner) {
         logger.info("\n--- Login Menu ---");
         logger.info("Enter ID: ");
@@ -143,7 +198,10 @@ public class LoginSignUp {
         }
     }
 
-
+    /**
+     * Displays the admin menu with administrative options.
+     * @param scanner Scanner object to read user input.
+     */
     public static void adminMenu(Scanner scanner) {
         boolean running = true;
         while (running) {
@@ -179,7 +237,11 @@ public class LoginSignUp {
         }
     }
 
-
+    /**
+     * Displays the user management menu where admins can manage user accounts and roles.
+     *
+     * @param scanner Scanner object to capture user input.
+     */
     public static void userManagementMenu(Scanner scanner) {
         boolean running = true;
         while (running) {
@@ -238,7 +300,11 @@ public class LoginSignUp {
             }
         }
     }
-
+    /**
+     * Displays the program monitoring menu for tracking program progress.
+     *
+     * @param scanner Scanner object to capture user input.
+     */
     public static void programMonitoringMenu(Scanner scanner) {
         boolean programExit = false;
         while (!programExit) {
@@ -286,7 +352,11 @@ public class LoginSignUp {
             }
         }
     }
-
+    /**
+     * Displays the content management menu where users can manage content.
+     *
+     * @param scanner Scanner object to capture user input.
+     */
     public static void contentManagementMenu(Scanner scanner) {
         boolean running = true;
         ContentManagement cm = new ContentManagement();
@@ -391,7 +461,11 @@ public class LoginSignUp {
             logger.info(MessageFormat.format("- {0}", contentStatus));
         }
     }
-
+    /**
+     * Displays the subscription management menu where users can manage their subscriptions.
+     *
+     * @param scanner Scanner object to capture user input.
+     */
     public static void subscriptionManagementMenu(Scanner scanner) {
         while (true) {
             logger.info("\n--- Subscription Management ---");
@@ -443,7 +517,11 @@ public class LoginSignUp {
         }
     }
 
-
+    /**
+     * Displays the instructor menu for managing programs and interacting with clients.
+     *
+     * @param scanner Scanner object to capture user input.
+     */
     public static void instructorMenu(Scanner scanner) {
         boolean running = true;
         while (running) {
@@ -478,7 +556,11 @@ public class LoginSignUp {
             }
         }
     }
-
+    /**
+     * Displays the program management menu for instructors to manage programs.
+     *
+     * @param scanner Scanner object to capture user input.
+     */
     public static void programManagementMenu(Scanner scanner) {
         boolean exit = false;
         while (!exit) {
@@ -613,7 +695,10 @@ public class LoginSignUp {
             }
         }
     }
-
+    /**
+     * Displays the client interaction menu with client-specific options.
+     * @param scanner Scanner object to read user input.
+     */
     public static void clientInteractionMenu(Scanner scanner) {
         boolean exit = false;
 
@@ -670,7 +755,11 @@ public class LoginSignUp {
             }
         }
     }
-
+    /**
+     * Displays the progress tracking menu for instructors and clients to view performance.
+     *
+     * @param scanner Scanner object to capture user input.
+     */
     public static void progressTrackingMenu(Scanner scanner) {
         boolean exit = false;
 
@@ -743,7 +832,11 @@ public class LoginSignUp {
             }
         }
     }
-
+    /**
+     * Displays the notifications and updates menu for users.
+     *
+     * @param scanner Scanner object to capture user input.
+     */
     public static void notificationsAndUpdatesMenu(Scanner scanner) {
         boolean exit = false;
 
@@ -798,8 +891,11 @@ public class LoginSignUp {
         }
     }
 
-
-    // Client menu
+    /**
+     * Displays the client menu, where the client can interact with available services.
+     *
+     * @param scanner Scanner object to read user input.
+     */
     public static void clientMenu(Scanner scanner) {
         boolean running = true;
         while (running) {
@@ -834,7 +930,10 @@ public class LoginSignUp {
             }
         }
     }
-
+    /**
+     * Displays the account management menu for the user.
+     * @param scanner Scanner object to read user input.
+     */
     public static void accountManagementMenu(Scanner scanner) {
         boolean exit = false;
 
@@ -913,7 +1012,11 @@ public class LoginSignUp {
             }
         }
     }
-
+    /**
+     * Displays the program exploration menu for users to browse available programs.
+     *
+     * @param scanner Scanner object to capture user input.
+     */
     public static void programExplorationMenu(Scanner scanner) {
         boolean exit = false;
 
@@ -972,7 +1075,11 @@ public class LoginSignUp {
             }
         }
     }
-
+    /**
+     * Displays the client progress tracking menu where clients can view their progress.
+     *
+     * @param scanner Scanner object to capture user input.
+     */
     public static void ProgressTrackingClientMenu(Scanner scanner) {
         boolean exit = false;
 
@@ -1036,7 +1143,11 @@ public class LoginSignUp {
             }
         }
     }
-
+    /**
+     * Displays the menu for client feedback and reviews.
+     *
+     * @param scanner Scanner object to capture user input.
+     */
     public static void FeedbackAndReviewsClientMenu(Scanner scanner) {
         boolean exit = false;
 
@@ -1093,7 +1204,11 @@ public class LoginSignUp {
 
 
     }
-
+    /**
+     * Main method that starts the application and presents the login menu to the user.
+     *
+     * @param args Command-line arguments (if any).
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
