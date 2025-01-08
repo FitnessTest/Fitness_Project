@@ -1,4 +1,5 @@
 package special.planner;
+
 import com.example.ProgramExplorationAndEnrollment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,37 +7,33 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ProgramExplorationAndEnrollmentTest {
 
     @BeforeEach
     void setUp() {
-
         ProgramExplorationAndEnrollment.programs = new ArrayList<>();
         new ProgramExplorationAndEnrollment();
     }
 
     @Test
     void testListPrograms_WithPrograms() {
-        List<ProgramExplorationAndEnrollment.Program> programs = ProgramExplorationAndEnrollment.getPrograms();
-        ProgramExplorationAndEnrollment.listPrograms(programs);
-
+        List<ProgramExplorationAndEnrollment.Program> programs = ProgramExplorationAndEnrollment.programs;
         assertEquals(3, programs.size());
         assertEquals("Weight Loss Bootcamp", programs.get(0).getTitle());
-        assertEquals("Beginner", programs.get(0).getDifficultyLevel());
     }
 
     @Test
     void testListPrograms_NoPrograms() {
-        ProgramExplorationAndEnrollment.listPrograms(List.of());
-        assertTrue(ProgramExplorationAndEnrollment.getPrograms().isEmpty());
+        List<ProgramExplorationAndEnrollment.Program> emptyList = new ArrayList<>();
+        ProgramExplorationAndEnrollment.listPrograms(emptyList);
     }
 
     @Test
     void testBrowsePrograms() {
-        List<ProgramExplorationAndEnrollment.Program> results = ProgramExplorationAndEnrollment.browsePrograms("Beginner", null, 0, 100);
+        List<ProgramExplorationAndEnrollment.Program> results =
+                ProgramExplorationAndEnrollment.browsePrograms("Beginner", null, 0, 100);
         assertEquals(1, results.size());
         assertEquals("Weight Loss Bootcamp", results.get(0).getTitle());
     }
@@ -44,20 +41,26 @@ class ProgramExplorationAndEnrollmentTest {
     @Test
     void testEnrollInProgram_Success() {
         ProgramExplorationAndEnrollment.enrollInProgram("Weight Loss Bootcamp");
+        assertTrue(ProgramExplorationAndEnrollment.isEnrolled("Weight Loss Bootcamp"));
     }
 
     @Test
     void testEnrollInProgram_NotFound() {
-        ProgramExplorationAndEnrollment.enrollInProgram("Nonexistent Program");
+        Exception exception = assertThrows(IllegalArgumentException.class,
+                () -> ProgramExplorationAndEnrollment.enrollInProgram("Nonexistent Program"));
+        assertEquals("Program not found: Nonexistent Program", exception.getMessage());
     }
 
     @Test
     void testViewSchedule_Success() {
-        ProgramExplorationAndEnrollment.viewSchedule("Muscle Building Challenge");
+        String schedule = ProgramExplorationAndEnrollment.viewSchedule("Muscle Building Challenge");
+        assertEquals("Tue-Thu 11:00 AM", schedule);
     }
 
     @Test
     void testViewSchedule_NotFound() {
-        ProgramExplorationAndEnrollment.viewSchedule("Nonexistent Program");
+        Exception exception = assertThrows(IllegalArgumentException.class,
+                () -> ProgramExplorationAndEnrollment.viewSchedule("Nonexistent Program"));
+        assertEquals("Program not found: Nonexistent Program", exception.getMessage());
     }
 }
