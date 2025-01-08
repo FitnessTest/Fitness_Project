@@ -21,7 +21,7 @@ class ProgramManagementTest {
                 "http://tutorial.com", "yoga.jpg", "yoga_doc.pdf", 49.99, "Mon-Wed 9:00 AM");
         List<ProgramManagement.Program> programs = ProgramManagement.getPrograms();
         assertEquals(1, programs.size());
-        assertEquals("Yoga Basics", programs.get(0).title);
+        assertEquals("Yoga Basics", programs.get(0).getTitle());
     }
 
     @Test
@@ -32,7 +32,7 @@ class ProgramManagementTest {
                 "Flexibility", "http://newtutorial.com", "advanced_yoga.jpg", "advanced_yoga_doc.pdf", 79.99, "Mon-Wed 10:00 AM");
         assertTrue(result);
         List<ProgramManagement.Program> programs = ProgramManagement.getPrograms();
-        assertEquals("Advanced Yoga", programs.get(0).title);
+        assertEquals("Advanced Yoga", programs.get(0).getTitle());
     }
 
     @Test
@@ -79,8 +79,8 @@ class ProgramManagementTest {
 
 
         assertEquals(2, programs.size(), "There should be two programs in the list.");
-        assertEquals("Yoga Basics", programs.get(0).title, "The first program should be 'Yoga Basics'.");
-        assertEquals("Advanced Yoga", programs.get(1).title, "The second program should be 'Advanced Yoga'.");
+        assertEquals("Yoga Basics", programs.get(0).getTitle(), "The first program should be 'Yoga Basics'.");
+        assertEquals("Advanced Yoga", programs.get(1).getTitle(), "The second program should be 'Advanced Yoga'.");
 
 
         ProgramManagement.listAllPrograms();

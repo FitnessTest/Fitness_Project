@@ -59,7 +59,7 @@ public class ProgramManagement {
     }
 
     // Getter for the programs list
-    public List<Program> getPrograms() {
+    public static List<Program> getPrograms() {
         return programs;
     }
 
